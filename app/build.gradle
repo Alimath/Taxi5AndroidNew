@@ -42,4 +42,7 @@ dependencies {
     //Binding UI
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.jakewharton:butterknife:8.2.1'
+
+    //Image rounded corners
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
