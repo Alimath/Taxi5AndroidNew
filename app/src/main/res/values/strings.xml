@@ -5,4 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="registration_phone_header1">ВВЕДИТЕ СВОЙ\nНОМЕР ТЕЛЕФОНА</string>
+    <string name="registration_phone_header2">На этот номер мы пришлем вам\nSMS со специальным кодом.</string>
 </resources>

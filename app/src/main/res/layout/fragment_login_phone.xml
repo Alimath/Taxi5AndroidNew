@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_login_phone">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/fragment_login_phone_header1"
+        android:text="@string/registration_phone_header1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/registrationColorHeader1"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif-medium" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:id="@+id/fragment_login_phone_header2"
+        android:text="@string/registration_phone_header2"
+        android:textColor="@color/registrationColorHeader2"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:layout_below="@+id/fragment_login_phone_header1"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        />
+</RelativeLayout>
