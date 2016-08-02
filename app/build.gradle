@@ -32,7 +32,6 @@ dependencies {
     //Network
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-//    compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     testCompile 'junit:junit:4.12'
 
@@ -45,4 +44,9 @@ dependencies {
 
     //Image rounded corners
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    //Custom fonts (for Roboto light/medium in 4.)
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+
+    compile group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '7.5.1'
 }

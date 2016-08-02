@@ -8,4 +8,10 @@
 
     <string name="registration_phone_header1">ВВЕДИТЕ СВОЙ\nНОМЕР ТЕЛЕФОНА</string>
     <string name="registration_phone_header2">На этот номер мы пришлем вам\nSMS со специальным кодом.</string>
+    <string name="registration_phone_buttonText">ЗАПРОСИТЬ КОД</string>
+    <string name="registration_phone_title">Проверка номера</string>
+
+
+    <string name="registration_sms_header1">ВВЕДИТЕ КОД\nИЗ SMS СООБЩЕНИЯ</string>
+    <string name="registration_sms_header2">Он должен придти на ваш телефон\nв течении пары минут.</string>
 </resources>

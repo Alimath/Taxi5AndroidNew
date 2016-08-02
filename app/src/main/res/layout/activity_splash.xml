@@ -27,7 +27,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Button"
+        android:text="auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/splashImage"
@@ -36,7 +36,7 @@
         android:id="@+id/splashtestbutton" />
 
     <Button
-        android:text="Button"
+        android:text="mainscreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/splashtestbutton"
