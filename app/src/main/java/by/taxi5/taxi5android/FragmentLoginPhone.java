@@ -1,6 +1,9 @@
 package by.taxi5.taxi5android;
 
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Debug;
 import android.os.SystemClock;
@@ -46,8 +49,7 @@ public class FragmentLoginPhone extends Fragment
         View phoneFragment = inflater.inflate(R.layout.fragment_login_phone, container, false);
         ButterKnife.bind(this, phoneFragment);
 
-//        getSMSButton.setEnabled(false);
-        getSMSButton.setClickable(false);
+        this.DisableGetSMSButton();
         return phoneFragment;
     }
 
@@ -62,29 +64,30 @@ public class FragmentLoginPhone extends Fragment
             String formatedPhone = phoneUtil.format(numberProto, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
 
             if(phoneUtil.isValidNumber(numberProto)) {
-                getSMSButton.setClickable(true);
-//                getSMSButton.setEnabled(true);
+                this.EnableGetSMSButton();
             }
             else {
-//                getSMSButton.setEnabled(false);
-                getSMSButton.setClickable(false);
+                this.DisableGetSMSButton();
             }
 
 //            this.phoneEditText.setText(formatedPhone.replace(countryCodePicker.getSelectedCountryCodeWithPlus(), ""));
 
         } catch (NumberParseException e) {
-//            getSMSButton.setEnabled(false);
-            getSMSButton.setClickable(false);
+            this.DisableGetSMSButton();
 //            System.err.println("NumberParseException was thrown: " + e.toString());
         }
     }
 
     @OnClick(R.id.fragment_login_phone_button_getSMS)
     public void OnGetSMSClick() {
-        String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
-        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
-        call.enqueue(this);
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+        loginActivity.OpenSMSFragment();
+
+//        String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
+//        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+//        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
+//        call.enqueue(this);
+
 //            Call<TokenData> call = taxi5SDK.Authorization("friday_sms", "375447221174", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", "4512");
 ////            Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", "375447221174", "taxi5_ios_app");
 //            call.enqueue(this);
@@ -111,5 +114,27 @@ public class FragmentLoginPhone extends Fragment
     @Override
     public void onFailure(Call<Void> call, Throwable t) {
         Log.d("taxi5", "responseCode: error");
+    }
+
+
+    private void EnableGetSMSButton() {
+        getSMSButton.setClickable(true);
+        getSMSButton.setTextColor(Color.parseColor("#FFFFFF"));
+        getSMSButton.setBackground(getMyDrawable(R.drawable.round_shape_blue_btn));
+    }
+
+    private void DisableGetSMSButton() {
+        getSMSButton.setClickable(false);
+        getSMSButton.setTextColor(Color.parseColor("#353535"));
+        getSMSButton.setBackground(getMyDrawable(R.drawable.round_shape_white_bordered_btn));
+    }
+
+    private Drawable getMyDrawable(int id) {
+        int version = Build.VERSION.SDK_INT;
+        if (version >= 21) {
+            return getActivity().getDrawable(id);
+        } else {
+            return getActivity().getResources().getDrawable(id);
+        }
     }
 }

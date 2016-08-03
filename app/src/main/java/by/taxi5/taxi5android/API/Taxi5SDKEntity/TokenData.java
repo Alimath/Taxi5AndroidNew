@@ -1,6 +1,10 @@
 package by.taxi5.taxi5android.API.Taxi5SDKEntity;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import io.paperdb.Paper;
 
 /**
  * Created by fedar.trukhan on 25.07.16.
@@ -40,7 +44,16 @@ public class TokenData {
         return "" + this.accessToken + ", " + this.type + ", " + this.expiresIn + ", " + this.refreshToken;
     }
 
-    public TokenData() {
+    TokenData() {
+//        if(Paper.book().read("taxi5AndroidTokenData") == null) {
+//            Log.d("taxi5", "null saved data");
+//        }
+//        else {
+//            return Paper.book().read("taxi5AndroidTokenData");
+//        }
+    }
 
+    public void saveTokenData() {
+        Paper.book().write("taxi5AndroidTokenData", TokenData.getInstance());
     }
 }
