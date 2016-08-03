@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:id="@+id/fragment_login_phone_header1"
-        android:text="@string/registration_phone_header1"
+        android:text="@string/registration_sms_header1"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="@color/registrationColorHeader1"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:id="@+id/fragment_login_phone_header2"
-        android:text="@string/registration_phone_header2"
+        android:text="@string/registration_sms_header2"
         android:textColor="@color/registrationColorHeader2"
         android:enabled="false"
         android:textAlignment="center"
@@ -57,6 +57,7 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:inputType="numberDecimal"
+            android:background="@drawable/round_shape_white_bordered_btn"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -81,7 +82,7 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/round_shape_blue_btn"
 
-        android:text="@string/registration_phone_buttonText"
+        android:text="@string/registration_sms_buttonText"
         android:fontFamily="sans-serif-medium"
         android:textSize="16sp"/>
 

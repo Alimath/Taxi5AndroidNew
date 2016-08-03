@@ -14,4 +14,5 @@
 
     <string name="registration_sms_header1">ВВЕДИТЕ КОД\nИЗ SMS СООБЩЕНИЯ</string>
     <string name="registration_sms_header2">Он должен придти на ваш телефон\nв течении пары минут.</string>
+    <string name="registration_sms_buttonText">ЗАПРОСИТЬ КОД ПОВТОРНО</string>
 </resources>

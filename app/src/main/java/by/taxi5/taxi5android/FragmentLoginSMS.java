@@ -14,8 +14,10 @@ import butterknife.ButterKnife;
 
 public class FragmentLoginSMS extends Fragment {
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View phoneFragment = inflater.inflate(R.layout.fragment_login_sms, container, false);
         ButterKnife.bind(this, phoneFragment);
 
