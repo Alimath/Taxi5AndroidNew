@@ -1,12 +1,10 @@
-package by.taxi5.taxi5android;
+package com.isolutions.taxi5;
 
 import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.SystemClock;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,9 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import by.taxi5.taxi5android.API.ApiFactory;
-import by.taxi5.taxi5android.API.Taxi5SDK;
-import by.taxi5.taxi5android.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

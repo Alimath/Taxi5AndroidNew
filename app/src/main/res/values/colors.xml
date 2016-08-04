@@ -3,6 +3,9 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="registrationColorHeader1">#353535</color>
+    <color name="defaultBlack">#353535</color>
+    <color name="defaultBlue">#01579B</color>
+    <color name="defaultWhite">#FAFAFA</color>
     <color name="registrationColorHeader2">#A0A0A0</color>
+    <color name="defaultBackgroundGray">#F0F0F0</color>
 </resources>

@@ -1,11 +1,10 @@
-package by.taxi5.taxi5android.API;
+package com.isolutions.taxi5.API;
 
-import by.taxi5.taxi5android.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 

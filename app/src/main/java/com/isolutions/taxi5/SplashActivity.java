@@ -1,4 +1,4 @@
-package by.taxi5.taxi5android;
+package com.isolutions.taxi5;
 
 import android.content.Intent;
 import android.os.Bundle;

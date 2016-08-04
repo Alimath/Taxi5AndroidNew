@@ -52,4 +52,10 @@ dependencies {
 
     //DataBase
     compile 'io.paperdb:paperdb:1.5'
+
+    //Masked text
+    compile 'com.github.pinball83:masked-edittext:1.0.3'
+
+    //GMS
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
 }

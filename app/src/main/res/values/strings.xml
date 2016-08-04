@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Taxi5Android</string>
+    <string name="app_name">Пятница!</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,4 +15,10 @@
     <string name="registration_sms_header1">ВВЕДИТЕ КОД\nИЗ SMS СООБЩЕНИЯ</string>
     <string name="registration_sms_header2">Он должен придти на ваш телефон\nв течении пары минут.</string>
     <string name="registration_sms_buttonText">ЗАПРОСИТЬ КОД ПОВТОРНО</string>
+    
+    <string name="left_drawer_menu_item_order_taxi">Заказать такси</string>
+    <string name="left_drawer_menu_item_my_places">Мои места</string>
+    <string name="left_drawer_menu_item_payments">Кредитные карты</string>
+    <string name="left_drawer_menu_item_plans">Тарифы</string>
+    <string name="left_drawer_menu_item_about">О нас</string>
 </resources>

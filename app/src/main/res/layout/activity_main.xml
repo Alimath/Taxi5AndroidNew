@@ -13,6 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_activity_fragment_map_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.isolutions.taxi5.FragmentMap"
+            tools:layout="@layout/stub_map" />
+
+        </FrameLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -24,7 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <include
-                    layout="@layout/nav_header_main"
+                    layout="@layout/left_drawer"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
             </ScrollView>

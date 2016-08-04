@@ -16,7 +16,7 @@
         android:text="@string/registration_phone_header1"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/registrationColorHeader1"
+        android:textColor="@color/defaultBlack"
         android:enabled="false"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -61,6 +61,7 @@
                 android:background="@drawable/round_shape_white_bordered_btn" />
 
             <com.hbb20.CountryCodePicker
+                android:textColor="@color/defaultBlack"
                 android:id="@+id/fragment_login_phone_country_code_picker"
                 app:ccpLanguage="RUSSIAN"
                 android:layout_width="100dp"
@@ -81,6 +82,7 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/defaultBlack"
             android:inputType="phone"
             android:background="@drawable/round_shape_white_bordered_btn"
             android:gravity="center"/>

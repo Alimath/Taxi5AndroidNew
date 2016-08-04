@@ -1,4 +1,4 @@
-package by.taxi5.taxi5android;
+package com.isolutions.taxi5;
 
 import org.junit.Test;
 

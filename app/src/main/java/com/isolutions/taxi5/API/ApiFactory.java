@@ -1,4 +1,4 @@
-package by.taxi5.taxi5android.API;
+package com.isolutions.taxi5.API;
 
 import android.support.annotation.NonNull;
 import java.util.concurrent.TimeUnit;

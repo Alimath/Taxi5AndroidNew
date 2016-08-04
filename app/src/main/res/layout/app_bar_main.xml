@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="by.taxi5.taxi5android.MainActivity">
+    tools:context="com.isolutions.taxi5.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

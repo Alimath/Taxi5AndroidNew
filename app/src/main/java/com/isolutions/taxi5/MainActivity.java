@@ -1,19 +1,10 @@
-package by.taxi5.taxi5android;
+package com.isolutions.taxi5;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,29 +16,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
-import java.io.IOException;
-
 import butterknife.BindView;
-import by.taxi5.taxi5android.API.ApiFactory;
-import by.taxi5.taxi5android.API.Taxi5SDK;
-import by.taxi5.taxi5android.API.Taxi5SDKEntity.TokenData;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<TokenData> {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.AvatarImage) ImageView avatarImageView;
+    @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Fragment mapFragment = new FragmentMap();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.main_activity_fragment_map_layout, mapFragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
+//        setContentView(R.layout.activity_login);
+//
+//
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -138,24 +135,24 @@ public class MainActivity extends AppCompatActivity
 //        Log.d("taxi5", "responseCode: error");
 //    }
 
-    @Override
-    public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-        Log.d("taxi5", TokenData.getInstance().GetDescription());
-        if(response.code() == 200) {
-            Log.d("taxi5", "response: " + response.body().GetDescription());
-        }
-        else {
-            try {
-                Log.d("taxi5", "responseCode: " + response.errorBody().string());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public void onFailure(Call<TokenData> call, Throwable t) {
-        Log.d("taxi5", "responseCode: error");
-    }
+//    @Override
+//    public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+//        Log.d("taxi5", TokenData.getInstance().GetDescription());
+//        if(response.code() == 200) {
+//            Log.d("taxi5", "response: " + response.body().GetDescription());
+//        }
+//        else {
+//            try {
+//                Log.d("taxi5", "responseCode: " + response.errorBody().string());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
+//
+//    @Override
+//    public void onFailure(Call<TokenData> call, Throwable t) {
+//        Log.d("taxi5", "responseCode: error");
+//    }
 }

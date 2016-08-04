@@ -1,6 +1,4 @@
-package by.taxi5.taxi5android.API.Taxi5SDKEntity;
-
-import android.util.Log;
+package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
 import com.google.gson.annotations.SerializedName;
 

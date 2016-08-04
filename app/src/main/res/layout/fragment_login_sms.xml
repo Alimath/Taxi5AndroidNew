@@ -16,7 +16,7 @@
         android:text="@string/registration_sms_header1"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/registrationColorHeader1"
+        android:textColor="@color/defaultBlack"
         android:enabled="false"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -51,14 +51,24 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp">
 
-        <EditText
+        <com.github.pinball83.maskededittext.MaskedEditText
+            android:textColor="@color/defaultBlack"
             android:id="@+id/fragment_login_sms_text_edit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textAlignment="center"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:background="@drawable/round_shape_white_bordered_btn"
-            android:gravity="center"/>
+            android:textSize="16sp"
+            android:gravity="center"
+
+
+            app:mask="* * * *"
+            app:notMaskedSymbol="*"
+            app:replacementChar="#"
+            app:deleteChar="#"
+            app:maskIconColor="@color/registrationColorHeader2"
+            />
     </LinearLayout>
 
     <ImageView
