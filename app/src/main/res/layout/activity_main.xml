@@ -18,13 +18,14 @@
         android:layout_height="match_parent"
         android:id="@+id/main_activity_fragment_map_layout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="56dp">
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.isolutions.taxi5.FragmentMap"
-            tools:layout="@layout/stub_map" />
+        <!--<fragment-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:name="com.isolutions.taxi5.FragmentMap"-->
+            <!--tools:layout="@layout/stub_map" />-->
 
         </FrameLayout>
 

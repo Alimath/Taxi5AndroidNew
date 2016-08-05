@@ -3,6 +3,7 @@ package com.isolutions.taxi5;
 import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 //        View mapView = inflater.inflate(R.layout.fragment_map, container, false);
-
-        View mapView = inflater.inflate(R.layout.stub_map, container, false);
+        Log.d("taxi5", "hallo world");
+        View mapView = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, mapView);
 
 //        getSMSButton.setEnabled(false);

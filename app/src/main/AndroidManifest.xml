@@ -8,6 +8,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC9XN7qko3G1JXdNl4VbhKu1ru9GZskDWA" />
+
         <activity
             android:name="com.isolutions.taxi5.MainActivity"
             android:label="@string/app_name"
@@ -38,5 +43,7 @@
             </intent-filter>
         </activity>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
