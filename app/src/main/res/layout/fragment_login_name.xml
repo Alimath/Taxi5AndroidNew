@@ -5,15 +5,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_login_sms">
+    android:id="@+id/fragment_login_name">
 
 
     <TextView
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_login_sms_header1"
-        android:text="@string/registration_sms_header1"
+        android:id="@+id/fragment_login_name_header1"
+        android:text="@string/registration_name_header1"
         android:textColor="@color/defaultBlack"
         android:enabled="false"
         android:textAlignment="center"
@@ -21,21 +21,21 @@
         android:textStyle="normal"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="@+id/fragment_login_sms"
-        app:layout_constraintCenterX_toCenterX="@+id/fragment_login_sms"
-        app:layout_constraintRight_toRightOf="@+id/fragment_login_sms"
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_login_name"
+        app:layout_constraintCenterX_toCenterX="@+id/fragment_login_name"
+        app:layout_constraintRight_toRightOf="@+id/fragment_login_name"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name" />
 
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_sms_header1"
-        app:layout_constraintCenterX_toCenterX="@+id/fragment_login_sms"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_name_header1"
+        app:layout_constraintCenterX_toCenterX="@+id/fragment_login_name"
         android:layout_marginTop="25dp"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_login_sms_header2"
-        android:text="@string/registration_sms_header2"
+        android:id="@+id/fragment_login_name_header2"
+        android:text="@string/registration_name_header2"
         android:textColor="@color/registrationColorHeader2"
         android:enabled="false"
         android:textAlignment="center"
@@ -43,13 +43,13 @@
         android:textStyle="normal"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        app:layout_constraintRight_toRightOf="@+id/fragment_login_sms"
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms" />
+        app:layout_constraintRight_toRightOf="@+id/fragment_login_name"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name" />
 
 
     <EditText
         android:textColor="@color/defaultBlack"
-        android:id="@+id/fragment_login_sms_text_edit"
+        android:id="@+id/fragment_login_name_text_edit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textAlignment="center"
@@ -58,9 +58,9 @@
         android:textSize="16sp"
         android:gravity="center"
 
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_sms_header2"
-        app:layout_constraintRight_toRightOf="@+id/fragment_login_sms"
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_name_header2"
+        app:layout_constraintRight_toRightOf="@+id/fragment_login_name"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name"
 
         android:layout_marginTop="25dp"
         android:layout_marginLeft="16dp"
@@ -70,14 +70,14 @@
         />
 
     <ImageView
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms"
-        app:layout_constraintRight_toRightOf="@+id/fragment_login_sms"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_sms_text_edit"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name"
+        app:layout_constraintRight_toRightOf="@+id/fragment_login_name"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_name_text_edit"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
 
-        android:id="@+id/fragment_login_sms_separator_1"
+        android:id="@+id/fragment_login_name_separator_1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F0F0F0"
@@ -86,16 +86,16 @@
         android:layout_marginEnd="16dp" />
 
     <Button
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms"
-        app:layout_constraintRight_toRightOf="@+id/fragment_login_sms"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_sms_separator_1"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name"
+        app:layout_constraintRight_toRightOf="@+id/fragment_login_name"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_name_separator_1"
 
-        android:id="@+id/fragment_login_sms_send_code_button"
+        android:id="@+id/fragment_login_name_send_code_button"
         android:layout_height="50dp"
         android:textColor="#FFFFFF"
         android:background="@drawable/round_shape_blue_btn"
 
-        android:text="@string/registration_sms_buttonText"
+        android:text="@string/registration_name_buttonText"
         android:fontFamily="sans-serif-medium"
         android:textSize="16sp"
         android:layout_marginStart="16dp"
@@ -106,12 +106,12 @@
         android:layout_width="match_parent" />
 
     <com.wang.avi.AVLoadingIndicatorView
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms_send_code_button"
-        app:layout_constraintCenterY_toCenterY="@+id/fragment_login_sms_send_code_button"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name_send_code_button"
+        app:layout_constraintCenterY_toCenterY="@+id/fragment_login_name_send_code_button"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
 
-        android:id="@+id/fragment_login_sms_loading_button_sms_view"
+        android:id="@+id/fragment_login_name_loading_button_name_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:indicatorName="BallClipRotateIndicator"/>
@@ -124,7 +124,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="fitStart"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_login_sms"
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_sms"/>
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_login_name"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_name"/>
 
 </android.support.constraint.ConstraintLayout>

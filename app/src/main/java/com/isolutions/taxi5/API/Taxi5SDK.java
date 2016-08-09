@@ -14,13 +14,27 @@ import retrofit2.http.Query;
 
 public interface Taxi5SDK {
     @GET("http://api.taxi5.by/oauth/auth")
-    Call<Void> GetSMSCode(@Query("response_type") String responseType, @Query("msid") String msid, @Query("client_id") String clientID);
+    Call<Void> GetSMSCode(
+            @Query("response_type") String responseType,
+            @Query("msid") String msid,
+            @Query("client_id") String clientID);
 
     @FormUrlEncoded
     @POST("http://api.taxi5.by/oauth/token")
-    Call<TokenData> Authorization(@Field("grant_type") String grantType,
-                                  @Field("msid") String msid,
-                                  @Field("client_id") String clientID,
-                                  @Field("client_secret") String clientSecret,
-                                  @Field("code") String code);
+    Call<TokenData> Authorization(
+            @Field("grant_type") String grantType,
+            @Field("msid") String msid,
+            @Field("client_id") String clientID,
+            @Field("client_secret") String clientSecret,
+            @Field("code") String code
+    );
+
+    @FormUrlEncoded
+    @POST("http://api.taxi5.by/oauth/token")
+    Call<TokenData> RefreshToken(
+            @Field("grant_type") String grantType,
+            @Field("client_id") String clientID,
+            @Field("client_secret") String clientSecret,
+            @Field("refresh_token") String refreshToken
+    );
 }

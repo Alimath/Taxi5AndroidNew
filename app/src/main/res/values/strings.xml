@@ -15,7 +15,12 @@
     <string name="registration_sms_header1">ВВЕДИТЕ КОД\nИЗ SMS СООБЩЕНИЯ</string>
     <string name="registration_sms_header2">Он должен придти на ваш телефон\nв течении пары минут.</string>
     <string name="registration_sms_buttonText">ЗАПРОСИТЬ КОД ПОВТОРНО</string>
-    
+    <string name="registration_sms_buttonText_code_entered">ВОЙТИ</string>
+
+    <string name="registration_name_header1">ПОДСКАЖИТЕ НАМ,\nКАК ВАШЕ ИМЯ?</string>
+    <string name="registration_name_header2">Оно нужно нам для того, чтобы\nВаш водитель знал как к вам обращаться</string>
+    <string name="registration_name_buttonText">ПЕРЕЙТИ К ПРИЛОЖЕНИЮ</string>
+
     <string name="left_drawer_menu_item_order_taxi">Заказать такси</string>
     <string name="left_drawer_menu_item_my_places">Мои места</string>
     <string name="left_drawer_menu_item_payments">Кредитные карты</string>

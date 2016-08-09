@@ -1,5 +1,7 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import android.media.session.MediaSession;
+
 import com.google.gson.annotations.SerializedName;
 
 import io.paperdb.Paper;
@@ -23,7 +25,26 @@ public class TokenData {
 
         }
 
+        localInstance.loadTokenData();
+
+
         return localInstance;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getExpiresIn() {
+        return expiresIn;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     @SerializedName("access_token")
@@ -38,11 +59,11 @@ public class TokenData {
     @SerializedName("refresh_token")
     private String refreshToken;
 
-    public String GetDescription() {
+    public String getDescription() {
         return "" + this.accessToken + ", " + this.type + ", " + this.expiresIn + ", " + this.refreshToken;
     }
 
-    TokenData() {
+    private TokenData() {
 //        if(Paper.book().read("taxi5AndroidTokenData") == null) {
 //            Log.d("taxi5", "null saved data");
 //        }
@@ -52,6 +73,17 @@ public class TokenData {
     }
 
     public void saveTokenData() {
-        Paper.book().write("taxi5AndroidTokenData", TokenData.getInstance());
+        Paper.book().write("taxi5AndroidTokenData", this);
+    }
+
+    private void loadTokenData() {
+        TokenData tData = (TokenData) Paper.book().read("taxi5AndroidTokenData");
+
+        if(tData != null) {
+            this.accessToken = tData.accessToken;
+            this.type = tData.type;
+            this.expiresIn = tData.expiresIn;
+            this.refreshToken = tData.refreshToken;
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.isolutions.taxi5;
 
 import android.app.Fragment;
+
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -24,7 +26,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+
+import com.isolutions.taxi5.API.ApiFactory;
+import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.wang.avi.AVLoadingIndicatorView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,11 +40,11 @@ import retrofit2.Response;
  * Created by fedar.trukhan on 27.07.16.
  */
 
-public class FragmentLoginPhone extends Fragment
-        implements Callback<Void> {
+public class FragmentLoginPhone extends Fragment {
     @BindView(R.id.fragment_login_phone_text_edit) EditText phoneEditText;
     @BindView(R.id.fragment_login_phone_country_code_picker) CountryCodePicker countryCodePicker;
     @BindView(R.id.fragment_login_phone_button_getSMS) Button getSMSButton;
+    @BindView(R.id.fragment_login_loading_button_sms_view) AVLoadingIndicatorView avLoadingIndicatorView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +52,13 @@ public class FragmentLoginPhone extends Fragment
         View phoneFragment = inflater.inflate(R.layout.fragment_login_phone, container, false);
         ButterKnife.bind(this, phoneFragment);
 
+        avLoadingIndicatorView.hide();
         this.DisableGetSMSButton();
+
+        TokenData tData = TokenData.getInstance();
+
+        Log.d("taxi5", tData.getDescription());
+
         return phoneFragment;
     }
 
@@ -76,26 +89,39 @@ public class FragmentLoginPhone extends Fragment
 
     @OnClick(R.id.fragment_login_phone_button_getSMS)
     public void OnGetSMSClick() {
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-        loginActivity.OpenSMSFragment();
+        this.StartGetSMSButtonLoadingAnimation();
 
-//        String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
-//        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-//        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
-//        call.enqueue(this);
+        String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
+        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
 
-//            Call<TokenData> call = taxi5SDK.Authorization("friday_sms", "375447221174", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", "4512");
-////            Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", "375447221174", "taxi5_ios_app");
-//            call.enqueue(this);
-//        numberStr =  + numberStr;
-//        Log.d("taxi5", "hallo phone");
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                onResponseCallback(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                onFailureCallback(call, t);
+            }
+        });
     }
 
-    @Override
-    public void onResponse(Call<Void> call, Response<Void> response) {
-        Log.d("taxi5", TokenData.getInstance().GetDescription());
+    public void onResponseCallback(Call<Void> call, Response<Void> response) {
+        StopGetSMSButtonLoadinganimation();
+//        Log.d("taxi5", TokenData.getInstance().GetDescription());
         if(response.code() == 200) {
             Log.d("taxi5", "response: " + response.body());
+
+            LoginActivity loginActivity = (LoginActivity) getActivity();
+            loginActivity.OpenSMSFragment();
+
+            ApplicationLauncher applicationLauncher = (ApplicationLauncher) getActivity().getApplicationContext();
+            if(applicationLauncher != null) {
+                applicationLauncher.temp_login_phone = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
+                Log.d("taxi5", applicationLauncher.temp_login_phone);
+            }
         }
         else {
             try {
@@ -104,11 +130,10 @@ public class FragmentLoginPhone extends Fragment
                 e.printStackTrace();
             }
         }
-
     }
 
-    @Override
-    public void onFailure(Call<Void> call, Throwable t) {
+    public void onFailureCallback(Call<Void> call, Throwable t) {
+        StopGetSMSButtonLoadinganimation();
         Log.d("taxi5", "responseCode: error");
     }
 
@@ -121,8 +146,27 @@ public class FragmentLoginPhone extends Fragment
 
     private void DisableGetSMSButton() {
         getSMSButton.setClickable(false);
+        phoneEditText.setClickable(false);
         getSMSButton.setTextColor(Color.parseColor("#353535"));
         getSMSButton.setBackground(getMyDrawable(R.drawable.round_shape_white_bordered_btn));
+    }
+
+    private void StartGetSMSButtonLoadingAnimation() {
+        getSMSButton.setClickable(false);
+        phoneEditText.setClickable(false);
+        avLoadingIndicatorView.show();
+    }
+
+    private void StopGetSMSButtonLoadinganimation() {
+        if(getSMSButton.getCurrentTextColor() == Color.parseColor("#FFFFFF")) {
+            getSMSButton.setClickable(false);
+            phoneEditText.setClickable(false);
+        }
+        else {
+            getSMSButton.setClickable(true);
+            phoneEditText.setClickable(true);
+        }
+        avLoadingIndicatorView.hide();
     }
 
     private Drawable getMyDrawable(int id) {
@@ -133,4 +177,6 @@ public class FragmentLoginPhone extends Fragment
             return getActivity().getResources().getDrawable(id);
         }
     }
+
+
 }

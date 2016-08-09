@@ -1,12 +1,28 @@
-//package by.taxi5.taxi5android;
+package com.isolutions.taxi5;
+
+import android.app.Application;
+import android.util.Log;
+
+import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+
+import io.paperdb.Paper;
+
+public class ApplicationLauncher extends Application {
+    public String temp_login_phone;
+    public String temp_login_code;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Paper.init(getApplicationContext());
+    }
+
+
+    //    @Override
+//    public void onCreate () {
+//        super.onCreate();
 //
-//import android.app.Application;
 //
-//public class ApplicationLauncher extends Application {
-////    @Override
-////    public void onCreate () {
-////        super.onCreate();
-////
-////
-////    }
-//}
+//    }
+}
