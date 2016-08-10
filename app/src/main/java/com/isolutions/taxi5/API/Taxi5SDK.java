@@ -1,10 +1,12 @@
 package com.isolutions.taxi5.API;
 
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -37,4 +39,10 @@ public interface Taxi5SDK {
             @Field("client_secret") String clientSecret,
             @Field("refresh_token") String refreshToken
     );
+
+    @GET("http://api.taxi5.by/m/v2/customer/me")
+    Call<ProfileData> GetProfile(
+            @Header("X-Authorization") String token
+    );
+
 }

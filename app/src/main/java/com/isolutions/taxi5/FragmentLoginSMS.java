@@ -7,6 +7,7 @@ import android.media.session.MediaSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import com.github.pinball83.maskededittext.MaskedEditText;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -183,6 +185,21 @@ public class FragmentLoginSMS extends Fragment {
             response.body().saveTokenData();
 
             Log.d("taxi5", TokenData.getInstance().getDescription());
+
+            Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            Call<ProfileData> profileDataCalll = taxi5SDK.GetProfile(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken());
+
+            profileDataCalll.enqueue(new Callback<ProfileData>() {
+                @Override
+                public void onResponse(Call<ProfileData> call, Response<ProfileData> response) {
+                    Log.d("taxi5", response.body().getDescription());
+                }
+
+                @Override
+                public void onFailure(Call<ProfileData> call, Throwable t) {
+                    Log.d("taxi5", "error to become profile");
+                }
+            });
 
 //            LoginActivity loginActivity = (LoginActivity) getActivity();
 //            loginActivity.OpenSMSFragment();
