@@ -32,31 +32,124 @@ public class ProfileData {
         return localInstance;
     }
 
+    public static void setInstance(ProfileData instance) {
+        ProfileData.instance = instance;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMsid() {
+        return msid;
+    }
+
+    public void setMsid(String msid) {
+        this.msid = msid;
+    }
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
+    public Integer getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Integer birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public boolean isPasswordExists() {
+        return isPasswordExists;
+    }
+
+    public void setPasswordExists(boolean passwordExists) {
+        isPasswordExists = passwordExists;
+    }
+
+    public ProfileDataOptions getOptions() {
+        return options;
+    }
+
+    public void setOptions(ProfileDataOptions options) {
+        this.options = options;
+    }
+
     @SerializedName("id")
-    private String id;
+    @Expose
+    private Integer id;
 
     @SerializedName("name")
+    @Expose
     private String name;
 
     @SerializedName("msid")
+    @Expose
     private String msid;
 
     @SerializedName("avatar")
+    @Expose
     private String avatarURL;
 
     @SerializedName("date_of_birth")
-    private String birthDate;
+    @Expose
+    private Integer birthDate;
 
     @SerializedName("email")
+    @Expose
     private String email;
 
     @SerializedName("is_blocked")
+    @Expose
     private boolean isBlocked;
 
     @SerializedName("is_confirmed")
+    @Expose
     private boolean isConfirmed;
 
     @SerializedName("password_exists")
+    @Expose
     private boolean isPasswordExists;
 
     @SerializedName("options")
@@ -76,21 +169,16 @@ public class ProfileData {
 //    private String refreshToken;
 
     public String getDescription() {
+//        return name + " " + msid;
         if(options.isNewsViaEmail()) {
-            return "" + name + ": true";
+            return "profile: " + name + ": true";
         }
         else {
-            return "" + name + ": false";
+            return "profile: " + name + ": false";
         }
     }
 
     private ProfileData() {
-//        if(Paper.book().read("taxi5AndroidTokenData") == null) {
-//            Log.d("taxi5", "null saved data");
-//        }
-//        else {
-//            return Paper.book().read("taxi5AndroidTokenData");
-//        }
     }
 
     public void saveProfileData() {
@@ -100,12 +188,19 @@ public class ProfileData {
     private void loadProfileData() {
         ProfileData tData = (ProfileData) Paper.book().read("taxi5AndroidProfileData");
 
-//        if(tData != null) {
-//            this.accessToken = tData.accessToken;
-//            this.type = tData.type;
-//            this.expiresIn = tData.expiresIn;
-//            this.refreshToken = tData.refreshToken;
-//        }
+        if(tData != null) {
+            this.id = tData.id;
+            this.name = tData.name;
+            this.msid = tData.msid;
+            this.avatarURL = tData.avatarURL;
+            this.birthDate = tData.birthDate;
+            this.email = tData.email;
+            this.isBlocked = tData.isBlocked;
+            this.isConfirmed = tData.isConfirmed;
+            this.isPasswordExists = tData.isPasswordExists;
+
+            this.options = tData.options;
+        }
     }
 }
 
