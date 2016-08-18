@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.github.pinball83.maskededittext.MaskedEditText;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -181,10 +182,16 @@ public class FragmentLoginSMS extends Fragment {
 
     public void onResponseAuthorization(Call<TokenData> call, Response<TokenData> response) {
         if(response.code() == 200) {
-            Log.d("taxi5", "response: " + response.body());
+//            Log.d("taxi5", "response: " + response.body());
+            response.body().setAuthorized(true);
             response.body().saveTokenData();
+//            TokenData.getInstance().setAuthorized(true);
 
-            Log.d("taxi5", TokenData.getInstance().getDescription());
+
+            LoginActivity loginActivity = (LoginActivity) getActivity();
+            loginActivity.OpenMainActivity();
+
+//            Log.d("taxi5", TokenData.getInstance().getDescription());
 
             Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
             Call<ProfileResponseData> profileDataCall = taxi5SDK.GetProfile(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken());
@@ -192,7 +199,18 @@ public class FragmentLoginSMS extends Fragment {
             profileDataCall.enqueue(new Callback<ProfileResponseData>() {
                 @Override
                 public void onResponse(Call<ProfileResponseData> call, Response<ProfileResponseData> response) {
+                    if (response.body().getStatusCode() == 200) {
+                        LoginActivity loginActivity = (LoginActivity) getActivity();
+                        response.body().getProfileData().saveProfileData();
 
+
+
+                        loginActivity.OpenMainActivity();
+                    }
+                    else {
+                        LoginActivity loginActivity = (LoginActivity) getActivity();
+                        loginActivity.OpenNameFragment();
+                    }
                     Log.d("taxi5", response.body().getProfileData().getDescription());
                 }
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -16,26 +18,24 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        Log.d("taxi5", "hallo wolds");
-        ButterKnife.bind(this);
-    }
+//            setContentView(R.layout.activity_splash);
 
-    @OnClick(R.id.splashtestbutton)
-    public void OnChangeViewClick() {
-        Log.d("taxi5", "button2 click");
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-        Log.d("taxi5", "button1 click");
-    }
 
-    @OnClick(R.id.splashtestbutton2)
-    public void OnChangeView2Click() {
-        Log.d("taxi5", "button2 click");
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-        Log.d("taxi5", "button2 click");
+        TokenData tokenData = TokenData.getInstance();
+
+        if(tokenData.getAuthorized()) {
+            Log.d("taxi5", "Main view");
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Log.d("taxi5", "Login view");
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
     }
 }

@@ -33,6 +33,17 @@ public interface Taxi5SDK {
 
     @FormUrlEncoded
     @POST("http://api.taxi5.by/oauth/token")
+    Call<TokenData> AuthorizationWithName(
+            @Field("grant_type") String grantType,
+            @Field("msid") String msid,
+            @Field("name") String name,
+            @Field("client_id") String clientID,
+            @Field("client_secret") String clientSecret,
+            @Field("code") String code
+    );
+
+    @FormUrlEncoded
+    @POST("http://api.taxi5.by/oauth/token")
     Call<TokenData> RefreshToken(
             @Field("grant_type") String grantType,
             @Field("client_id") String clientID,

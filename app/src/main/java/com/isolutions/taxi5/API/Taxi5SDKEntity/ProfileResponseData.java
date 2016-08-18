@@ -14,8 +14,8 @@ public class ProfileResponseData {
         return profileData;
     }
 
-    public String getStatusCode() {
-        return statusCode;
+    public Integer getStatusCode() {
+        return new Integer(statusCode);
     }
 
     public ArrayList<String> getErrors() {

@@ -3,6 +3,7 @@ package com.isolutions.taxi5;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -43,11 +44,32 @@ public class LoginActivity extends AppCompatActivity {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         ft.replace(R.id.login_activity_fragment_layout, smsFragment);
-//        ft.setCustomAnimations(R.anim.left_to_right_open, R.anim.left_to_right_close, R.anim.right_to_left_open, R.anim.left_to_right_close);
-//        ft.setCustomAnimations(R.anim.left_to_right_open, R.anim.)
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
         ft.commit();
     }
 
+    public void OpenNameFragment() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+        Fragment nameFragment = new FragmentLoginName();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.login_activity_fragment_layout, nameFragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+
+    public void OpenMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

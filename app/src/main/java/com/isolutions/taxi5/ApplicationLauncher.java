@@ -1,6 +1,7 @@
 package com.isolutions.taxi5;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
@@ -14,15 +15,6 @@ public class ApplicationLauncher extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         Paper.init(getApplicationContext());
     }
-
-
-    //    @Override
-//    public void onCreate () {
-//        super.onCreate();
-//
-//
-//    }
 }

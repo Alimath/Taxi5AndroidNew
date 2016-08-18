@@ -1,6 +1,7 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
 import android.media.session.MediaSession;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -59,8 +60,18 @@ public class TokenData {
     @SerializedName("refresh_token")
     private String refreshToken;
 
+    public Boolean getAuthorized() {
+        return isAuthorized;
+    }
+
+    public void setAuthorized(Boolean authorized) {
+        isAuthorized = authorized;
+    }
+
+    private Boolean isAuthorized = false;
+
     public String getDescription() {
-        return "" + this.accessToken + ", " + this.type + ", " + this.expiresIn + ", " + this.refreshToken;
+        return "" + this.accessToken + ", " + this.type + ", " + this.expiresIn + ", " + this.refreshToken + ", " + this.isAuthorized;
     }
 
     private TokenData() {
@@ -84,6 +95,7 @@ public class TokenData {
             this.type = tData.type;
             this.expiresIn = tData.expiresIn;
             this.refreshToken = tData.refreshToken;
+            this.isAuthorized = tData.isAuthorized;
         }
     }
 }

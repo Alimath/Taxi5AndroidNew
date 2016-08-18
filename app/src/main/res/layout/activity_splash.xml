@@ -26,21 +26,4 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="auth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/splashImage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp"
-        android:id="@+id/splashtestbutton" />
-
-    <Button
-        android:text="mainscreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/splashtestbutton"
-        android:layout_alignRight="@+id/splashtestbutton"
-        android:layout_alignEnd="@+id/splashtestbutton"
-        android:id="@+id/splashtestbutton2" />
 </RelativeLayout>
