@@ -17,7 +17,62 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp" >
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/toolbar_main_constraint" >
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/toolbar_left_menu_icon"
+
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+
+                    app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+                    app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"
+                    />
+                <Button
+                    android:id="@+id/toolbar_menu_button"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+
+                    android:background="@color/clearColor"
+
+                    app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+                    app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"/>
+                
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/toolbar_logo"
+
+                    app:layout_constraintCenterX_toCenterX="@id/toolbar_main_constraint"
+                    app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+                    />
+                
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/toolbar_right_menu_icon"
+
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+
+                    app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+                    app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"
+                    />
+
+            </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

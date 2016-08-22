@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/fragment_status_car_find"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/statusesBackWithAlpha"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_status_car_find_main_back"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+
+        android:background="@drawable/default_status_back"
+
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_car_find"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_car_find">
+
+        <View
+            android:id="@+id/fragment_status_car_find_title_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginTop="50dp"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+
+            android:text="@string/status_car_find_title_text"
+            />
+
+
+        <View
+            android:id="@+id/fragment_status_car_find_time_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginTop="50dp"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_car_find_title_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="14sp"
+            android:textColor="@color/registrationColorHeader2"
+
+            android:text="@string/status_car_find_arrive_time"
+
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_title_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_time_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:id="@+id/fragment_status_car_find_time_text_view"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_title_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_time_separator"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"/>
+
+
+
+        <View
+            android:id="@+id/fragment_status_car_find_plate_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginTop="50dp"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_car_find_time_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="14sp"
+            android:textColor="@color/registrationColorHeader2"
+
+            android:text="@string/status_car_find_plate"
+
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_time_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_plate_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:id="@+id/fragment_status_car_find_plate_text_view"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_time_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_plate_separator"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"/>
+
+
+        <View
+            android:id="@+id/fragment_status_car_find_car_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginTop="50dp"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_car_find_plate_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="14sp"
+            android:textColor="@color/registrationColorHeader2"
+
+            android:text="@string/status_car_find_car"
+
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_plate_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_car_separator"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            />
+
+        <TextView
+            android:id="@+id/fragment_status_car_find_car_text_view"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_car_find_plate_separator"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_car_separator"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"/>
+
+
+
+        
+        <Button
+            android:id="@+id/fragment_status_car_find_cancel_button"
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+
+            android:background="@drawable/round_shape_white_bordered_btn"
+
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+
+
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+            android:text="@string/status_car_find_cancel_btn_text"
+            />
+
+
+        <Button
+            android:id="@+id/fragment_status_car_find_aprove_button"
+
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:background="@drawable/round_shape_green_btn"
+
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_car_find_cancel_button"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_main_back"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_main_back"
+
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="16sp"
+            android:textColor="@color/defaultWhite"
+            android:text="@string/status_car_find_aprove_btn_text"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

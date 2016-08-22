@@ -8,4 +8,9 @@
     <color name="defaultWhite">#FAFAFA</color>
     <color name="registrationColorHeader2">#A0A0A0</color>
     <color name="defaultBackgroundGray">#F0F0F0</color>
+    <color name="approximatePriceTextColor">#B4B4B4</color>
+    <color name="hintsColor">#DCDCDC</color>
+    <color name="statusesBackWithAlpha">#33000000</color>
+    <color name="statusTimerBack">#F5F5F5</color>
+    <color name="clearColor">#00000000</color>
 </resources>

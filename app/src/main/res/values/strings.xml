@@ -26,4 +26,54 @@
     <string name="left_drawer_menu_item_payments">Кредитные карты</string>
     <string name="left_drawer_menu_item_plans">Тарифы</string>
     <string name="left_drawer_menu_item_about">О нас</string>
+    <string name="left_drawer_call_us_btn">СВЯЗАТЬСЯ С НАМИ</string>
+    
+    
+    <string name="approximate_cost">Примерная стоимость:&#032;</string>
+    <string name="status_create_order_button_text">ЗАКАЗАТЬ ТАКСИ</string>
+    <string name="rubles_short">р.</string>
+    <string name="copeeks_short">коп.</string>
+    <string name="status_create_order_from_text">Откуда</string>
+    <string name="status_create_order_to_text">Куда</string>
+    <string name="status_create_order_comment_hint">Введите комментарий к заказу</string>
+
+    <string name="status_search_car_button_text">ОТМЕНИТЬ ЗАКАЗ</string>
+
+    <string name="status_car_find_title_text">АВТОМОБИЛЬ НАЙДЕН</string>
+    <string name="status_car_find_aprove_btn_text">ПРИНЯТЬ</string>
+    <string name="status_car_find_cancel_btn_text">ОТМЕНИТЬ ЗАКАЗ</string>
+    <string name="status_car_find_arrive_time">Время прибытия</string>
+    <string name="status_car_find_plate">Номер</string>
+    <string name="status_car_find_car">Автомобиль</string>
+    
+    <string name="status_car_on_way_title">АВТОМОБИЛЬ В ПУТИ К ВАМ</string>
+    <string name="status_car_on_way_plate">Номер</string>
+    <string name="status_car_on_way_car">Автомобиль</string>
+    <string name="status_car_on_way_call_driver_btn">ПОЗВОНИТЬ ВОДИТЕЛЮ</string>
+    <string name="status_car_on_way_cancel_order">ОТМЕНИТЬ ЗАКАЗ</string>
+
+    <string name="status_you_on_way_title">ВЫ В ПУТИ</string>
+    <string name="status_you_on_way_plate">Номер</string>
+    <string name="status_you_on_way_car">Автомобиль</string>
+
+    <string name="status_car_delivered_title">МАШИНА НА МЕСТЕ</string>
+    <string name="status_car_delivered_header2">АВТОМОБИЛЬ УЖЕ\nОЖИДАЕТ ВАС</string>
+    <string name="status_car_delivered_plate">Номер машины - &#032;</string>
+    <string name="status_car_delivered_call_driver_btn">ПОЗВОНИТЬ ВОДИТЕЛЮ</string>
+
+    <string name="status_order_complete_title">ИНФОРМАЦИЯ О ЗАКАЗЕ</string>
+    <string name="status_order_complete_header1">ВАШ ЗАКАЗ\nУСПЕШНО ЗАВЕРШЕН</string>
+    <string name="status_order_complete_header2">Оцените качество поездки</string>
+    <string name="status_order_complete_review_btn">ОЦЕНИТЬ ПОЕЗДКУ</string>
+
+    <string name="status_payment_wait_helpheader">Также, вы можете заплатить водителю наличными</string>
+    <string name="status_payment_wait_from">Откуда</string>
+    <string name="status_payment_wait_to">Куда</string>
+    <string name="status_payment_wait_distance">Расстояние</string>
+    <string name="status_payment_wait_pay_with_card_btn">ОПЛАТИТЬ КАРТОЙ</string>
+
+    <string name="km_short">км</string>
+    <string name="old_currency">BYR</string>
+    <string name="new_currency">BYN</string>
+
 </resources>

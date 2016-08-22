@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,10 +17,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.isolutions.taxi5.API.ApiFactory;
+import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public FragmentMap mapFragment = new FragmentMap();
+    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
 
@@ -28,16 +39,39 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        Fragment mapFragment = new FragmentMap();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         ft.replace(R.id.main_activity_fragment_map_layout, mapFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        customToolbar.mainActivity = this;
+
+        ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+
+        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", TokenData.getInstance().getRefreshToken());
+
+        call.enqueue(new Callback<TokenData>() {
+            @Override
+            public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                onResponseRefreshToken(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<TokenData> call, Throwable t) {
+                onFailureRefreshToken(call, t);
+            }
+        });
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        setContentView(R.layout.activity_login);
@@ -153,4 +187,24 @@ public class MainActivity extends AppCompatActivity
 //    public void onFailure(Call<TokenData> call, Throwable t) {
 //        Log.d("taxi5", "responseCode: error");
 //    }
+
+    public void OpenLeftMenu() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
+        if(response.code() == 200) {
+            response.body().setAuthorized(true);
+            response.body().saveTokenData();
+            Log.d("taxi5", TokenData.getInstance().getDescription());
+        }
+        else {
+
+        }
+    }
+
+    public void onFailureRefreshToken(Call<TokenData> call, Throwable t) {
+        Log.d("taxi5", "responseCode: error");
+    }
 }

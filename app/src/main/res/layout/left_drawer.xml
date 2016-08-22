@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/left_drawer_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -11,89 +13,352 @@
         android:layout_height="172dp"
         android:src="@drawable/leftmenuheaderimage"
         android:scaleType="centerCrop"
+
+
+        app:layout_constraintTop_toTopOf="@id/left_drawer_main"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
         />
 
-    <RelativeLayout
-        android:id="@+id/left_drawer_header_layout"
+
+
+    <TextView
+        android:id="@+id/left_drawer_profile_name_text_view"
         android:layout_width="match_parent"
-        android:layout_height="172dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Fedar Trukhan"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/left_drawer_header_back_image"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_header_back_image"
+        />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/left_drawer_avatar_image"
-            android:layout_height="64dp"
-            android:layout_width="64dp"
-            android:layout_above="@+id/left_drawer_profile_name_text_view"
-            android:layout_marginBottom="15dp"
-            android:src = "@drawable/ava1" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/left_drawer_avatar_image"
+        android:layout_height="64dp"
+        android:layout_width="64dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:src = "@drawable/ava1"
 
-        <TextView
-            android:id="@+id/left_drawer_profile_name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="13dp"
-            android:text="Fedar Trukhan"
-            android:textColor="@android:color/white"/>
-    </RelativeLayout>
-    
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_profile_name_text_view"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_header_back_image"
+        />
+
     <ImageView
         android:id="@+id/left_drawer_separator"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/defaultBackgroundGray"
-        android:layout_below="@+id/left_drawer_header_layout"/>
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_header_back_image"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
+
+    <View
+        android:id="@+id/left_drawer_order_taxi_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="54dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_separator"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
     
-    <!--menu-->
-    <RelativeLayout
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="16dp"
+
+        android:src="@drawable/leftmenuiconordertaxi"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_order_taxi_separator"
+        />
+    <TextView
+        android:id="@+id/left_drawer_call_taxi_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+
+
+        android:gravity="start"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlue"
+        android:text="@string/left_drawer_menu_item_order_taxi"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_order_taxi_separator"
+        />
+
+
+    <View
+        android:id="@+id/left_drawer_my_places_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="54dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_order_taxi_separator"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="19dp"
+
+        android:src="@drawable/leftmenuiconmyplaces"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_order_taxi_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_my_places_separator"
+        />
+    <TextView
+        android:id="@+id/left_drawer_my_places_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+
+
+        android:gravity="start"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlack"
+        android:text="@string/left_drawer_menu_item_my_places"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_order_taxi_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_my_places_separator"
+        />
+
+    <View
+        android:id="@+id/left_drawer_payments_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="54dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_my_places_separator"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="16dp"
+
+        android:src="@drawable/leftmenuiconpayments"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_my_places_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_payments_separator"
+        />
+    <TextView
+        android:id="@+id/left_drawer_payments_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+
+
+        android:gravity="start"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlack"
+        android:text="@string/left_drawer_menu_item_payments"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_my_places_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_payments_separator"
+        />
+
+    <View
+        android:id="@+id/left_drawer_plans_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="54dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_payments_separator"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+
+        android:src="@drawable/leftmenuiconplans"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_payments_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_plans_separator"
+        />
+    <TextView
+        android:id="@+id/left_drawer_plans_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+
+
+        android:gravity="start"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlack"
+        android:text="@string/left_drawer_menu_item_plans"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_payments_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_plans_separator"
+        />
+
+
+    <View
+        android:id="@+id/left_drawer_about_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="54dp"
+
+
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_plans_separator"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+
+        android:src="@drawable/leftmenuiconplans"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_plans_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_about_separator"
+        />
+    <TextView
+        android:id="@+id/left_drawer_about_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+
+
+        android:gravity="start"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlack"
+        android:text="@string/left_drawer_menu_item_about"
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_plans_separator"
+        app:layout_constraintBottom_toTopOf="@id/left_drawer_about_separator"
+        />
+
+    <Button
+        android:id="@+id/left_drawer_call_to_us_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:background="@drawable/round_shape_blue_btn"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="30dp"
+
+        android:gravity="center"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        android:textColor="@color/defaultWhite"
+
+        android:text="@string/left_drawer_call_us_btn"
+
+
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        app:layout_constraintRight_toRightOf="@id/left_drawer_main"
+        app:layout_constraintBottom_toBottomOf="@id/left_drawer_main"
+        app:layout_constraintTop_toBottomOf="@id/left_drawer_about_separator"
+        />
+    
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/left_drawer_separator"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@color/defaultWhite">
-        <RelativeLayout
-            android:id="@+id/left_drawer_menu_item_order_taxi"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_alignParentTop="true">
 
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/left_drawer_menu_item_order_taxi_icon"
-                android:layout_width="18dp"
-                android:layout_height="16dp"
-                android:src="@drawable/leftmenuiconordertaxi"
-                android:scaleType="centerInside"/>
+        android:scaleType="fitStart"
+        android:src="@drawable/left_drawer_bottom_cubics"
 
-            <TextView
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/left_drawer_menu_item_order_taxi"
-                android:textColor="@color/defaultBlue"
-                android:textStyle="normal"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="14sp"
-                android:layout_alignParentStart="true"
-                android:paddingStart="56dp"
-                android:paddingEnd="0dp"
-                android:paddingRight="0dp"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="56dp"/>
+        android:layout_marginTop="3dp"
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="@color/defaultBackgroundGray"/>
-        </RelativeLayout>
+        app:layout_constraintTop_toTopOf="@id/left_drawer_call_to_us_btn"
+        app:layout_constraintLeft_toLeftOf="@id/left_drawer_main"
+        />
 
-
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.isolutions.taxi5.API;
 
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import retrofit2.Call;
@@ -8,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -54,6 +56,12 @@ public interface Taxi5SDK {
     @GET("http://api.taxi5.by/m/v2/customer/me")
     Call<ProfileResponseData> GetProfile(
             @Header("X-Authorization") String token
+    );
+
+    @GET("http://api.taxi5.by/m/v2/order/{id}")
+    Call<OrderResponseData> ReadOrderStatus (
+            @Header("X-Authorization") String token,
+            @Path("id") int orderID
     );
 
 }

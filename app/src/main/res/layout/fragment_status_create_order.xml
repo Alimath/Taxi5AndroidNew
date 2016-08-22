@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:id="@+id/fragment_status_create_order_main"
+    >
+
+
+
+    <LinearLayout
+        android:id="@+id/fragment_status_create_order_approximate_price_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+
+        android:background="@drawable/default_status_back"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+
+        app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_main">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+
+            android:textColor="@color/approximatePriceTextColor"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+
+            android:textAlignment="center"
+            android:gravity="center"
+
+            android:text="@string/approximate_cost"
+            />
+        
+        <TextView
+            android:id="@+id/fragment_status_create_order_approximate_price_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:textAlignment="center"
+            android:gravity="center"
+
+            android:textColor="@color/defaultBlack"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            />
+
+    </LinearLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_status_create_order_from_to_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:background="@drawable/default_status_back"
+
+
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_main"
+
+        app:layout_constraintBottom_toTopOf="@+id/fragment_status_create_order_comment_view"
+
+        >
+
+        <View
+            android:id="@+id/fragment_status_create_order_from_to_view_separator_center"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginLeft="52dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginEnd="1dp"
+
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintCenterY_toCenterY="@+id/fragment_status_create_order_from_to_view"/>
+
+        <View
+            android:id="@+id/fragment_status_create_order_from_to_view_separator_top_right"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+
+            app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view"/>
+
+        <View
+            android:id="@+id/fragment_status_create_order_from_to_view_separator_bottom_right"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+
+            app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_from_to_view_separator_center"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view"/>
+
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+
+            app:srcCompat="@drawable/status_icon_find"
+            android:scaleType="fitXY"
+
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="22dp"
+
+            app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_from_to_view"/>
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+
+            app:srcCompat="@drawable/status_icon_find"
+            android:scaleType="fitXY"
+
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="22dp"
+
+            app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_from_to_view"/>
+
+        <ImageView
+            android:id="@+id/fragment_status_create_order_from_to_view_from_icon"
+            android:layout_width="11dp"
+            android:layout_height="16dp"
+
+            app:srcCompat="@drawable/status_icon_from"
+            android:scaleType="fitXY"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="22dp"
+
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_from_to_view"/>
+        <ImageView
+            android:id="@+id/fragment_status_create_order_from_to_view_to_icon"
+            android:layout_width="11dp"
+            android:layout_height="16dp"
+
+            app:srcCompat="@drawable/status_icon_to"
+            android:scaleType="fitXY"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="22dp"
+
+            app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_from_to_view"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_from_to_view"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+
+            app:layout_constraintTop_toBottomOf="@+id/fragment_status_create_order_from_to_view_from_icon"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_create_order_from_to_view_to_icon"
+            app:layout_constraintCenterX_toCenterX="@id/fragment_status_create_order_from_to_view_to_icon"
+
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view"
+            app:layout_constraintBottom_toTopOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/approximatePriceTextColor"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:text="@string/status_create_order_from_text"
+                />
+            <TextView
+                android:id="@+id/fragment_status_create_order_from_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/defaultBlack"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+
+            app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/approximatePriceTextColor"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp"
+                android:text="@string/status_create_order_to_text"
+                />
+            <TextView
+                android:id="@+id/fragment_status_create_order_to_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/defaultBlack"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_status_create_order_comment_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/default_status_back"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="15dp"
+
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_status_create_order_button">
+
+        <View
+            android:id="@+id/fragment_status_create_order_comment_view_separator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/defaultBackgroundGray"
+
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="12dp"
+
+            app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_comment_view"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_comment_view"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_comment_view"/>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+
+            app:srcCompat="@drawable/status_icon_edit"
+            android:scaleType="fitXY"
+
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+
+            app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_comment_view"
+            app:layout_constraintCenterY_toCenterY="@+id/fragment_status_create_order_comment_view"
+            />
+
+        <EditText
+            android:id="@+id/fragment_status_create_order_comment_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:inputType="textNoSuggestions"
+
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+
+            android:background="#00000000"
+
+            android:textColorHint="@color/hintsColor"
+            android:hint="@string/status_create_order_comment_hint"
+
+            android:textColor="@color/defaultBlack"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_comment_view"
+            app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_comment_view_separator">
+            </EditText>
+
+
+    </android.support.constraint.ConstraintLayout>
+    
+    
+    <Button
+        android:id="@+id/fragment_status_create_order_button"
+
+        android:background="@drawable/round_shape_blue_btn_with_shadow"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+        android:text="@string/status_create_order_button_text"
+        android:textColor="@color/defaultWhite"
+
+
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="10dp"
+
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_main"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_main"
+        />
+
+</android.support.constraint.ConstraintLayout>
