@@ -15,7 +15,7 @@ public class ProfileResponseData {
     }
 
     public Integer getStatusCode() {
-        return new Integer(statusCode);
+        return statusCode;
     }
 
     public ArrayList<String> getErrors() {
@@ -28,7 +28,7 @@ public class ProfileResponseData {
 
     @SerializedName("status_code")
     @Expose
-    private String statusCode;
+    private Integer statusCode;
 
     @SerializedName("errors")
     @Expose

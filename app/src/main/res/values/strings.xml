@@ -76,4 +76,8 @@
     <string name="old_currency">BYR</string>
     <string name="new_currency">BYN</string>
 
+    <string name="degree_sign">°</string>
+    <string name="degree_minute_sign">\'</string>
+    <string name="degree_second_sign">\"</string>
+
 </resources>

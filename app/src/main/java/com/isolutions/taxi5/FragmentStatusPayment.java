@@ -1,6 +1,5 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import butterknife.ButterKnife;
  * Created by fedar.trukhan on 22.08.16.
  */
 
-public class FragmentStatusPayment extends StatusesBase {
+public class FragmentStatusPayment extends StatusesBaseFragment {
 
 
     @Override

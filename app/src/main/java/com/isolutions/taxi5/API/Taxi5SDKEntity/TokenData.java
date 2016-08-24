@@ -3,6 +3,7 @@ package com.isolutions.taxi5.API.Taxi5SDKEntity;
 import android.media.session.MediaSession;
 import android.util.Log;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.paperdb.Paper;
@@ -31,6 +32,9 @@ public class TokenData {
 
         return localInstance;
     }
+    public String getToken() {
+        return type+" "+accessToken;
+    }
 
     public String getAccessToken() {
         return accessToken;
@@ -49,15 +53,19 @@ public class TokenData {
     }
 
     @SerializedName("access_token")
+    @Expose
     private String accessToken;
 
     @SerializedName("type")
+    @Expose
     private String type;
 
     @SerializedName("expires_in")
+    @Expose
     private String expiresIn;
 
     @SerializedName("refresh_token")
+    @Expose
     private String refreshToken;
 
     public Boolean getAuthorized() {

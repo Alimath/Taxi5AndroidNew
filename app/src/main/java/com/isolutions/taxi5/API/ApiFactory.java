@@ -1,6 +1,15 @@
 package com.isolutions.taxi5.API;
 
 import android.support.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
+import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataDeserializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataSerializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.OrderDataSerializer;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -27,9 +36,15 @@ public class ApiFactory {
 
     @NonNull
     private static Retrofit getRetrofit() {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().
+            registerTypeAdapter(LocationData.class, new LocationDataDeserializer()).
+            registerTypeAdapter(LocationData.class, new LocationDataSerializer()).
+            registerTypeAdapter(OrderData.class, new OrderDataSerializer()).create();
+
+
         return new Retrofit.Builder()
                 .baseUrl("http://taxi5.by")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(CLIENT)
                 .build();
     }

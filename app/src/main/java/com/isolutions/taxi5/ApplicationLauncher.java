@@ -1,10 +1,6 @@
 package com.isolutions.taxi5;
 
 import android.app.Application;
-import android.content.Intent;
-import android.util.Log;
-
-import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
 import io.paperdb.Paper;
 
@@ -16,5 +12,8 @@ public class ApplicationLauncher extends Application {
     public void onCreate() {
         super.onCreate();
         Paper.init(getApplicationContext());
+
+        AppData.getInstance().setAppContext(this);
     }
+
 }

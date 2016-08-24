@@ -1,43 +1,34 @@
 package com.isolutions.taxi5;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.CountDownTimer;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatusType;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentMap extends Fragment implements OnMapReadyCallback {
+public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener {
     private GoogleMap mMap;
     private LatLng nullPoint = new LatLng(53.902464, 27.56149);
     private CountDownTimer readOrderStatusTimer;
@@ -52,23 +43,26 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     public FragmentStatusOrderComplete statusOrderCompleteFragment = new FragmentStatusOrderComplete();
     public FragmentStatusPayment statusPaymentFragment = new FragmentStatusPayment();
 
-
-
-    public OrderData orderData;
+    private static volatile FragmentMap mapFragment;
+    public static FragmentMap getMapFragment() {
+        return mapFragment;
+    }
 
 
     public void ResetMap() {
-        orderData = null;
+        AppData.getInstance().setCurrentOrder(null);
 
         RefreshView();
     }
 
     public void RefreshView() {
-        ReadOrderState();
-        if(orderData == null) {
-            changeStatus(this.statusPaymentFragment);
+        if(AppData.getInstance().getCurrentOrder() == null) {
+            changeStatus(this.statusCreateOrderFragment);
         }
         else {
+            if (AppData.getInstance().getCurrentOrder().status != null) {
+                changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+            }
             ReadOrderState();
         }
     }
@@ -82,7 +76,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
             public void onFinish() {
                 ReadOrderState();
 
-                if(orderData != null) {
+                if(AppData.getInstance().getCurrentOrder() != null) {
 //                    startTimer();
                 }
             }
@@ -90,71 +84,46 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
     }
 
     void ReadOrderState() {
-        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-        Call<OrderResponseData> call = taxi5SDK.ReadOrderStatus(TokenData.getInstance().getType()+" "+ TokenData.getInstance().getAccessToken(), 609306);
+        if(AppData.getInstance().getCurrentOrder() != null) {
+            Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            Call<OrderResponseData> call = taxi5SDK.ReadOrderStatus(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken(), AppData.getInstance().getCurrentOrder().id);
 
-        call.enqueue(new Callback<OrderResponseData>() {
-            @Override
-            public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
-                orderData = response.body().getOrderData();
-                Log.d("taxi5", orderData.id + " " +
-                        orderData.status.status + " ");
-//                        order.to.locationDescription.address.street + " " +
-//                        order.vehicle.titleName + " " +
-//                        order.driver.driverPhone + " " +
-//                        order.comment);
-                if(orderData.status != null) {
-                    Log.d("taxi5", "refresh by enum");
-                    changeStatusByEnum(orderData.status.status);
+            call.enqueue(new Callback<OrderResponseData>() {
+                @Override
+                public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
+                    OrderData order = response.body().getOrderData();
+                    if (order != null) {
+                        AppData.getInstance().setCurrentOrder(response.body().getOrderData());
+                        if (order.status != null) {
+                            changeStatusByEnum(order.status.status);
+                        }
+                    }
+                    startTimer();
                 }
-                startTimer();
-            }
 
-            @Override
-            public void onFailure(Call<OrderResponseData> call, Throwable t) {
+                @Override
+                public void onFailure(Call<OrderResponseData> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-//        View mapView = inflater.inflate(R.layout.fragment_map, container, false);
-        Log.d("taxi5", "hallo world");
         View mapView = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, mapView);
 
-
+        this.mapFragment = this;
         RefreshView();
-//        Fragment statusCreateOrderFragment = this.statusCreateOrderFragment;
-
-
-//        getFragmentManager().getFragment(R.id.map, "sa");
-
-//        getSMSButton.setEnabled(false);
-//        getSMSButton.setClickable(false);
-
-
-//        SupportMapFragment supportMapFragment = (SupportMapFragment) this.getFragmentManager().findFragmentById(R.id.map);
 
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         return mapView;
     }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_maps);
-//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//    }
 
 
     /**
@@ -173,14 +142,71 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(nullPoint, 17));
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
+        mMap.setOnCameraIdleListener(this);
+
 //        ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
 //        mMap.setMyLocationEnabled(true);
+    }
 
+    @Override
+    public void onCameraIdle() {
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng pos = mMap.getCameraPosition().target;
+
+        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        Call<LocationsListResponseData> call = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
+
+        statusCreateOrderFragment.setFromText("");
+        statusCreateOrderFragment.ShowProgressBar();
+
+        call.enqueue(new Callback<LocationsListResponseData>() {
+            @Override
+            public void onResponse(Call<LocationsListResponseData> call, Response<LocationsListResponseData> response) {
+                statusCreateOrderFragment.HideProgressBar();
+                Log.d("taxi5", "ok for pos");
+                if(response.body().getStatusCode() == 200) {
+                    if(response.body().getResponseData().size() > 0) {
+//                        Log.d("taxi5", "full: " + response.body().getResponseData().get(0).locationDescription + ", string: " + response.body().getResponseData().get(0).locationStringDescription);
+                        Log.d("taxi5", "ok response with array > 0");
+                        LatLng pos = mMap.getCameraPosition().target;
+                        LocationData locationData = response.body().getResponseData().get(0);
+                        locationData.latitude = pos.latitude;
+                        locationData.longitude = pos.longitude;
+
+                        statusCreateOrderFragment.setFromLocation(locationData);
+//                        LocationAddress ad1 = response.body().getResponseData().get(0).locationDescription.address;
+//                        Log.d("taxi5", ad1.country + " " + ad1.settlement + " " + ad1.street + " " + ad1.building);
+                    }
+                    else {
+                        LatLng pos = mMap.getCameraPosition().target;
+
+                        LocationData locationData = new LocationData();
+                        locationData.latitude = pos.latitude;
+                        locationData.longitude = pos.longitude;
+                        statusCreateOrderFragment.setFromLocation(locationData);
+
+                        Log.d("taxi5", "array size 0");
+                    }
+                }
+                else {
+                    LatLng pos = mMap.getCameraPosition().target;
+
+                    LocationData locationData = new LocationData();
+                    locationData.latitude = pos.latitude;
+                    locationData.longitude = pos.longitude;
+                    statusCreateOrderFragment.setFromLocation(locationData);
+                    Log.d("taxi5", "error to load data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LocationsListResponseData> call, Throwable t) {
+                statusCreateOrderFragment.HideProgressBar();
+                Log.d("taxi5", "fail to reverse geocode" + t.getLocalizedMessage());
+            }
+        });
+
+//        Log.d("taxi5", "pos: " + mMap.getCameraPosition().target.toString());
     }
 
     public void changeStatusByEnum(OrderStatusType statusType) {
@@ -250,18 +276,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void changeStatus(StatusesBase statusFragment) {
+    public void changeStatus(StatusesBaseFragment statusFragment) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-        Log.d("taxi5", "change status");
-        if(orderData != null) {
-            Log.d("taxi5", "fill");
-            statusFragment.fillWithOrder(orderData);
-        }
 
         ft.replace(R.id.fragment_status, statusFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
+
+//        statusFragment.fillWithOrder();
     }
+
+
 
 }

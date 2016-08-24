@@ -1,5 +1,6 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,8 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderOptions {
     @SerializedName("developer")
-    public boolean developer;
+    @Expose
+    public Boolean developer;
 
     @SerializedName("ignored")
-    public boolean ignored;
+    @Expose
+    public Boolean ignored;
 }

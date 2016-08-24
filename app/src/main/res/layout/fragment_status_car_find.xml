@@ -264,7 +264,7 @@
 
 
         <Button
-            android:id="@+id/fragment_status_car_find_aprove_button"
+            android:id="@+id/fragment_status_car_find_approve_button"
 
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"

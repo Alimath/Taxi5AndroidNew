@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -11,14 +10,20 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/fragment_status_search_car_rotation_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/status_search_car_rotatet_image"
+
+        android:clickable="true"
 
         android:indeterminateOnly="true"
         android:indeterminateBehavior="cycle"
         android:indeterminateDuration="3500"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_search_car_main"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_search_car_main"
         />
 
 
@@ -90,7 +95,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/fragment_status_search_car_main"
         app:layout_constraintRight_toRightOf="@+id/fragment_status_search_car_main"
 
-        app:layout_constraintBottom_toTopOf="@+id/fragment_status_search_car_button"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_status_search_car_cancel_button"
 
         >
 
@@ -211,68 +216,84 @@
 
             />
 
+        <TextView
+            android:id="@+id/fragment_status_search_car_order_from_to_view_from_help_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
+            android:textColor="@color/approximatePriceTextColor"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:text="@string/status_create_order_from_text"
+
+            android:layout_marginTop="8dp"
 
             app:layout_constraintTop_toTopOf="@id/fragment_status_search_car_from_to_view"
-            app:layout_constraintBottom_toTopOf="@id/fragment_status_search_car_from_to_view_separator_center"
             app:layout_constraintLeft_toLeftOf="@id/fragment_status_search_car_from_to_view_separator_center"
-            >
+            />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:textColor="@color/approximatePriceTextColor"
-                android:fontFamily="sans-serif"
-                android:textSize="14sp"
-                android:text="@string/status_create_order_from_text"
-                />
-            <TextView
-                android:id="@+id/fragment_status_search_car_from_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:textColor="@color/defaultBlack"
-                android:fontFamily="sans-serif"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/fragment_status_search_car_from_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+
+            android:inputType="text"
+            android:maxLines="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="@color/clearColor"
+
+
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+
+            android:textColor="@color/defaultBlack"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_search_car_order_from_to_view_from_help_text"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_search_car_order_from_to_view_from_help_text"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_search_car_from_to_view_separator_top_right"
+            />
+
+        <TextView
+            android:id="@+id/fragment_status_search_car_order_from_to_view_to_help_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/approximatePriceTextColor"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:text="@string/status_create_order_to_text"
+
+            android:layout_marginTop="8dp"
 
             app:layout_constraintTop_toTopOf="@id/fragment_status_search_car_from_to_view_separator_center"
-            app:layout_constraintBottom_toBottomOf="@id/fragment_status_search_car_from_to_view"
             app:layout_constraintLeft_toLeftOf="@id/fragment_status_search_car_from_to_view_separator_center"
-            >
+            />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/fragment_status_search_car_to_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-                android:textColor="@color/approximatePriceTextColor"
-                android:fontFamily="sans-serif"
-                android:textSize="14sp"
-                android:text="@string/status_create_order_to_text"
-                />
-            <TextView
-                android:id="@+id/fragment_status_search_car_to_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="@color/clearColor"
 
-                android:textColor="@color/defaultBlack"
-                android:fontFamily="sans-serif"
-                android:textSize="16sp"/>
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
 
-        </LinearLayout>
+            android:textColor="@color/defaultBlack"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_search_car_order_from_to_view_to_help_text"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_search_car_order_from_to_view_from_help_text"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_search_car_from_to_view_separator_top_right"
+            />
 
 
 
@@ -280,7 +301,7 @@
 
 
     <Button
-        android:id="@+id/fragment_status_search_car_button"
+        android:id="@+id/fragment_status_search_car_cancel_button"
 
         android:background="@drawable/round_shape_red_btn_with_shadow"
 

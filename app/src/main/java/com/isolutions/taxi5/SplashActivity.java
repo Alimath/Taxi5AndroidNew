@@ -24,14 +24,12 @@ public class SplashActivity extends AppCompatActivity {
         TokenData tokenData = TokenData.getInstance();
 
         if(tokenData.getAuthorized()) {
-            Log.d("taxi5", "Main view");
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
         else {
-            Log.d("taxi5", "Login view");
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

@@ -4,14 +4,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by fedar.trukhan on 22.08.16.
+ * Created by fedar.trukhan on 23.08.16.
  */
 
-public class LocationResponseData {
-    public LocationData getResponseData() {
-        return locationData;
+public class LocationsListResponseData {
+    public ArrayList<LocationData> getResponseData() {
+        return locationsData;
     }
 
     public Integer getStatusCode() {
@@ -24,7 +25,7 @@ public class LocationResponseData {
 
     @SerializedName("data")
     @Expose
-    private LocationData locationData;
+    private ArrayList<LocationData> locationsData;
 
     @SerializedName("status_code")
     @Expose
@@ -33,5 +34,4 @@ public class LocationResponseData {
     @SerializedName("errors")
     @Expose
     private ArrayList<String> errors;
-
 }

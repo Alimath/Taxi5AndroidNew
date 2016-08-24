@@ -11,25 +11,25 @@ public class ProfileDataOptions {
 
     @SerializedName("news_via_email")
     @Expose
-    private boolean newsViaEmail;
+    private Boolean newsViaEmail;
 
     @SerializedName("news_via_sms")
     @Expose
-    private boolean newsViaSMS;
+    private Boolean newsViaSMS;
 
-    public boolean isNewsViaSMS() {
+    public Boolean isNewsViaSMS() {
         return newsViaSMS;
     }
 
-    public void setNewsViaEmail(boolean newsViaEmail) {
+    public void setNewsViaEmail(Boolean newsViaEmail) {
         this.newsViaEmail = newsViaEmail;
     }
 
-    public void setNewsViaSMS(boolean newsViaSMS) {
+    public void setNewsViaSMS(Boolean newsViaSMS) {
         this.newsViaSMS = newsViaSMS;
     }
 
-    public boolean isNewsViaEmail() {
+    public Boolean isNewsViaEmail() {
         return newsViaEmail;
     }
 

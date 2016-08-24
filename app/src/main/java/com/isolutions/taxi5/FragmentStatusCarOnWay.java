@@ -1,6 +1,5 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
-
-import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -21,7 +18,8 @@ import butterknife.ButterKnife;
  * Created by fedar.trukhan on 22.08.16.
  */
 
-public class FragmentStatusCarOnWay extends StatusesBase {
+public class FragmentStatusCarOnWay extends StatusesBaseFragment {
+
     @BindView(R.id.fragment_status_car_on_way_timer_text_view)
     TextView timerTextView;
 
@@ -52,20 +50,23 @@ public class FragmentStatusCarOnWay extends StatusesBase {
     }
 
     @Override
-    public void fillWithOrder(OrderData order) {
-        Log.d("taxi5", "fillWithOrder" + " " + order.vehicle.license_tax);
-        if(isInitiated) {
-            if(order.vehicle != null) {
-                if(order.vehicle.license_tax != null) {
-                    plateTextView.setText(order.vehicle.license_tax);
+    public void fillWithOrder() {
+        OrderData order = appData.getCurrentOrder();
+        if(order != null) {
+            Log.d("taxi5", "fillWithOrder" + " " + order.vehicle.license_tax);
+            if (isInitiated) {
+                if (order.vehicle != null) {
+                    if (order.vehicle.license_tax != null) {
+                        plateTextView.setText(order.vehicle.license_tax);
+                    }
+                    if (order.vehicle.titleName != null) {
+                        carTextView.setText(order.vehicle.titleName);
+                    }
                 }
-                if(order.vehicle.titleName != null) {
-                    carTextView.setText(order.vehicle.titleName);
+                if (order.eta != null) {
+                    etaTimeStamp = order.eta;
+                    updateTimer();
                 }
-            }
-            if(order.eta != null) {
-                etaTimeStamp = order.eta;
-                updateTimer();
             }
         }
     }

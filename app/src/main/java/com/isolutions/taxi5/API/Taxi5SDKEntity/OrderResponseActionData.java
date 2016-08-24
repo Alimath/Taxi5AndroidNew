@@ -6,14 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 /**
- * Created by fedar.trukhan on 22.08.16.
+ * Created by fedar.trukhan on 24.08.16.
  */
 
-public class LocationResponseData {
-    public LocationData getResponseData() {
-        return locationData;
-    }
-
+public class OrderResponseActionData {
     public Integer getStatusCode() {
         return statusCode;
     }
@@ -22,10 +18,6 @@ public class LocationResponseData {
         return errors;
     }
 
-    @SerializedName("data")
-    @Expose
-    private LocationData locationData;
-
     @SerializedName("status_code")
     @Expose
     private Integer statusCode;
@@ -33,5 +25,4 @@ public class LocationResponseData {
     @SerializedName("errors")
     @Expose
     private ArrayList<String> errors;
-
 }

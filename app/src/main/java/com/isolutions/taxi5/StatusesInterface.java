@@ -9,5 +9,5 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
  */
 
 public interface StatusesInterface {
-    void fillWithOrder(OrderData order);
+    void fillWithOrder();
 }

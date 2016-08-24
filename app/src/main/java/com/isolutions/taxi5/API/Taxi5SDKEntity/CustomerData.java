@@ -9,11 +9,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class CustomerData {
     @SerializedName("id")
-    public int id;
+    @Expose
+    public Long id;
 
     @SerializedName("name")
+    @Expose
     public String name;
 
     @SerializedName("msid")
+    @Expose
     public String msid;
 }

@@ -26,7 +26,6 @@ public class FragmentCustomToolbar extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        Log.d("taxi5", "create order");
         View customToolbar = inflater.inflate(R.layout.fragment_custom_toolbar, container, false);
         ButterKnife.bind(this, customToolbar);
 
@@ -35,7 +34,6 @@ public class FragmentCustomToolbar extends Fragment {
 
     @OnClick(R.id.toolbar_menu_button)
     public void onLeftMenuOpenClick() {
-        Log.d("taxi5", "open drawer");
         mainActivity.OpenLeftMenu();
     }
 

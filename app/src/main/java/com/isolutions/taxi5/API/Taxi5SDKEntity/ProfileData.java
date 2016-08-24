@@ -1,5 +1,9 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import android.media.Image;
+import android.util.Log;
+import android.widget.ImageView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -84,7 +88,7 @@ public class ProfileData {
         this.email = email;
     }
 
-    public boolean isBlocked() {
+    public Boolean isBlocked() {
         return isBlocked;
     }
 
@@ -92,7 +96,7 @@ public class ProfileData {
         isBlocked = blocked;
     }
 
-    public boolean isConfirmed() {
+    public Boolean isConfirmed() {
         return isConfirmed;
     }
 
@@ -100,7 +104,7 @@ public class ProfileData {
         isConfirmed = confirmed;
     }
 
-    public boolean isPasswordExists() {
+    public Boolean isPasswordExists() {
         return isPasswordExists;
     }
 
@@ -142,19 +146,20 @@ public class ProfileData {
 
     @SerializedName("is_blocked")
     @Expose
-    private boolean isBlocked;
+    private Boolean isBlocked;
 
     @SerializedName("is_confirmed")
     @Expose
-    private boolean isConfirmed;
+    private Boolean isConfirmed;
 
     @SerializedName("password_exists")
     @Expose
-    private boolean isPasswordExists;
+    private Boolean isPasswordExists;
 
     @SerializedName("options")
     @Expose
     private ProfileDataOptions options;
+
 
 //    @SerializedName("access_token")
 //    private String accessToken;

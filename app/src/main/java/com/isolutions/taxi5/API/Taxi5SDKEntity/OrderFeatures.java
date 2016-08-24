@@ -1,5 +1,6 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,23 +9,30 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderFeatures {
     @SerializedName("rta")
-    public boolean rta;
+    @Expose
+    public Boolean rta;
 
     @SerializedName("animal")
-    public boolean animal;
+    @Expose
+    public Boolean animal;
 
     @SerializedName("baby")
-    public boolean baby;
+    @Expose
+    public Boolean baby;
 
     @SerializedName("escort")
-    public boolean escort;
+    @Expose
+    public Boolean escort;
 
     @SerializedName("terminal")
-    public boolean terminal;
+    @Expose
+    public Boolean terminal;
 
     @SerializedName("wifi")
-    public boolean wifi;
+    @Expose
+    public Boolean wifi;
 
     @SerializedName("vehicle")
+    @Expose
     public String vehicle;
 }

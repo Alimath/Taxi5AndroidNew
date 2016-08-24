@@ -1,5 +1,6 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,14 +9,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class ReviewData {
     @SerializedName("civility")
-    public int civility;
+    @Expose
+    public Integer civility;
 
     @SerializedName("cleanliness")
-    public int cleanliness;
+    @Expose
+    public Integer cleanliness;
 
     @SerializedName("velocity")
-    public int velocity;
+    @Expose
+    public Integer velocity;
 
     @SerializedName("comment")
+    @Expose
     public String comment;
 }

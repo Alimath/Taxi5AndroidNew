@@ -1,5 +1,8 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import android.text.TextUtils;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,8 +11,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class LocationObject {
     @SerializedName("name")
-    public String name;
+    @Expose
+    public String nameOfObject;
 
     @SerializedName("type")
+    @Expose
     public String type;
+
+    public String getStringDescription() {
+        if(!TextUtils.isEmpty(nameOfObject)) {
+            return nameOfObject;
+        }
+
+        return null;
+    }
 }

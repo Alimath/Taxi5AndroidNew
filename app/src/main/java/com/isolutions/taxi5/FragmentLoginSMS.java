@@ -204,14 +204,12 @@ public class FragmentLoginSMS extends Fragment {
                         response.body().getProfileData().saveProfileData();
 
 
-
                         loginActivity.OpenMainActivity();
                     }
                     else {
                         LoginActivity loginActivity = (LoginActivity) getActivity();
                         loginActivity.OpenNameFragment();
                     }
-                    Log.d("taxi5", response.body().getProfileData().getDescription());
                 }
 
                 @Override
