@@ -213,4 +213,16 @@ public class MainActivity extends AppCompatActivity
     public void onFailureRefreshToken(Call<TokenData> call, Throwable t) {
         Log.d("taxi5", "responseCode: error");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppData.getInstance().setAppForeground(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppData.getInstance().setAppForeground(false);
+    }
 }

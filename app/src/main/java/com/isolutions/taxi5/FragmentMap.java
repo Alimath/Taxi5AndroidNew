@@ -277,13 +277,17 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void changeStatus(StatusesBaseFragment statusFragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if(AppData.getInstance().getAppForeground()) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-        ft.replace(R.id.fragment_status, statusFragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
+            ft.replace(R.id.fragment_status, statusFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
 
-//        statusFragment.fillWithOrder();
+            if (statusFragment.isVisible()) {
+                statusFragment.fillWithOrder();
+            }
+        }
     }
 
 

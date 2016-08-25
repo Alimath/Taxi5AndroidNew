@@ -80,4 +80,6 @@
     <string name="degree_minute_sign">\'</string>
     <string name="degree_second_sign">\"</string>
 
+    <string name="minutes">мин</string>
+
 </resources>

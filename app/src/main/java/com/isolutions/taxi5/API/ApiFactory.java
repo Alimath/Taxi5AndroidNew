@@ -10,17 +10,20 @@ import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataDeserial
 import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.OrderDataSerializer;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class ApiFactory {
     private static final int CONNECT_TIMEOUT = 15;
     private static final int WRITE_TIMEOUT = 60;
     private static final int TIMEOUT = 60;
-
 
 
     private static final OkHttpClient CLIENT = new OkHttpClient.Builder()
@@ -37,9 +40,9 @@ public class ApiFactory {
     @NonNull
     private static Retrofit getRetrofit() {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().
-            registerTypeAdapter(LocationData.class, new LocationDataDeserializer()).
-            registerTypeAdapter(LocationData.class, new LocationDataSerializer()).
-            registerTypeAdapter(OrderData.class, new OrderDataSerializer()).create();
+                registerTypeAdapter(LocationData.class, new LocationDataDeserializer()).
+                registerTypeAdapter(LocationData.class, new LocationDataSerializer()).
+                registerTypeAdapter(OrderData.class, new OrderDataSerializer()).create();
 
 
         return new Retrofit.Builder()
@@ -47,5 +50,15 @@ public class ApiFactory {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(CLIENT)
                 .build();
+    }
+
+    private static List<Call> stackOfCalls;
+
+    public Boolean addCallToStack(Call call) {
+        return stackOfCalls.add(call);
+    }
+
+    public List<Call> getCalls() {
+        return stackOfCalls;
     }
 }
