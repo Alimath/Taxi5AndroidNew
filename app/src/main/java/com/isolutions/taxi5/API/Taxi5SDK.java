@@ -95,4 +95,10 @@ public interface Taxi5SDK {
             @Path("id") Integer orderID
     );
 
+    @POST("http://api.taxi5.by/m/v2/order/{id}/repeat")
+    Call<OrderResponseActionData> RepeatOrder (
+            @Header("X-Authorization") String token,
+            @Path("id") Integer orderID
+    );
+
 }

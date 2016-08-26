@@ -263,6 +263,20 @@
             android:text="@string/status_car_find_cancel_btn_text"
             />
 
+        <ProgressBar
+            android:id="@+id/fragment_status_car_find_cancel_button_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_car_find_cancel_button"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_cancel_button"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_cancel_button"
+            />
+
 
         <Button
             android:id="@+id/fragment_status_car_find_approve_button"
@@ -287,6 +301,20 @@
             android:textSize="16sp"
             android:textColor="@color/defaultWhite"
             android:text="@string/status_car_find_aprove_btn_text"/>
+
+        <ProgressBar
+            android:id="@+id/fragment_status_car_find_approve_button_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_car_find_approve_button"
+            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_approve_button"
+            app:layout_constraintRight_toRightOf="@id/fragment_status_car_find_approve_button"
+            />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.esotericsoftware.kryo.serializers.FieldSerializer;
@@ -41,6 +43,19 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
     TextView carTextView;
 
 
+    @BindView(R.id.fragment_status_car_find_approve_button_progress_bar)
+    ProgressBar buttonApproveProgressBar;
+
+    @BindView(R.id.fragment_status_car_find_cancel_button_progress_bar)
+    ProgressBar buttonCancelProgressBar;
+
+    @BindView(R.id.fragment_status_car_find_approve_button)
+    Button approveBtn;
+
+    @BindView(R.id.fragment_status_car_find_cancel_button)
+    Button cancelBtn;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,18 +65,23 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
         ButterKnife.bind(this, findCar);
 
         fillWithOrder();
+
+        HideCancelProgressBar();
+        HideApproveProgressBar();
         return findCar;
     }
 
 
     @OnClick(R.id.fragment_status_car_find_cancel_button)
     void OnCancelOrderBtnClick() {
+        ShowCancelProgressBar();
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         Call<OrderResponseActionData> call = taxi5SDK.CancelOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
         call.enqueue(new Callback<OrderResponseActionData>() {
             @Override
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+                HideCancelProgressBar();
                 if (response.isSuccessful()) {
                     appData.setCurrentOrder(null);
                     FragmentMap.getMapFragment().RefreshView();
@@ -70,6 +90,7 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
 
             @Override
             public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+                HideCancelProgressBar();
                 Log.d("taxi5", "error to cancel order: " + t.getLocalizedMessage());
             }
         });
@@ -80,9 +101,12 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         Call<OrderResponseActionData> call = taxi5SDK.ConfirmOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
+        ShowApproveProgressBar();
+
         call.enqueue(new Callback<OrderResponseActionData>() {
             @Override
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+                HideApproveProgressBar();
                 if(response.isSuccessful()) {
                     Log.d("taxi5", "Approve ok");
                 }
@@ -93,6 +117,7 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
 
             @Override
             public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+                HideApproveProgressBar();
                 Log.d("taxi5", "Approve error 2");
             }
         });
@@ -128,5 +153,35 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
             carTextView.setText(order.vehicle.titleName);
         }
 
+    }
+
+    void SetApproveBtnAvailableState(boolean state) {
+        approveBtn.setClickable(state);
+    }
+
+    void SetCancelBtnAvailableState(boolean state) {
+        cancelBtn.setClickable(state);
+    }
+
+    public void ShowCancelProgressBar() {
+        buttonCancelProgressBar.setVisibility(View.VISIBLE);
+        SetCancelBtnAvailableState(false);
+
+    }
+
+    public void HideCancelProgressBar() {
+        buttonCancelProgressBar.setVisibility(View.INVISIBLE);
+        SetCancelBtnAvailableState(true);
+    }
+
+    public void ShowApproveProgressBar() {
+        buttonApproveProgressBar.setVisibility(View.VISIBLE);
+        SetApproveBtnAvailableState(false);
+
+    }
+
+    public void HideApproveProgressBar() {
+        buttonApproveProgressBar.setVisibility(View.INVISIBLE);
+        SetApproveBtnAvailableState(true);
     }
 }

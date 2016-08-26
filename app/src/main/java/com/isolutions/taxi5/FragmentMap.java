@@ -42,6 +42,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public FragmentStatusCarDelivered statusCarDeliveredFragment = new FragmentStatusCarDelivered();
     public FragmentStatusOrderComplete statusOrderCompleteFragment = new FragmentStatusOrderComplete();
     public FragmentStatusPayment statusPaymentFragment = new FragmentStatusPayment();
+    public FragmentStatusInformation statusInformationFragment = new FragmentStatusInformation();
 
     private static volatile FragmentMap mapFragment;
     public static FragmentMap getMapFragment() {
@@ -222,7 +223,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     changeStatus(statusCarFindFragment);
                     break;
                 case CarNotFound:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
                 case CarApproved:
                     changeStatus(statusCarOnWayFragment);
@@ -231,10 +232,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     changeStatus(statusCarOnWayFragment);
                     break;
                 case ClientApproveTimeout:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
                 case ClientApproveReject:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
                 case CarDelivering:
                     changeStatus(statusCarOnWayFragment);
@@ -243,7 +244,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     changeStatus(statusCarDeliveredFragment);
                     break;
                 case ClientNotFound:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
                 case OrderPostponed:
                     //TODO: make design
@@ -267,10 +268,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     changeStatus(statusOrderCompleteFragment);
                     break;
                 case Canceled:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
                 case ForceCanceled:
-                    //TODO: make design
+                    changeStatus(statusInformationFragment);
                     break;
             }
         }

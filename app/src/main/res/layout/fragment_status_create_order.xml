@@ -389,6 +389,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_main"
         />
 
+    <ProgressBar
+        android:id="@+id/fragment_status_create_order_button_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:indeterminate="true"
+        android:indeterminateOnly="true"
+        android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_button"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_button"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_button"
+        />
+
     <ImageView
         android:layout_width="22dp"
         android:layout_height="32dp"

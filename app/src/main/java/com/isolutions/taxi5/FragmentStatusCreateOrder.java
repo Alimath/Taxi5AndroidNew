@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -51,6 +52,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar)
     ProgressBar progressBar;
 
+    @BindView(R.id.fragment_status_create_order_button_progress_bar)
+    ProgressBar buttonProgressBar;
+
+    @BindView(R.id.fragment_status_create_order_button)
+    Button createOrderButton;
+
     private LocationData fromLocation;
     private LocationData toLocation;
 
@@ -64,27 +71,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
         HideEstimatedPrice();
         HideProgressBar();
+        EndCreateButtonProgress();
 
         return createOrder;
     }
 
 
-    public void ShowEstimatedPrice(int price) {
-        estimatedPriceLayout.setVisibility(View.VISIBLE);
-    }
-
-
-    public void HideEstimatedPrice() {
-        estimatedPriceLayout.setVisibility(View.INVISIBLE);
-    }
-
-    public void ShowProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    public void HideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
-    }
 
     public void setFromLocation(LocationData fromLoc) {
         fromLocation = fromLoc;
@@ -110,6 +102,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 //        String jjs = new Gson().toJson(CreateOrder());
 //        Log.d("taxi5", "JSON: " + jjs);
 
+        StartCreateButtonProgress();
+//        createOrderBtn.setMode(ActionProcessButton.Mode.ENDLESS);
+//        createOrderBtn.setProgress(1);
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         Call<OrderResponseData> call = taxi5SDK.SendOrderRequest(TokenData.getInstance().getToken(), CreateOrder());
@@ -117,6 +112,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         call.enqueue(new Callback<OrderResponseData>() {
             @Override
             public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
+                EndCreateButtonProgress();
                 if (response.body().getStatusCode() == 201) {
                     OrderData order = response.body().getOrderData();
                     appData.setCurrentOrder(order);
@@ -128,6 +124,8 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
             @Override
             public void onFailure(Call<OrderResponseData> call, Throwable t) {
+                EndCreateButtonProgress();
+//                createOrderBtn.setProgress(0);
                 for (StackTraceElement element:t.getStackTrace()) {
                     Log.d("taxi5", "error:1 - " + element.toString());
                 }
@@ -155,5 +153,46 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         }
 
         return order;
+    }
+
+
+
+    void SetCreateOrderButtonAvailableState(boolean state) {
+        if(state) {
+            createOrderButton.setClickable(true);
+        }
+        else {
+            createOrderButton.setClickable(false);
+        }
+    }
+
+    public void ShowEstimatedPrice(int price) {
+        estimatedPriceLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    public void HideEstimatedPrice() {
+        estimatedPriceLayout.setVisibility(View.INVISIBLE);
+    }
+
+    void StartCreateButtonProgress() {
+        SetCreateOrderButtonAvailableState(false);
+        buttonProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    void EndCreateButtonProgress() {
+        SetCreateOrderButtonAvailableState(true);
+        buttonProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void ShowProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+        SetCreateOrderButtonAvailableState(false);
+
+    }
+
+    public void HideProgressBar() {
+        progressBar.setVisibility(View.INVISIBLE);
+        SetCreateOrderButtonAvailableState(true);
     }
 }

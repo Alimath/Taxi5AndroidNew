@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
@@ -46,6 +48,13 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
     ImageView rotatedImage;
 
 
+    @BindView(R.id.fragment_status_search_car_cancel_button)
+    Button cancelBtn;
+
+    @BindView(R.id.fragment_status_search_car_cancel_button_progress_bar)
+    ProgressBar buttonCancelProgressBar;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +65,7 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
 
         HideEstimatedPrice();
+        HideCancelProgressBar();
 
         fillWithOrder();
 
@@ -111,13 +121,15 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_search_car_cancel_button)
     void OnCancelOrderBtnClick() {
-        Log.d("taxi5", "try to cancel order");
+        ShowCancelProgressBar();
+
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         Call<OrderResponseActionData> call = taxi5SDK.CancelOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
         call.enqueue(new Callback<OrderResponseActionData>() {
             @Override
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+                HideCancelProgressBar();
                 if (response.isSuccessful()) {
                     appData.setCurrentOrder(null);
                     FragmentMap.getMapFragment().RefreshView();
@@ -126,9 +138,24 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
             @Override
             public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+                HideCancelProgressBar();
                 Log.d("taxi5", "error to cancel order: " + t.getLocalizedMessage());
             }
         });
     }
 
+    void SetCancelBtnAvailableState(boolean state) {
+        cancelBtn.setClickable(state);
+    }
+
+    public void ShowCancelProgressBar() {
+        buttonCancelProgressBar.setVisibility(View.VISIBLE);
+        SetCancelBtnAvailableState(false);
+
+    }
+
+    public void HideCancelProgressBar() {
+        buttonCancelProgressBar.setVisibility(View.INVISIBLE);
+        SetCancelBtnAvailableState(true);
+    }
 }

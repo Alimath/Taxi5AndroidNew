@@ -51,6 +51,10 @@
     <string name="status_car_on_way_car">Автомобиль</string>
     <string name="status_car_on_way_call_driver_btn">ПОЗВОНИТЬ ВОДИТЕЛЮ</string>
     <string name="status_car_on_way_cancel_order">ОТМЕНИТЬ ЗАКАЗ</string>
+    <string name="status_car_on_way_call_driver_dialog_title">Позвонить водителю</string>
+    <string name="status_car_on_way_call_driver_dialog_message">Вы действительно хотите позвонить водителю?</string>
+    <string name="status_car_on_way_call_driver_dialog_ok">Позвонить</string>
+    <string name="status_car_on_way_call_driver_dialog_cancel">Закрыть</string>
 
     <string name="status_you_on_way_title">ВЫ В ПУТИ</string>
     <string name="status_you_on_way_plate">Номер</string>
@@ -81,5 +85,10 @@
     <string name="degree_second_sign">\"</string>
 
     <string name="minutes">мин</string>
+
+    <string name="status_information_title">ИНФОРМАЦИЯ О ЗАКАЗЕ</string>
+    <string name="status_information_no_cars_header">К СОЖАЛЕНИЮ, СЕЙЧАС\nНЕТ СВОБОДНЫХ МАШИН</string>
+    <string name="status_information_try_to_repeat_order">Попробуйте продолжить поиск</string>
+    <string name="status_information_repeat_order_button_text">НАЧАТЬ НОВЫЙ ПОИСК</string>
 
 </resources>
