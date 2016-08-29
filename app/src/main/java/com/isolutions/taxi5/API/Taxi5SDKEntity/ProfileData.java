@@ -1,5 +1,6 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntity;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.util.Log;
 import android.widget.ImageView;
@@ -160,28 +161,15 @@ public class ProfileData {
     @Expose
     private ProfileDataOptions options;
 
-
-//    @SerializedName("access_token")
-//    private String accessToken;
-//
-//    @SerializedName("type")
-//    private String type;
-//
-//    @SerializedName("expires_in")
-//    private String expiresIn;
-//
-//    @SerializedName("refresh_token")
-//    private String refreshToken;
-
-    public String getDescription() {
-//        return name + " " + msid;
-        if(options.isNewsViaEmail()) {
-            return "profile: " + name + ": true";
-        }
-        else {
-            return "profile: " + name + ": false";
-        }
+    public Bitmap getAvatarImage() {
+        return avatarImage;
     }
+
+    public void setAvatarImage(Bitmap avatarImage) {
+        this.avatarImage = avatarImage;
+    }
+
+    private Bitmap avatarImage;
 
     private ProfileData() {
     }
@@ -205,6 +193,10 @@ public class ProfileData {
             this.isPasswordExists = tData.isPasswordExists;
 
             this.options = tData.options;
+
+            if(tData.avatarImage != null) {
+                this.avatarImage = tData.avatarImage;
+            }
         }
     }
 }

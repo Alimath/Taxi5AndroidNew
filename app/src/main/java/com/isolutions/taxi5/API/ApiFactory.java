@@ -6,9 +6,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
-import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataDeserializer;
-import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.LocationDataSerializer;
-import com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers.OrderDataSerializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataDeserializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataSerializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.OrderDataSerializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.ProfileDataSerializer;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +19,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class ApiFactory {
     private static final int CONNECT_TIMEOUT = 15;
@@ -42,7 +42,9 @@ public class ApiFactory {
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().
                 registerTypeAdapter(LocationData.class, new LocationDataDeserializer()).
                 registerTypeAdapter(LocationData.class, new LocationDataSerializer()).
-                registerTypeAdapter(OrderData.class, new OrderDataSerializer()).create();
+                registerTypeAdapter(OrderData.class, new OrderDataSerializer()).
+                registerTypeAdapter(ProfileData.class, new ProfileDataSerializer()).
+                create();
 
 
         return new Retrofit.Builder()

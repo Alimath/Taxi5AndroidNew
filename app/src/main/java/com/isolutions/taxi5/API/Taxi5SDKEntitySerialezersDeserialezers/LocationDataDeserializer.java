@@ -1,7 +1,4 @@
-package com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers;
-
-import android.text.TextUtils;
-import android.util.Log;
+package com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -9,8 +6,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescription;

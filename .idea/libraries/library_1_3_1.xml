@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-1.3.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mlsdev.rximagepicker/library/1.3.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mlsdev.rximagepicker/library/1.3.1/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mlsdev.rximagepicker/library/1.3.1/da2e3ad9c74a1a56f85f27d313f26a322ae0bc00/library-1.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

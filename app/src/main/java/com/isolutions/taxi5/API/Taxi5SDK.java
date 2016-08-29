@@ -1,9 +1,11 @@
 package com.isolutions.taxi5.API;
 
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ActiveHistoryOrdersResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
@@ -99,6 +101,22 @@ public interface Taxi5SDK {
     Call<OrderResponseActionData> RepeatOrder (
             @Header("X-Authorization") String token,
             @Path("id") Integer orderID
+    );
+
+    @GET("http://api.taxi5.by/m/v2/customer/me/active-orders")
+    Call<ActiveHistoryOrdersResponseData> ActiveOrders (
+            @Header("X-Authorization") String token
+    );
+
+    @GET("http://api.taxi5.by/m/v2/customer/me/orders-history?limit=30")
+    Call<ActiveHistoryOrdersResponseData> HistoryOrders (
+            @Header("X-Authorization") String token
+    );
+
+    @POST("http://api.taxi5.by/m/v2/customer/me")
+    Call<OrderResponseActionData> SendProfile(
+            @Header("X-Authorization") String token,
+            @Body ProfileData profileData
     );
 
 }

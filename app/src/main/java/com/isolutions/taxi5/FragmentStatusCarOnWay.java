@@ -137,7 +137,6 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
     }
 
     public void updateTimer() {
-        Log.d("taxi5", "update timer");
         if(etaTimeStamp != null) {
             Long time = new Date().getTime()/1000L;
             Long err = etaTimeStamp - time;

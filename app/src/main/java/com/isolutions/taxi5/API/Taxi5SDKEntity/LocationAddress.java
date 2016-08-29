@@ -28,11 +28,11 @@ public class LocationAddress {
 
     @SerializedName("porch")
     @Expose
-    public Long porch;
+    public String porch;
 
     @SerializedName("apartment")
     @Expose
-    public Long apartment;
+    public String apartment;
 
     @SerializedName("section")
     @Expose

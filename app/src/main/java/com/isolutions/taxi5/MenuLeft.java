@@ -21,7 +21,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MenuLeft extends Fragment {
-
     @BindView(R.id.left_drawer_avatar_image)
     CircleImageView avatarImage;
 
@@ -35,6 +34,15 @@ public class MenuLeft extends Fragment {
 
         View leftMenu= inflater.inflate(R.layout.left_drawer, container, false);
         ButterKnife.bind(this, leftMenu);
+
+
+        RefreshProfileData();
+        AppData.getInstance().leftDrawer = this;
+
+        return leftMenu;
+    }
+
+    public void RefreshProfileData() {
         if(ProfileData.getInstance().getAvatarURL() != null) {
             if(!ProfileData.getInstance().getAvatarURL().isEmpty()) {
                 Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
@@ -45,13 +53,24 @@ public class MenuLeft extends Fragment {
                 profileNameTextView.setText(ProfileData.getInstance().getName());
             }
         }
-
-        return leftMenu;
     }
-
 
     @OnClick(R.id.left_drawer_call_to_us_btn)
     public void OnClickCallUsListener() {
         Log.d("taxi5", "call us");
+    }
+
+    @OnClick(R.id.left_drawer_profile_button)
+    public void onProfileButtonClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenProfileMenu();
+        }
+    }
+
+    @OnClick(R.id.left_drawer_map_button)
+    public void onMapButtonClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenMap();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.isolutions.taxi5.API.Taxi5SDKEntityDeserialezers;
+package com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers;
 
 import android.util.Log;
 
@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
-import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 
 import java.lang.reflect.Type;
 

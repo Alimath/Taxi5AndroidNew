@@ -19,9 +19,12 @@ import android.widget.ImageView;
 
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,8 +32,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     public FragmentMap mapFragment = new FragmentMap();
-    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
+    public FragmentScreenProfile fragmentScreenProfile = new FragmentScreenProfile();
+//    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
 
@@ -39,60 +44,47 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        AppData.getInstance().mainActivity = this;
 
-        ft.replace(R.id.main_activity_fragment_map_layout, mapFragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-
-        customToolbar.mainActivity = this;
-
-        ft = getFragmentManager().beginTransaction();
-
-        ft.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-
-        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-        Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", TokenData.getInstance().getRefreshToken());
-
-        call.enqueue(new Callback<TokenData>() {
-            @Override
-            public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-                onResponseRefreshToken(call, response);
-            }
-
-            @Override
-            public void onFailure(Call<TokenData> call, Throwable t) {
-                onFailureRefreshToken(call, t);
-            }
-        });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        setContentView(R.layout.activity_login);
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
 //
+////        ft.replace(R.id.main_activity_fragment_map_layout, mapFragment);
+//        ft.add(customToolbar, "customtoolbar");
+////        ft.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
+//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//        ft.commit();
+
+        OpenMap();
+
+//        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
+//        ft1.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
+//        ft1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//        ft1.commit();
+
+
+//        ProfileData profileData = ProfileData.getInstance();
+//        profileData.setName("Hallo games");
+//        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+//        Call<OrderResponseActionData> call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(),
+//                profileData);
 //
-//        fab.setOnClickListener(new View.OnClickListener() {
+//        call.enqueue(new Callback<OrderResponseActionData>() {
 //            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+//            public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+//                if(response.isSuccessful()) {
+//                    Log.d("taxi5", "profileUpdated");
+//                }
+//                else {
+//                    Log.d("taxi5", "profileUpdated error");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+//                Log.d("taxi5", "profileUpdated failure");
 //            }
 //        });
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -106,7 +98,7 @@ public class MainActivity extends AppCompatActivity
                 drawer.closeDrawer(findViewById(R.id.activity_main_nav_view_right));
             }
             else {
-                super.onBackPressed();
+//                super.onBackPressed();
             }
         }
     }
@@ -120,12 +112,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -136,83 +124,49 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-//        if (id == R.id.nav_camera) {
-//            Log.d("taxi5","Start callz");
-//            Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-//            Call<TokenData> call = taxi5SDK.Authorization("friday_sms", "375447221174", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", "4512");
-////            Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", "375447221174", "taxi5_ios_app");
-//            call.enqueue(this);
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-//    @Override
-//    public void onResponse(retrofit2.Call<Void> call, Response<Void> response) {
-//        Log.d("taxi5", "responseCode: "+response.code());
-//    }
-//
-//    @Override
-//    public void onFailure(retrofit2.Call<Void> call, Throwable t) {
-//        Log.d("taxi5", "responseCode: error");
-//    }
-
-//    @Override
-//    public void onResponse(Call<TokenData> call, Response<TokenData> response) {
-//        Log.d("taxi5", TokenData.getInstance().GetDescription());
-//        if(response.code() == 200) {
-//            Log.d("taxi5", "response: " + response.body().GetDescription());
-//        }
-//        else {
-//            try {
-//                Log.d("taxi5", "responseCode: " + response.errorBody().string());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
-//
-//    @Override
-//    public void onFailure(Call<TokenData> call, Throwable t) {
-//        Log.d("taxi5", "responseCode: error");
-//    }
+    public void OpenRightMenu() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.openDrawer(GravityCompat.END);
+    }
 
     public void OpenLeftMenu() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.openDrawer(GravityCompat.START);
     }
 
-    public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
-        if(response.code() == 200) {
-            response.body().setAuthorized(true);
-            response.body().saveTokenData();
-            Log.d("taxi5", TokenData.getInstance().getDescription());
-        }
-        else {
-
-        }
+    public void CloseRightMenu() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.END);
     }
 
-    public void onFailureRefreshToken(Call<TokenData> call, Throwable t) {
-        Log.d("taxi5", "responseCode: error");
+    public void CloseLeftMenu() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
+
+//    public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
+//        if(response.code() == 200) {
+//            response.body().setAuthorized(true);
+//            response.body().saveTokenData();
+//            Log.d("taxi5", TokenData.getInstance().getDescription());
+//        }
+//        else {
+//            //TODO: make a clear
+//        }
+//    }
+//
+//    public void onFailureRefreshToken(Call<TokenData> call, Throwable t) {
+//        Log.d("taxi5", "responseCode: error");
+//    }
+
+
 
     @Override
     protected void onResume() {
@@ -224,5 +178,46 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         AppData.getInstance().setAppForeground(false);
+    }
+
+    public void OpenProfileMenu() {
+//        Log.d("taxi5", "onProfileButtonClick");
+
+        ChangeFragment(fragmentScreenProfile);
+
+        if (fragmentScreenProfile.isVisible()) {
+            fragmentScreenProfile.RefreshView();
+        }
+
+        CloseLeftMenu();
+    }
+
+    public void OpenMap() {
+        ChangeFragment(mapFragment);
+        mapFragment.RefreshView();
+//        if(mapFragment.isVisible()) {
+//        }
+    }
+
+    public void OpenClearMap() {
+        AppData.getInstance().setCurrentOrder(null);
+        ChangeFragment(mapFragment);
+        mapFragment.RefreshView();
+    }
+
+    public void CloseMenus() {
+        CloseLeftMenu();
+        CloseRightMenu();
+    }
+
+    public void ChangeFragment(Fragment fragment) {
+        if(AppData.getInstance().getAppForeground()) {
+            CloseLeftMenu();
+            CloseRightMenu();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.main_activity_fragment_map_layout, fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commit();
+        }
     }
 }

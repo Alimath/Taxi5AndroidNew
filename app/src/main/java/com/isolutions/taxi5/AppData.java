@@ -21,6 +21,11 @@ public class AppData {
 
     private volatile Long serverClientOffset = 0L;
 
+    public MenuLeft leftDrawer = null;
+    public MenuRight rightDrawer = null;
+
+    public MainActivity mainActivity = null;
+
     public Boolean getAppForeground() {
         return isAppForeground;
     }

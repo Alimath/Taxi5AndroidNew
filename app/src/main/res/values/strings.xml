@@ -90,5 +90,30 @@
     <string name="status_information_no_cars_header">К СОЖАЛЕНИЮ, СЕЙЧАС\nНЕТ СВОБОДНЫХ МАШИН</string>
     <string name="status_information_try_to_repeat_order">Попробуйте продолжить поиск</string>
     <string name="status_information_repeat_order_button_text">НАЧАТЬ НОВЫЙ ПОИСК</string>
+    
+    <string name="active_order_cell_status_car_search">Поиск</string>
+    <string name="active_order_cell_status_registered">Зарегистрирован</string>
+    <string name="active_order_cell_status_car_found">Автомобиль найден</string>
+    <string name="active_order_cell_status_car_not_found">Не найдено</string>
+    <string name="active_order_cell_status_client_approve_timeout">Не подтвержден</string>
+    <string name="active_order_cell_status_client_not_found">Клиент не найден</string>
+    <string name="active_order_cell_status_order_postponed">Отложен</string>
+    <string name="active_order_cell_status_order_in_progress">Выполняется</string>
+    <string name="active_order_cell_status_order_completed">Не оплачен</string>
+    <string name="active_order_cell_status_order_paid">Оплачен</string>
+    <string name="active_order_cell_status_order_closed">Закрыт</string>
+    <string name="active_order_cell_status_order_not_paid">Не оплачен</string>
+    <string name="active_order_cell_status_canceled">Отменен</string>
+    <string name="active_order_cell_status_order_pending_payment">Ожидание оплаты</string>
+    <string name="active_order_cell_status_car_wait">Ожидает</string>
+
+    <string name="right_drawer_active_orders_header">Текущие заказы</string>
+    <string name="right_drawer_history_orders_header">Прошлые заказы</string>
+
+    <string name="profile_screen_header">Личная информация</string>
+    <string name="profile_screen_name_title">Имя</string>
+    <string name="profile_screen_email_title">Почта</string>
+    <string name="profile_screen_phone_title">Номер</string>
+    <string name="profile_screen_upload_data">Сохранить</string>
 
 </resources>
