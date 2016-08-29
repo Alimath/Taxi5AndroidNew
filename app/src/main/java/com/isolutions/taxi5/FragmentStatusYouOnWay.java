@@ -17,6 +17,7 @@ public class FragmentStatusYouOnWay extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 //        super.onCreateView(inflater, container, savedInstanceState);
 
         View youOnWay = inflater.inflate(R.layout.fragment_status_you_on_way, container, false);

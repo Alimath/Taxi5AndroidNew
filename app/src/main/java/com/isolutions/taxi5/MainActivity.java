@@ -1,7 +1,7 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
 
     public void OpenMap() {
         ChangeFragment(mapFragment);
-        mapFragment.RefreshView();
+//        mapFragment.RefreshView();
 //        if(mapFragment.isVisible()) {
 //        }
     }
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity
         if(AppData.getInstance().getAppForeground()) {
             CloseLeftMenu();
             CloseRightMenu();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_activity_fragment_map_layout, fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();

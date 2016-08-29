@@ -63,6 +63,7 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
 
         View carOnWay = inflater.inflate(R.layout.fragment_status_car_on_way, container, false);
         ButterKnife.bind(this, carOnWay);

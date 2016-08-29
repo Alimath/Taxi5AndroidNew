@@ -17,6 +17,7 @@ public class FragmentStatusPayment extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 //        super.onCreateView(inflater, container, savedInstanceState);
 
         View paymentWaiting = inflater.inflate(R.layout.fragment_status_payment, container, false);

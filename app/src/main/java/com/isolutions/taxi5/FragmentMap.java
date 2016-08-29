@@ -1,10 +1,11 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
@@ -22,6 +24,8 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatusType;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+
+import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -118,21 +122,29 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     private View mapView;
-    private MapFragment gmsFragment;
+    private SupportMapFragment gmsFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        mapView = inflater.inflate(R.layout.fragment_map, container, false);
+        if(mapView != null) {
+            ViewGroup parent = (ViewGroup) mapView.getParent();
+        }
+        try {
+            super.onCreateView(inflater, container, savedInstanceState);
+            mapView = inflater.inflate(R.layout.fragment_map, container, false);
+            ButterKnife.bind(this, mapView);
+        }
+        catch (InflateException e) {
 
-        ButterKnife.bind(this, mapView);
+        }
+
 
         Log.d("taxi5", "ON CREATE MAP VIEW");
 
         this.mapFragment = this;
 
-        gmsFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
+        gmsFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         gmsFragment.getMapAsync(this);
 
         RefreshView();
@@ -167,6 +179,22 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public void ScrollMaptoPos(LatLng point, boolean noNeedGeocod) {
         this.noNeedGeocoding = noNeedGeocod;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -303,7 +331,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void changeStatus(StatusesBaseFragment statusFragment) {
         if(AppData.getInstance().getAppForeground()) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
             ft.replace(R.id.fragment_status, statusFragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

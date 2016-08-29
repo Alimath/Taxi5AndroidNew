@@ -58,6 +58,7 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View searchCar = inflater.inflate(R.layout.fragment_status_search_car, container, false);
         ButterKnife.bind(this, searchCar);
 

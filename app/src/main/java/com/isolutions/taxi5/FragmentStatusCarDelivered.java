@@ -17,6 +17,7 @@ public class FragmentStatusCarDelivered extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 //        super.onCreateView(inflater, container, savedInstanceState);
 
         View carDelivered = inflater.inflate(R.layout.fragment_status_car_delivered, container, false);

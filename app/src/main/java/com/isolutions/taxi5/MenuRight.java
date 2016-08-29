@@ -1,6 +1,6 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -98,6 +98,7 @@ public class MenuRight extends Fragment {
                         isHistorySelected = true;
                     }
 
+                    //TODO: Сделать запись orderdata в appdata, после чего просто открывать карту. а уже в самой карте при инициализации сделать проверку и обновление статусов.
                     if (!isHistorySelected) {
                         AppData.getInstance().setCurrentOrder(activeOrders.get(realPos));
                         FragmentMap.getMapFragment().RefreshView();
@@ -105,6 +106,7 @@ public class MenuRight extends Fragment {
                             AppData.getInstance().mainActivity.CloseRightMenu();
                         }
                     } else {
+                        AppData.getInstance().mainActivity.OpenMap();
                         FragmentMap mapFragment = FragmentMap.getMapFragment();
                         AppData.getInstance().setCurrentOrder(null);
                         FragmentMap.getMapFragment().RefreshView();

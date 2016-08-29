@@ -1,7 +1,7 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Fragment phoneFragment = new FragmentLoginPhone();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.replace(R.id.login_activity_fragment_layout, phoneFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Fragment smsFragment = new FragmentLoginSMS();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.replace(R.id.login_activity_fragment_layout, smsFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Fragment nameFragment = new FragmentLoginName();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.replace(R.id.login_activity_fragment_layout, nameFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

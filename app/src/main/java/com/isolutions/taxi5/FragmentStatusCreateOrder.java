@@ -64,7 +64,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         View createOrder= inflater.inflate(R.layout.fragment_status_create_order, container, false);
         ButterKnife.bind(this, createOrder);
 

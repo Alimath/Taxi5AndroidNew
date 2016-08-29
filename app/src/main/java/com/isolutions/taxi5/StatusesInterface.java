@@ -1,6 +1,6 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 

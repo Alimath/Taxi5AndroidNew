@@ -1,6 +1,6 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;

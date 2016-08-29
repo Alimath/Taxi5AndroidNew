@@ -1,8 +1,7 @@
 package com.isolutions.taxi5;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;

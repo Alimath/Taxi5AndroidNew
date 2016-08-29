@@ -17,6 +17,7 @@ public class FragmentStatusOrderComplete extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
 //        super.onCreateView(inflater, container, savedInstanceState);
 
         View orderComplete = inflater.inflate(R.layout.fragment_status_order_complete, container, false);

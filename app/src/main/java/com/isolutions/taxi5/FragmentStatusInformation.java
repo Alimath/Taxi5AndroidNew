@@ -46,6 +46,7 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View information = inflater.inflate(R.layout.fragment_status_information, container, false);
         ButterKnife.bind(this, information);
 
