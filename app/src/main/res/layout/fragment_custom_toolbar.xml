@@ -1,94 +1,153 @@
-<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="56dp"
     android:background="@color/whiteColor"
-    android:id="@+id/toolbar_main_constraint"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:layout_width="18dp"
-        android:layout_height="12dp"
-        android:src="@drawable/toolbar_left_menu_icon"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar_main"
+    >
 
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/toolbar_main_constraint"
+        android:visibility="visible"
+        >
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="12dp"
+            android:src="@drawable/toolbar_left_menu_icon"
 
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
-        app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"
-        />
-    <Button
-        android:id="@+id/toolbar_left_menu_button"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
 
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="0dp"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"
+            />
+        <Button
+            android:id="@+id/toolbar_left_menu_button"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
 
-        android:background="@color/clearColor"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
 
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
-        app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"/>
+            android:background="@color/clearColor"
 
-    <ImageView
-        android:layout_width="140dp"
-        android:layout_height="26dp"
-        android:src="@drawable/toolbar_logo"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"/>
 
-        app:layout_constraintCenterX_toCenterX="@id/toolbar_main_constraint"
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
-        />
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="26dp"
+            android:src="@drawable/toolbar_logo"
 
-    <ImageView
-        android:id="@+id/toolbar_right_menu_icon"
-        android:layout_width="18dp"
-        android:layout_height="22dp"
-        android:src="@drawable/toolbar_right_menu_icon"
+            app:layout_constraintCenterX_toCenterX="@id/toolbar_main_constraint"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            />
 
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
+        <ImageView
+            android:id="@+id/toolbar_right_menu_icon"
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:src="@drawable/toolbar_right_menu_icon"
 
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
-        app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"
-        />
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/toolbar_orders_count_background"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"
+            />
 
-        android:src="@color/defaultRed"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/toolbar_orders_count_background"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
 
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+            android:src="@color/defaultRed"
 
-        app:layout_constraintLeft_toLeftOf="@id/toolbar_right_menu_icon"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_right_menu_icon"
-        />
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
 
-    <TextView
-        android:id="@+id/toolbar_orders_count_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/toolbar_right_menu_icon"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_right_menu_icon"
+            />
 
-        android:textColor="@color/defaultWhite"
-        android:textSize="10sp"
-        android:fontFamily="sans-serif"
+        <TextView
+            android:id="@+id/toolbar_orders_count_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        app:layout_constraintCenterX_toCenterX="@id/toolbar_orders_count_background"
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_orders_count_background"
-        />
+            android:textColor="@color/defaultWhite"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif"
 
-    <Button
-        android:id="@+id/toolbar_right_menu_button"
-        android:layout_width="40dp"
-        android:layout_height="match_parent"
+            app:layout_constraintCenterX_toCenterX="@id/toolbar_orders_count_background"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_orders_count_background"
+            />
 
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
+        <Button
+            android:id="@+id/toolbar_right_menu_button"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
 
-        android:background="@color/clearColor"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
 
-        app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
-        app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"/>
+            android:background="@color/clearColor"
+
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"/>
+
+    </android.support.constraint.ConstraintLayout>
+    
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/toolbar_main_search_bar"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+
+            android:src="@drawable/toolbar_search_icon"
+
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_search_bar"
+            app:layout_constraintLeft_toLeftOf="@id/toolbar_main_search_bar"
+            />
+
+        <EditText
+            android:id="@+id/toolbar_main_search_edit_text"
+            android:background="@color/clearColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
+            android:lines="1"
+
+            android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginEnd="36dp"
+
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/defaultBlack"
+
+            android:hint="Введите текст для поиска"
+            android:textColorHint="@color/hintsColor"
+
+            app:layout_constraintLeft_toLeftOf="@id/toolbar_main_search_bar"
+            app:layout_constraintRight_toRightOf="@id/toolbar_main_search_bar"
+
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

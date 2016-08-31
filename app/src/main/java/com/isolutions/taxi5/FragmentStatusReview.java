@@ -61,6 +61,9 @@ public class FragmentStatusReview extends StatusesBaseFragment {
         reviewData.comment = commentEditText.getText().toString();
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseActionData> call = taxi5SDK.SendReview(TokenData.getInstance().getToken(),
                 AppData.getInstance().getCurrentOrder().id, reviewData);
 

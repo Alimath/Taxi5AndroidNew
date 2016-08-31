@@ -32,7 +32,6 @@ public class ProfileDataSerializer implements JsonSerializer<ProfileData> {
             result.addProperty("avatar", encodedImage);
         }
 
-            Log.d("taxi5", "orderData serialized: " + new Gson().toJson(result));
 
         return result;
     }

@@ -32,6 +32,17 @@
         app:layout_constraintRight_toRightOf="@+id/fragment_map_container"
         app:layout_constraintLeft_toLeftOf="@+id/fragment_map_container"
         >
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_search_addresses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toTopOf="@+id/fragment_map_container"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_map_container"
+        app:layout_constraintRight_toRightOf="@+id/fragment_map_container"
+        app:layout_constraintLeft_toLeftOf="@+id/fragment_map_container">
 
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

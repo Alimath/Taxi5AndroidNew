@@ -7,6 +7,7 @@ package com.isolutions.taxi5;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,14 +65,21 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+//        super.onCreateView(inflater, container, savedInstanceState);
         View createOrder= inflater.inflate(R.layout.fragment_status_create_order, container, false);
         ButterKnife.bind(this, createOrder);
-
 
         HideEstimatedPrice();
         HideProgressBar();
         EndCreateButtonProgress();
+
+        if (fromLocation != null) {
+            setFromText(fromLocation.getStringDescription());
+            HideProgressBar();
+        }
+        if(toLocation != null) {
+            setToText(toLocation.getStringDescription());
+        }
 
         return createOrder;
     }
@@ -102,7 +110,14 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     public void setFromText(String fromDescription) {
         if(isVisible()) {
-            this.fromText.setText(fromDescription);
+            if(!TextUtils.isEmpty(fromDescription)) {
+                this.fromText.setText(fromDescription);
+                HideProgressBar();
+            }
+            else {
+                this.fromText.setText("");
+                ShowProgressBar();
+            }
         }
     }
 
@@ -123,6 +138,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 //        createOrderBtn.setProgress(1);
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseData> call = taxi5SDK.SendOrderRequest(TokenData.getInstance().getToken(), CreateOrder());
 
         call.enqueue(new Callback<OrderResponseData>() {
@@ -131,7 +149,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
                 EndCreateButtonProgress();
                 if (response.body().getStatusCode() == 201) {
                     OrderData order = response.body().getOrderData();
-                    appData.setCurrentOrder(order);
+                    appData.setCurrentOrder(order, false);
                     FragmentMap.getMapFragment().RefreshView();
                 } else {
                     Log.d("taxi5", "status code: " + response.body().getStatusCode());
@@ -171,7 +189,10 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         return order;
     }
 
+    @Override
+    public void fillWithOrder() {
 
+    }
 
     void SetCreateOrderButtonAvailableState(boolean state) {
         if(state) {
@@ -201,17 +222,31 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         buttonProgressBar.setVisibility(View.INVISIBLE);
     }
 
-    public void ShowProgressBar() {
+    private void ShowProgressBar() {
         if(isVisible()) {
             progressBar.setVisibility(View.VISIBLE);
             SetCreateOrderButtonAvailableState(false);
         }
     }
 
-    public void HideProgressBar() {
+    private void HideProgressBar() {
         if(isVisible()) {
             progressBar.setVisibility(View.INVISIBLE);
             SetCreateOrderButtonAvailableState(true);
         }
+    }
+
+    @OnClick(R.id.fragment_status_create_order_from_to_view_search_from_address)
+    public void OnSearchFromAddressClick() {
+        Log.d("taxi5", "Show search addresse");
+        if(FragmentMap.getMapFragment() != null) {
+            FragmentMap.getMapFragment().ShowSearchAddressView(true);
+        }
+    }
+
+    @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address)
+    public void OnSearhToAddressClick() {
+        Log.d("taxi5", "Show search addresse");
+        FragmentMap.getMapFragment().ShowSearchAddressView(false);
     }
 }

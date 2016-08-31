@@ -1,5 +1,6 @@
 package com.isolutions.taxi5;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * Created by fedar.trukhan on 22.08.16.
@@ -27,6 +29,14 @@ public class FragmentCustomToolbar extends Fragment {
 
     @BindView(R.id.toolbar_orders_count_text_view)
     TextView orderCountTextView;
+
+    @BindView(R.id.toolbar_main_constraint)
+    ConstraintLayout defaultToolbar;
+
+    @BindView(R.id.toolbar_main_search_bar)
+    ConstraintLayout searchToolbar;
+
+    FragmentStatusCreateOrderFindAddress createOrderFindAddress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +77,24 @@ public class FragmentCustomToolbar extends Fragment {
         }
     }
 
+    public void ConvertToSearchBar() {
+        defaultToolbar.setVisibility(View.INVISIBLE);
+        searchToolbar.setVisibility(View.VISIBLE);
+    }
+
+    public void ConvertToDefaultToolbar() {
+        defaultToolbar.setVisibility(View.VISIBLE);
+        searchToolbar.setVisibility(View.INVISIBLE);
+    }
+
+    @OnTextChanged(R.id.toolbar_main_search_edit_text)
+    public void onTextChanged(CharSequence text) {
+        if(createOrderFindAddress != null) {
+            if(text.length() > 2) {
+                createOrderFindAddress.SearchAddressesWithString(text.toString());
+            }
+        }
+    }
 
 
 }

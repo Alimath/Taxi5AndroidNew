@@ -103,6 +103,9 @@ public class FragmentLoginSMS extends Fragment {
         ApplicationLauncher applicationLauncher = (ApplicationLauncher) getActivity().getApplicationContext();
         String numberStr = applicationLauncher.temp_login_phone;
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<TokenData> call = taxi5SDK.Authorization("friday_sms", numberStr, "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", code);
 
         call.enqueue(new Callback<TokenData>() {
@@ -194,6 +197,9 @@ public class FragmentLoginSMS extends Fragment {
 //            Log.d("taxi5", TokenData.getInstance().getDescription());
 
             Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            if(taxi5SDK == null) {
+                return;
+            }
             Call<ProfileResponseData> profileDataCall = taxi5SDK.GetProfile(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken());
 
             profileDataCall.enqueue(new Callback<ProfileResponseData>() {

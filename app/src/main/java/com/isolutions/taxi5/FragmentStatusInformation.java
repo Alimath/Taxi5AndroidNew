@@ -65,6 +65,12 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
                 headerTextView.setText(getString(R.string.status_information_no_cars_header));
                 messageTextView.setText(getString(R.string.status_information_try_to_repeat_order));
             }
+            if(order.status.status == OrderStatusType.ClientApproveTimeout) {
+                button.setText(getString(R.string.status_information_repeat_order_button_text));
+                titleTextView.setText(getString(R.string.status_information_title));
+                headerTextView.setText(getString(R.string.status_information_timeout_header));
+                messageTextView.setText(getString(R.string.status_information_try_to_repeat_order));
+            }
         }
     }
 
@@ -105,6 +111,9 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
         if(order != null && order.status != null && order.status.status != null) {
             if (order.status.status == OrderStatusType.CarNotFound) {
                 Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+                if(taxi5SDK == null) {
+                    return;
+                }
                 Call<OrderResponseActionData> call = taxi5SDK.RepeatOrder(TokenData.getInstance().getToken(), order.id);
 
                 call.enqueue(new Callback<OrderResponseActionData>() {

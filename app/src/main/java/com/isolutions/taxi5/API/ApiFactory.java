@@ -1,6 +1,10 @@
 package com.isolutions.taxi5.API;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,6 +15,9 @@ import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationD
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.OrderDataSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.ProfileDataSerializer;
+import com.isolutions.taxi5.AppData;
+import com.isolutions.taxi5.LoginActivity;
+import com.isolutions.taxi5.NoInternetActivity;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,9 +39,22 @@ public class ApiFactory {
             .readTimeout(30, TimeUnit.SECONDS)
             .build();
 
-    @NonNull
     public static Taxi5SDK getTaxi5SDK() {
-        return getRetrofit().create(Taxi5SDK.class);
+        if(isNetworkConnected()) {
+            Log.d("taxi5", "has inet connection");
+            return getRetrofit().create(Taxi5SDK.class);
+        }
+        else {
+            Log.d("taxi5", "no inet connection");
+
+
+            Intent intent = new Intent(AppData.getInstance().currentActivity, NoInternetActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            AppData.getInstance().currentActivity.startActivity(intent);
+            AppData.getInstance().currentActivity.finish();
+
+            return null;
+        }
     }
 
     @NonNull
@@ -62,5 +82,15 @@ public class ApiFactory {
 
     public List<Call> getCalls() {
         return stackOfCalls;
+    }
+
+    private static boolean isNetworkConnected() {
+        if(AppData.getInstance() != null && AppData.getInstance().getAppContext() != null) {
+            ConnectivityManager cm = (ConnectivityManager) AppData.getInstance().getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo() != null;
+        }
+        else {
+            return false;
+        }
     }
 }

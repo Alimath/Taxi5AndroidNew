@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_status_create_order_find_address_main"
+    android:background="@color/whiteColor">
+
+    <View
+        android:id="@+id/fragment_status_create_order_find_address_top_separator"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_find_address_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_find_address_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_find_address_main"
+        />
+
+    <ListView
+        android:id="@+id/fragment_status_create_order_find_address_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_create_order_find_address_top_separator"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_find_address_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_find_address_main"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_find_address_main"
+        >
+
+
+
+    </ListView>
+
+</android.support.constraint.ConstraintLayout>

@@ -24,8 +24,6 @@ public class OrderDataSerializer implements JsonSerializer<OrderData> {
 
         JsonElement result = gson.toJsonTree(src);
 
-        Log.d("taxi5", "orderData serialized: " + new Gson().toJson(result));
-
         return result;
     }
 }

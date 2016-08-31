@@ -71,7 +71,6 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
         isInitiated = true;
 
         Date date = new Date();
-        Log.d("taxi5", "" + date.getTime());
 
         fillWithOrder();
 
@@ -201,6 +200,9 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
     public void CancelOrderBtnClick() {
         ShowCancelProgressBar();
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseActionData> call = taxi5SDK.CancelOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
         call.enqueue(new Callback<OrderResponseActionData>() {
@@ -208,7 +210,7 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
                 HideCancelProgressBar();
                 if (response.isSuccessful()) {
-                    appData.setCurrentOrder(null);
+                    appData.setCurrentOrder(null, false);
                     FragmentMap.getMapFragment().RefreshView();
                 }
             }

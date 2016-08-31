@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row_address_search_main">
+
+    <TextView
+        android:id="@+id/row_address_search_title_text_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:textSize="14sp"
+        android:textColor="@color/defaultBlack"
+        android:fontFamily="sans-serif"
+
+        android:lines="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="9dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/row_address_search_main"
+        app:layout_constraintTop_toTopOf="@id/row_address_search_main"
+        app:layout_constraintRight_toRightOf="@id/row_address_search_main"
+        />
+
+    <TextView
+        android:id="@+id/row_address_search_subtitle_text_view"
+
+        android:textSize="14sp"
+        android:textColor="@color/approximatePriceTextColor"
+        android:fontFamily="sans-serif"
+
+        android:lines="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="32dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@id/row_address_search_main"
+        app:layout_constraintLeft_toLeftOf="@id/row_address_search_main"
+        app:layout_constraintRight_toRightOf="@id/row_address_search_main"
+        />
+
+    <ImageView
+        android:id="@+id/row_address_search_arrow"
+
+        android:layout_width="9dp"
+        android:layout_height="12dp"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:src="@drawable/search_address_arrow_up"
+
+        app:layout_constraintRight_toRightOf="@id/row_address_search_main"
+        app:layout_constraintCenterY_toCenterY="@id/row_address_search_main"
+        />
+
+</android.support.constraint.ConstraintLayout>

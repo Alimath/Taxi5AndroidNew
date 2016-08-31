@@ -87,7 +87,10 @@ public class MenuRight extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(AppData.getInstance().mainActivity != null) {
-                    AppData.getInstance().mainActivity.OpenMap();
+                    if(AppData.getInstance().leftDrawer != null) {
+                        AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
+                    }
+                    AppData.getInstance().mainActivity.OpenClearMap();
 
                     boolean isHistorySelected = false;
 
@@ -98,37 +101,48 @@ public class MenuRight extends Fragment {
                         isHistorySelected = true;
                     }
 
-                    //TODO: Сделать запись orderdata в appdata, после чего просто открывать карту. а уже в самой карте при инициализации сделать проверку и обновление статусов.
-                    if (!isHistorySelected) {
-                        AppData.getInstance().setCurrentOrder(activeOrders.get(realPos));
-                        FragmentMap.getMapFragment().RefreshView();
-                        if (AppData.getInstance().mainActivity != null) {
-                            AppData.getInstance().mainActivity.CloseRightMenu();
-                        }
-                    } else {
-                        AppData.getInstance().mainActivity.OpenMap();
-                        FragmentMap mapFragment = FragmentMap.getMapFragment();
-                        AppData.getInstance().setCurrentOrder(null);
-                        FragmentMap.getMapFragment().RefreshView();
-                        OrderData order = historyOrders.get(realPos);
-                        if (order != null) {
-                            if (order.from != null) {
-                                mapFragment.statusCreateOrderFragment.setFromLocation(order.from);
-                                mapFragment.ScrollMaptoPos(new LatLng(order.from.latitude, order.from.longitude), true);
-                            } else {
-                                mapFragment.ScrollMaptoPos(mapFragment.nullPoint, false);
-                            }
-                            if (order.to != null) {
-                                mapFragment.statusCreateOrderFragment.setToLocation(order.to);
-                            } else {
-                                mapFragment.statusCreateOrderFragment.setToLocation(null);
-                            }
+//                    TODO: Сделать запись orderdata в appdata, после чего просто открывать карту. а уже в самой карте при инициализации сделать проверку и обновление статусов.
 
-                        }
+                    if (!isHistorySelected) {
+                        AppData.getInstance().setCurrentOrder(activeOrders.get(realPos), false);
                         if (AppData.getInstance().mainActivity != null) {
                             AppData.getInstance().mainActivity.CloseRightMenu();
                         }
+
+                        FragmentMap.getMapFragment().RefreshView();
                     }
+                    else {
+                        AppData.getInstance().setCurrentOrder(historyOrders.get(realPos), true);
+                        if (AppData.getInstance().mainActivity != null) {
+                            AppData.getInstance().mainActivity.CloseRightMenu();
+                        }
+
+                        FragmentMap.getMapFragment().RefreshView();
+                    }
+//                        AppData.getInstance().setCurrentOrder(historyOrders.get(realPos), true);
+//                        AppData.getInstance().mainActivity.OpenMap();
+//
+//                        if (AppData.getInstance().mainActivity != null) {
+//                            AppData.getInstance().mainActivity.CloseRightMenu();
+//                        }
+//
+//                        FragmentMap.getMapFragment().RefreshView();
+
+//                        if (order != null) {
+//                            if (order.from != null) {
+//                                mapFragment.statusCreateOrderFragment.setFromLocation(order.from);
+//                                mapFragment.ScrollMaptoPos(new LatLng(order.from.latitude, order.from.longitude), true);
+//                            } else {
+//                                mapFragment.ScrollMaptoPos(mapFragment.nullPoint, false);
+//                            }
+//                            if (order.to != null) {
+//                                mapFragment.statusCreateOrderFragment.setToLocation(order.to);
+//                            } else {
+//                                mapFragment.statusCreateOrderFragment.setToLocation(null);
+//                            }
+//
+//                        }
+//                    }
                 }
             }
 
@@ -195,6 +209,9 @@ public class MenuRight extends Fragment {
 
     private void CheckActiveOrders() {
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<ActiveHistoryOrdersResponseData> call = taxi5SDK.ActiveOrders(TokenData.getInstance().getToken());
 
         call.enqueue(new Callback<ActiveHistoryOrdersResponseData>() {
@@ -212,6 +229,9 @@ public class MenuRight extends Fragment {
 
     private void CheckHistoryOrders() {
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<ActiveHistoryOrdersResponseData> call = taxi5SDK.HistoryOrders(TokenData.getInstance().getToken());
 
         call.enqueue(new Callback<ActiveHistoryOrdersResponseData>() {

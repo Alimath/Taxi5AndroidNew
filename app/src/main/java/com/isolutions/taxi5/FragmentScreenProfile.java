@@ -149,6 +149,9 @@ public class FragmentScreenProfile extends Fragment {
         }
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseActionData> call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(), profileData);
 
         this.profileData = profileData;

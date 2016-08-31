@@ -125,7 +125,7 @@ public class MenuLeft extends Fragment {
     @OnClick(R.id.left_drawer_map_button)
     public void onMapButtonClick() {
         if(AppData.getInstance().mainActivity != null) {
-            AppData.getInstance().mainActivity.OpenMap();
+            AppData.getInstance().mainActivity.OpenClearMap();
             HighlightMenuItem(OpenFragmentTypes.Map);
         }
     }

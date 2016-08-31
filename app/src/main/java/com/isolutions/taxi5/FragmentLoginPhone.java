@@ -92,6 +92,9 @@ public class FragmentLoginPhone extends Fragment {
 
         String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
 
         call.enqueue(new Callback<Void>() {

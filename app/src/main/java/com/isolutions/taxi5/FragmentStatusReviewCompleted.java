@@ -24,7 +24,7 @@ public class FragmentStatusReviewCompleted extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_order_review_completed_button)
     public void OnBackToMapClick() {
-        AppData.getInstance().setCurrentOrder(null);
+        AppData.getInstance().setCurrentOrder(null, false);
         FragmentMap.getMapFragment().RefreshView();
     }
 }

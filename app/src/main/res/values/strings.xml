@@ -92,6 +92,7 @@
     <string name="status_information_no_cars_header">К СОЖАЛЕНИЮ, СЕЙЧАС\nНЕТ СВОБОДНЫХ МАШИН</string>
     <string name="status_information_try_to_repeat_order">Попробуйте продолжить поиск</string>
     <string name="status_information_repeat_order_button_text">НАЧАТЬ НОВЫЙ ПОИСК</string>
+    <string name="status_information_timeout_header">ИСТЕКЛО ВРЕМЯ\nПОДТВЕРЖДЕНИЯ ЗАКАЗА</string>
 
     <string name="history_order_cell_to_point_not_defined">Не указан</string>
     <string name="active_order_cell_status_car_search">Поиск</string>

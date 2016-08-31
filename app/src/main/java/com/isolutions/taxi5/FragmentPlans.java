@@ -69,6 +69,9 @@ public class FragmentPlans extends Fragment {
 
     public void LoadAndFillPlans() {
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<PlanResponseData> call = taxi5SDK.GetPlans(TokenData.getInstance().getToken());
 
         call.enqueue(new Callback<PlanResponseData>() {

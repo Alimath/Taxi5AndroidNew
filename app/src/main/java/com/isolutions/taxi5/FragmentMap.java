@@ -49,6 +49,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public FragmentStatusReview statusReviewFragment = new FragmentStatusReview();
     public FragmentStatusReviewCompleted statusReviewCompletedFragment = new FragmentStatusReviewCompleted();
 
+    public FragmentStatusCreateOrderFindAddress statusCreateOrderFindAddressFragment = new FragmentStatusCreateOrderFindAddress();
+
     private static volatile FragmentMap mapFragment;
     public static FragmentMap getMapFragment() {
         return mapFragment;
@@ -57,23 +59,55 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     private Call<OrderResponseData> readOrderCall = null;
 
     public void ResetMap() {
-        AppData.getInstance().setCurrentOrder(null);
+        AppData.getInstance().setCurrentOrder(null, false);
 
         RefreshView();
     }
 
     public void RefreshView() {
-        if(AppData.getInstance().getCurrentOrder() == null) {
+        if(AppData.getInstance().isOrderHistory) {
             if(readOrderCall != null) {
                 readOrderCall.cancel();
             }
-            changeStatus(this.statusCreateOrderFragment);
+
+            if(AppData.getInstance().getCurrentOrder() != null) {
+                changeStatus(this.statusCreateOrderFragment);
+                if(AppData.getInstance().getCurrentOrder().from != null) {
+                    LatLng latLng = new LatLng(AppData.getInstance().getCurrentOrder().from.latitude, AppData.getInstance().getCurrentOrder().from.longitude);
+                    statusCreateOrderFragment.setFromLocation(AppData.getInstance().getCurrentOrder().from);
+                    if(AppData.getInstance().getCurrentOrder().to != null) {
+                        statusCreateOrderFragment.setFromLocation(AppData.getInstance().getCurrentOrder().to);
+                    }
+                    ScrollMaptoPos(latLng, true);
+                }
+                else {
+                    ScrollMaptoPos(nullPoint, false);
+                }
+            }
+            else {
+                AppData.getInstance().isOrderHistory = false;
+                RefreshView();
+            }
         }
         else {
-            if (AppData.getInstance().getCurrentOrder().status != null) {
-                changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+            if(AppData.getInstance().getCurrentOrder() == null) {
+                changeStatus(this.statusCreateOrderFragment);
+//                statusCreateOrderFragment.setFromText("");
+//                ScrollMaptoPos(nullPoint, false);
             }
-            ReadOrderState();
+            else {
+                if(AppData.getInstance().getCurrentOrder().from != null) {
+                    LatLng latLng = new LatLng(AppData.getInstance().getCurrentOrder().from.latitude, AppData.getInstance().getCurrentOrder().from.longitude);
+                    ScrollMaptoPos(latLng, true);
+                }
+                if(AppData.getInstance().getCurrentOrder().status != null && !AppData.getInstance().getCurrentOrder().status.isTerminal) {
+                    changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+                    ReadOrderState();
+                }
+                else {
+                    changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+                }
+            }
         }
     }
 
@@ -97,24 +131,31 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     void ReadOrderState() {
-        if(AppData.getInstance().getCurrentOrder() != null) {
+        if(AppData.getInstance().getCurrentOrder() != null && !AppData.getInstance().isOrderHistory) {
             if(readOrderCall != null) {
                 readOrderCall.cancel();
             }
             Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            if(taxi5SDK == null) {
+                return;
+            }
             readOrderCall = taxi5SDK.ReadOrderStatus(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken(), AppData.getInstance().getCurrentOrder().id);
 
             readOrderCall.enqueue(new Callback<OrderResponseData>() {
                 @Override
                 public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
+                    if(AppData.getInstance().getCurrentOrder() == null) {
+                        return;
+                    }
                     OrderData order = response.body().getOrderData();
                     if (order != null) {
-                        AppData.getInstance().setCurrentOrder(response.body().getOrderData());
+                        AppData.getInstance().setCurrentOrder(response.body().getOrderData(), false);
                         if (order.status != null && order.status.status != null) {
                             changeStatusByEnum(order.status.status);
                         }
                         if(order.status != null) {
                             if(order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
+                                AppData.getInstance().isOrderHistory = true;
                                 return;
                             }
                         }
@@ -136,6 +177,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("taxi5", "on create map view");
         if(mapView != null) {
             ViewGroup parent = (ViewGroup) mapView.getParent();
         }
@@ -145,6 +187,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             ButterKnife.bind(this, mapView);
         }
         catch (InflateException e) {
+            Log.d("taxi5", "map on create error");
         }
 
         this.mapFragment = this;
@@ -157,16 +200,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         return mapView;
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -175,6 +208,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
         mMap.setOnCameraIdleListener(this);
+        RefreshView();
 
 //        ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
 //        mMap.setMyLocationEnabled(true);
@@ -183,7 +217,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     boolean noNeedGeocoding = false;
     public void ScrollMaptoPos(LatLng point, boolean noNeedGeocod) {
         this.noNeedGeocoding = noNeedGeocod;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
+        if(mMap != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
+        }
     }
 
     @Override
@@ -206,38 +242,37 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public void onCameraIdle() {
 
         if(noNeedGeocoding) {
+            noNeedGeocoding = false;
             return;
         }
-        else {
-            noNeedGeocoding = false;
-        }
+
         LatLng pos = mMap.getCameraPosition().target;
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<LocationsListResponseData> call = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
 
         if(statusCreateOrderFragment.isVisible()) {
             statusCreateOrderFragment.setFromText("");
-            statusCreateOrderFragment.ShowProgressBar();
         }
 
         call.enqueue(new Callback<LocationsListResponseData>() {
             @Override
             public void onResponse(Call<LocationsListResponseData> call, Response<LocationsListResponseData> response) {
-                statusCreateOrderFragment.HideProgressBar();
-                Log.d("taxi5", "ok for pos");
-                if(response.body().getStatusCode() == 200) {
+                if(response.isSuccessful()) {
+                    if(AppData.getInstance().isOrderHistory) {
+                        AppData.getInstance().setCurrentOrder(null, false);
+                    }
+                    RefreshView();
                     if(response.body().getResponseData().size() > 0) {
-//                        Log.d("taxi5", "full: " + response.body().getResponseData().get(0).locationDescription + ", string: " + response.body().getResponseData().get(0).locationStringDescription);
-                        Log.d("taxi5", "ok response with array > 0");
                         LatLng pos = mMap.getCameraPosition().target;
                         LocationData locationData = response.body().getResponseData().get(0);
                         locationData.latitude = pos.latitude;
                         locationData.longitude = pos.longitude;
 
                         statusCreateOrderFragment.setFromLocation(locationData);
-//                        LocationAddress ad1 = response.body().getResponseData().get(0).locationDescription.address;
-//                        Log.d("taxi5", ad1.country + " " + ad1.settlement + " " + ad1.street + " " + ad1.building);
                     }
                     else {
                         LatLng pos = mMap.getCameraPosition().target;
@@ -261,7 +296,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
             @Override
             public void onFailure(Call<LocationsListResponseData> call, Throwable t) {
-                statusCreateOrderFragment.HideProgressBar();
                 Log.d("taxi5", "fail to reverse geocode" + t.getLocalizedMessage());
             }
         });
@@ -344,11 +378,45 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
 
+            getChildFragmentManager().executePendingTransactions();
+
             if (statusFragment.isVisible()) {
                 statusFragment.fillWithOrder();
             }
         }
     }
+
+    public void ShowSearchAddressView(boolean isFromAddress) {
+        if(AppData.getInstance().getAppForeground() && isVisible()) {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+
+            ft.replace(R.id.fragment_search_addresses, statusCreateOrderFindAddressFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack("find_addresses");
+            ft.commit();
+
+            if(AppData.getInstance().toolbar != null) {
+                AppData.getInstance().toolbar.ConvertToSearchBar();
+            }
+
+            getChildFragmentManager().executePendingTransactions();
+
+        }
+    }
+
+    public void HideSearhAddressView() {
+        if(this.statusCreateOrderFindAddressFragment.isVisible()) {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+
+            ft.replace(R.id.fragment_search_addresses, null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.addToBackStack("find_addresses");
+            ft.commit();
+
+            getChildFragmentManager();
+        }
+    }
+
 
 
     public void ShowReviewStatus() {

@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ft.replace(R.id.login_activity_fragment_layout, phoneFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        AppData.getInstance().currentActivity = this;
         ft.commit();
     }
 

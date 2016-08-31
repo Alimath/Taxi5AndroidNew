@@ -77,6 +77,9 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
     void OnCancelOrderBtnClick() {
         ShowCancelProgressBar();
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseActionData> call = taxi5SDK.CancelOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
         call.enqueue(new Callback<OrderResponseActionData>() {
@@ -84,7 +87,7 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
                 HideCancelProgressBar();
                 if (response.isSuccessful()) {
-                    appData.setCurrentOrder(null);
+                    appData.setCurrentOrder(null, false);
                     FragmentMap.getMapFragment().RefreshView();
                 }
             }
@@ -100,6 +103,9 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
     @OnClick(R.id.fragment_status_car_find_approve_button)
     void OnApproveOrderBtnClick() {
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<OrderResponseActionData> call = taxi5SDK.ConfirmOrderWithID(TokenData.getInstance().getToken(), appData.getCurrentOrder().id);
 
         ShowApproveProgressBar();

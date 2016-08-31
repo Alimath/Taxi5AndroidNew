@@ -27,7 +27,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        AppData.getInstance().currentActivity = this;
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
         Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", TokenData.getInstance().getRefreshToken());
 
         call.enqueue(new Callback<TokenData>() {
@@ -52,6 +56,9 @@ public class SplashActivity extends AppCompatActivity {
             Log.d("taxi5", TokenData.getInstance().getDescription());
 
             Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            if(taxi5SDK == null) {
+                return;
+            }
             Call<ProfileResponseData> profileDataCall = taxi5SDK.GetProfile(TokenData.getInstance().getType() + " " + TokenData.getInstance().getAccessToken());
 
             profileDataCall.enqueue(new Callback<ProfileResponseData>() {

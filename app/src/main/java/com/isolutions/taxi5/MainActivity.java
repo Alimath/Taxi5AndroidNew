@@ -48,46 +48,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         AppData.getInstance().mainActivity = this;
-
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//
-////        ft.replace(R.id.main_activity_fragment_map_layout, mapFragment);
-//        ft.add(customToolbar, "customtoolbar");
-////        ft.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
-//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        ft.commit();
-
+        AppData.getInstance().currentActivity = this;
         OpenClearMap();
-
-//        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
-//        ft1.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
-//        ft1.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        ft1.commit();
-
-
-//        ProfileData profileData = ProfileData.getInstance();
-//        profileData.setName("Hallo games");
-//        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-//        Call<OrderResponseActionData> call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(),
-//                profileData);
-//
-//        call.enqueue(new Callback<OrderResponseActionData>() {
-//            @Override
-//            public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
-//                if(response.isSuccessful()) {
-//                    Log.d("taxi5", "profileUpdated");
-//                }
-//                else {
-//                    Log.d("taxi5", "profileUpdated error");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
-//                Log.d("taxi5", "profileUpdated failure");
-//            }
-//        });
-
     }
 
     @Override
@@ -200,22 +162,16 @@ public class MainActivity extends AppCompatActivity
         CloseLeftMenu();
     }
 
-    public void OpenMap() {
-        ChangeFragment(mapFragment);
-//        mapFragment.RefreshView();
-//        if(mapFragment.isVisible()) {
-//        }
-    }
-
     public void OpenAboutUs() {
         ChangeFragment(fragmentAboutUs);
         CloseMenus();
     }
 
     public void OpenClearMap() {
-        AppData.getInstance().setCurrentOrder(null);
+        AppData.getInstance().setCurrentOrder(null, false);
         ChangeFragment(mapFragment);
         mapFragment.RefreshView();
+        mapFragment.ScrollMaptoPos(mapFragment.nullPoint, false);
     }
 
     public void CloseMenus() {
@@ -231,6 +187,7 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.main_activity_fragment_map_layout, fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
     }
 }

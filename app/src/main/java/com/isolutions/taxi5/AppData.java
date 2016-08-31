@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 
@@ -64,6 +65,8 @@ public class AppData {
         return appContext;
     }
 
+    public volatile AppCompatActivity currentActivity;
+
     public void setAppContext(Context context) {
         appContext = context;
     }
@@ -72,8 +75,10 @@ public class AppData {
         return currentOrder;
     }
 
-    public void setCurrentOrder(OrderData orderData) {
+    public volatile boolean isOrderHistory = false;
+    public void setCurrentOrder(OrderData orderData, boolean isHistory) {
         this.currentOrder= orderData;
+        isOrderHistory = isHistory;
     }
 
     public static AppData getInstance() {

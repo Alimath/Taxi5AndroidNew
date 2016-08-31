@@ -25,15 +25,12 @@ public class LocationDataSerializer implements JsonSerializer<LocationData> {
 
         JsonObject result = (JsonObject)gson.toJsonTree(src);
         if(src.locationDescription != null) {
-            Log.d("taxi5", "add location description");
             result.add("description", gson2.toJsonTree(src.locationDescription));
         }
         else if(src.details != null) {
-            Log.d("taxi5", "add details");
             result.add("description", gson2.toJsonTree(src.details));
         }
         else if(src.locationStringDescription != null) {
-            Log.d("taxi5", "add string location description");
             result.addProperty("description", src.locationStringDescription);
         }
         return result;
