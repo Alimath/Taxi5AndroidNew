@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_status_review_main">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor"
+        />
+
+
+    <View
+        android:id="@+id/fragment_status_review_stars_header_background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        app:layout_constraintTop_toTopOf="@id/fragment_status_review_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+
+        android:textColor="@color/defaultBlack"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/status_order_review_stars_header"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_review_stars_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+
+    <View
+        android:id="@+id/fragment_status_review_separator_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_stars_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+    <View
+        android:id="@+id/fragment_status_review_separator_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_1"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+    <View
+        android:id="@+id/fragment_status_review_comment_header_background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginTop="60dp"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_2"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:lines="1"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        android:textColor="@color/defaultBlack"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:text="@string/status_order_review_cleanness"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_stars_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_separator_1"
+        />
+
+    <fragment
+        android:id="@+id/fragment_status_review_cleanness_stars_fragment"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:name="com.isolutions.taxi5.FragmentStatusReviewStars"
+        tools:layout="@layout/fragment_status_order_review_stars"
+
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_stars_header_background"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_separator_1"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:lines="1"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        android:textColor="@color/defaultBlack"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:text="@string/status_order_review_civility"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_1"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_separator_2"
+        />
+
+    <fragment
+        android:id="@+id/fragment_status_review_civility_stars_fragment"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:name="com.isolutions.taxi5.FragmentStatusReviewStars"
+        tools:layout="@layout/fragment_status_order_review_stars"
+
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_1"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_separator_2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:lines="1"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        android:textColor="@color/defaultBlack"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:text="@string/status_order_review_velocity"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_2"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_comment_header_background"
+        />
+    <fragment
+        android:id="@+id/fragment_status_review_velocity_stars_fragment"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:name="com.isolutions.taxi5.FragmentStatusReviewStars"
+        tools:layout="@layout/fragment_status_order_review_stars"
+
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_separator_2"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_comment_header_background"
+        />
+
+
+    <View
+        android:id="@+id/fragment_status_review_separator_3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/defaultBackgroundGray"
+
+        android:layout_marginTop="60dp"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_comment_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+
+        android:textColor="@color/defaultBlack"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/status_order_review_comment_header"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_review_comment_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+    
+    <EditText
+        android:id="@+id/fragment_status_review_comment_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+
+        android:textColor="@color/defaultBlack"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+
+        android:hint="@string/status_create_order_comment_hint"
+        android:textColorHint="@color/hintsColor"
+
+
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_review_comment_header_background"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_review_separator_3"
+        />
+
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+
+        android:scaleType="centerCrop"
+
+        android:src="@drawable/left_drawer_bottom_cubics"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_review_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+    
+    <Button
+        android:id="@+id/fragment_status_review_send_review_button"
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:textSize="16sp"
+        android:textColor="@color/defaultWhite"
+        android:text="@string/status_order_review_send_review_button_title"
+        android:fontFamily="sans-serif-medium"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+
+        android:background="@drawable/round_shape_green_btn"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_status_review_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_status_review_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_main"
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -5,8 +5,10 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.PlanResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ReviewData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
 import retrofit2.Call;
@@ -117,6 +119,18 @@ public interface Taxi5SDK {
     Call<OrderResponseActionData> SendProfile(
             @Header("X-Authorization") String token,
             @Body ProfileData profileData
+    );
+
+    @POST("http://api.taxi5.by/m/v2/order/{id}/review")
+    Call<OrderResponseActionData> SendReview(
+            @Header("X-Authorization") String token,
+            @Path("id") Integer orderID,
+            @Body ReviewData reviewData
+    );
+
+    @GET("http://api.taxi5.by/m/v2/plans")
+    Call<PlanResponseData> GetPlans(
+            @Header("X-Authorization") String token
     );
 
 }

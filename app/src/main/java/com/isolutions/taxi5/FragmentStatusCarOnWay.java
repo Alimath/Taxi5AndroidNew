@@ -182,7 +182,7 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
                     return;
                 }
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + appData.getCurrentOrder().driver.driverPhone));
+                intent.setData(Uri.parse("tel:+" + appData.getCurrentOrder().driver.driverPhone));
                 startActivity(intent);
             }
         });

@@ -153,6 +153,15 @@ public class MenuRight extends Fragment {
 
 
     public void startUpdateActiveOrdersTimer() {
+        if(AppData.getInstance().toolbar != null) {
+            if(activeOrders != null) {
+                AppData.getInstance().toolbar.SetOrderCount(activeOrders.size());
+            }
+            else {
+                AppData.getInstance().toolbar.SetOrderCount(0);
+            }
+        }
+
         if(this.checkActiveOrderTimer != null) {
             this.checkActiveOrderTimer.cancel();
         }
@@ -223,6 +232,8 @@ public class MenuRight extends Fragment {
             if(response.body() != null && response.body().getResponseData() != null) {
                 activeOrders = response.body().getResponseData();
                 adapterActiveOrders.updateResource(activeOrders);
+            }
+            else {
             }
         }
         else {

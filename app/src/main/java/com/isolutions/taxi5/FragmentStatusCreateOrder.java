@@ -101,11 +101,15 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     }
 
     public void setFromText(String fromDescription) {
-        this.fromText.setText(fromDescription);
+        if(isVisible()) {
+            this.fromText.setText(fromDescription);
+        }
     }
 
     public void setToText(String toDescription) {
-        this.toText.setText(toDescription);
+        if(isVisible()) {
+            this.toText.setText(toDescription);
+        }
     }
 
     @OnClick(R.id.fragment_status_create_order_button)
@@ -198,13 +202,16 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     }
 
     public void ShowProgressBar() {
-        progressBar.setVisibility(View.VISIBLE);
-        SetCreateOrderButtonAvailableState(false);
-
+        if(isVisible()) {
+            progressBar.setVisibility(View.VISIBLE);
+            SetCreateOrderButtonAvailableState(false);
+        }
     }
 
     public void HideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
-        SetCreateOrderButtonAvailableState(true);
+        if(isVisible()) {
+            progressBar.setVisibility(View.INVISIBLE);
+            SetCreateOrderButtonAvailableState(true);
+        }
     }
 }

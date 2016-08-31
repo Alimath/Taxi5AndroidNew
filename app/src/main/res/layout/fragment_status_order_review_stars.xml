@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_status_review_stars_main">
+
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_5_button"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:background="@drawable/review_full_star"
+        android:tag="5"
+
+
+        app:layout_constraintRight_toRightOf="@id/fragment_status_review_stars_main"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_4_button"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:background="@drawable/review_full_star"
+        android:tag="4"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_5_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_3_button"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:background="@drawable/review_full_star"
+        android:tag="3"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_4_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_2_button"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:background="@drawable/review_full_star"
+        android:tag="2"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_3_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_1_button"
+        android:layout_width="20dp"
+        android:layout_height="19dp"
+        android:background="@drawable/review_full_star"
+        android:tag="1"
+
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+
+        app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_2_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

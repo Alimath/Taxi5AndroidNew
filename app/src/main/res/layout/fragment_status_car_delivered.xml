@@ -115,8 +115,6 @@
                 android:id="@+id/fragment_status_car_delivered_plate_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7 TAX 3503"
-
 
                 android:gravity="center"
                 android:fontFamily="sans-serif"
@@ -127,6 +125,8 @@
         
         
         <Button
+            android:id="@+id/fragment_status_car_delivered_call_to_driver"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
 

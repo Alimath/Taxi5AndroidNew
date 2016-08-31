@@ -1,6 +1,9 @@
 package com.isolutions.taxi5;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
@@ -21,10 +24,13 @@ public class AppData {
 
     private volatile Long serverClientOffset = 0L;
 
+    public volatile Boolean selectedPlansCurrencyNew = true;
+
     public MenuLeft leftDrawer = null;
     public MenuRight rightDrawer = null;
 
     public MainActivity mainActivity = null;
+    public FragmentCustomToolbar toolbar = null;
 
     public Boolean getAppForeground() {
         return isAppForeground;
@@ -86,5 +92,23 @@ public class AppData {
 
     public int getColor(int id) {
         return ContextCompat.getColor(appContext, id);
+    }
+
+    public void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (intent.resolveActivity(getAppContext().getPackageManager()) != null) {
+            getAppContext().startActivity(intent);
+        }
+    }
+
+    public Drawable getMyDrawable(int id) {
+        int version = Build.VERSION.SDK_INT;
+        if (version >= 21) {
+            return getAppContext().getDrawable(id);
+        } else {
+            return getAppContext().getResources().getDrawable(id);
+        }
     }
 }

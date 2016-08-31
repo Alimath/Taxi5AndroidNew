@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -18,17 +21,23 @@ import butterknife.OnClick;
 //}
 
 public class FragmentCustomToolbar extends Fragment {
-
 //    public MainActivity mainActivity;
+    @BindView(R.id.toolbar_orders_count_background)
+    ImageView ordersCountBack;
+
+    @BindView(R.id.toolbar_orders_count_text_view)
+    TextView orderCountTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        Log.d("taxi5", "custom toolbar created");
         View customToolbar = inflater.inflate(R.layout.fragment_custom_toolbar, container, false);
         ButterKnife.bind(this, customToolbar);
+        this.SetOrderCount(0);
+
+        AppData.getInstance().toolbar = this;
 
         return customToolbar;
     }
@@ -46,6 +55,18 @@ public class FragmentCustomToolbar extends Fragment {
             AppData.getInstance().mainActivity.OpenLeftMenu();
         }
     }
+
+    public void SetOrderCount(int ordersCount) {
+        if(ordersCount > 0) {
+            ordersCountBack.setVisibility(View.VISIBLE);
+            orderCountTextView.setText(""+ordersCount);
+        }
+        else {
+            ordersCountBack.setVisibility(View.INVISIBLE);
+            orderCountTextView.setText("");
+        }
+    }
+
 
 
 }

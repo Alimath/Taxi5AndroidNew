@@ -56,6 +56,8 @@
     <string name="status_car_on_way_call_driver_dialog_ok">Позвонить</string>
     <string name="status_car_on_way_call_driver_dialog_cancel">Закрыть</string>
 
+
+
     <string name="status_you_on_way_title">ВЫ В ПУТИ</string>
     <string name="status_you_on_way_plate">Номер</string>
     <string name="status_you_on_way_car">Автомобиль</string>
@@ -90,7 +92,8 @@
     <string name="status_information_no_cars_header">К СОЖАЛЕНИЮ, СЕЙЧАС\nНЕТ СВОБОДНЫХ МАШИН</string>
     <string name="status_information_try_to_repeat_order">Попробуйте продолжить поиск</string>
     <string name="status_information_repeat_order_button_text">НАЧАТЬ НОВЫЙ ПОИСК</string>
-    
+
+    <string name="history_order_cell_to_point_not_defined">Не указан</string>
     <string name="active_order_cell_status_car_search">Поиск</string>
     <string name="active_order_cell_status_registered">Зарегистрирован</string>
     <string name="active_order_cell_status_car_found">Автомобиль найден</string>
@@ -115,5 +118,27 @@
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
     <string name="profile_screen_upload_data">Сохранить</string>
+
+    <string name="status_order_review_send_review_button_title">ОТПРАВИТЬ ОТЗЫВ</string>
+    <string name="status_order_review_stars_header">Оценки по критериям</string>
+    <string name="status_order_review_comment_header">Комментарий к оценке</string>
+    <string name="status_order_review_cleanness">ЧИСТОТА САЛОНА</string>
+    <string name="status_order_review_civility">ВЕЖЛИВОСТЬ</string>
+    <string name="status_order_review_velocity">СКОРОСТЬ ПОДАЧИ</string>
+
+    <string name="status_order_review_completed_title">ОТЗЫВ ПРИНЯТ</string>
+    <string name="status_order_review_completed_header">СПАСИБО ЗА\nОСТАВЛЕННОЕ МНЕНИЕ</string>
+    <string name="status_order_review_completed_text">Нам важно что вы думаете о нас</string>
+    <string name="back_to_map_btn_title">ВЕРНУТЬСЯ К КАРТЕ</string>
+
+    <string name="about_us_title">МЫ КОМАНДА ДРУЗЕЙ\nИЗ РАЗНЫХ СФЕР БИЗНЕСА</string>
+    <string name="about_us_text">Мы получаем удовольствие от того, что делаем, и верим, что это изменит мир к лучшему.\n\nМы часто пользуемся такси и устали от хамства, обмана и дряхлых машин. Хотим ездить с комфортов, брать с собой любимую собаку, использовать Wi-Fi для работы и развлечений и оплачивать поездку картой. Хотим рекомендовать друзьям лучшее такси в городе и быть уверены, что им понравиться. \n\nМы мечтали о современном такси и создали его. Для себя и для вас. \n\nПятница - такси для людей.</string>
+    <string name="about_us_review_button_text">ОЦЕНИТЬ ПРИЛОЖЕНИЕ</string>
+    
+    <string name="row_plan_data_city_title">В городе</string>
+    <string name="row_plan_data_country_title">За городом</string>
+    <string name="row_plan_data_idle_title">Час простоя</string>
+    <string name="row_plan_data_base_title">Посадка</string>
+    <string name="row_plan_data_airport_title">Аэропорт</string>
 
 </resources>

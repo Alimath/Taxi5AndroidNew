@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +46,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public FragmentStatusOrderComplete statusOrderCompleteFragment = new FragmentStatusOrderComplete();
     public FragmentStatusPayment statusPaymentFragment = new FragmentStatusPayment();
     public FragmentStatusInformation statusInformationFragment = new FragmentStatusInformation();
+    public FragmentStatusReview statusReviewFragment = new FragmentStatusReview();
+    public FragmentStatusReviewCompleted statusReviewCompletedFragment = new FragmentStatusReviewCompleted();
 
     private static volatile FragmentMap mapFragment;
     public static FragmentMap getMapFragment() {
@@ -77,19 +78,22 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void startTimer() {
-        this.readOrderStatusTimer = new CountDownTimer(3000, 500) {
-            public void onTick(long millisUntilFinished) {
+        if(AppData.getInstance().getCurrentOrder() != null && AppData.getInstance().getCurrentOrder().status != null &&
+                !AppData.getInstance().getCurrentOrder().status.isTerminal) {
+            this.readOrderStatusTimer = new CountDownTimer(3000, 500) {
+                public void onTick(long millisUntilFinished) {
 
-            }
-
-            public void onFinish() {
-                ReadOrderState();
-
-                if(AppData.getInstance().getCurrentOrder() != null) {
-//                    startTimer();
                 }
-            }
-        }.start();
+
+                public void onFinish() {
+                    ReadOrderState();
+
+                    if (AppData.getInstance().getCurrentOrder() != null) {
+//                    startTimer();
+                    }
+                }
+            }.start();
+        }
     }
 
     void ReadOrderState() {
@@ -108,6 +112,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                         AppData.getInstance().setCurrentOrder(response.body().getOrderData());
                         if (order.status != null && order.status.status != null) {
                             changeStatusByEnum(order.status.status);
+                        }
+                        if(order.status != null) {
+                            if(order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
+                                return;
+                            }
                         }
                     }
                     startTimer();
@@ -136,11 +145,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             ButterKnife.bind(this, mapView);
         }
         catch (InflateException e) {
-
         }
-
-
-        Log.d("taxi5", "ON CREATE MAP VIEW");
 
         this.mapFragment = this;
 
@@ -211,8 +216,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         Call<LocationsListResponseData> call = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
 
-        statusCreateOrderFragment.setFromText("");
-        statusCreateOrderFragment.ShowProgressBar();
+        if(statusCreateOrderFragment.isVisible()) {
+            statusCreateOrderFragment.setFromText("");
+            statusCreateOrderFragment.ShowProgressBar();
+        }
 
         call.enqueue(new Callback<LocationsListResponseData>() {
             @Override
@@ -330,7 +337,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void changeStatus(StatusesBaseFragment statusFragment) {
-        if(AppData.getInstance().getAppForeground()) {
+        if(AppData.getInstance().getAppForeground() && isVisible()) {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
             ft.replace(R.id.fragment_status, statusFragment);
@@ -344,5 +351,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
 
+    public void ShowReviewStatus() {
+        changeStatus(statusReviewFragment);
+    }
+    public void ShowReviewCompletedStatus() {
+        changeStatus(statusReviewCompletedFragment);
+    }
 
 }

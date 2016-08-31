@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.FragmentPlans;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity
 
     public FragmentMap mapFragment = new FragmentMap();
     public FragmentScreenProfile fragmentScreenProfile = new FragmentScreenProfile();
+    public FragmentAboutUs fragmentAboutUs = new FragmentAboutUs();
+    public FragmentPlans fragmentPlans = new FragmentPlans();
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 //        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //        ft.commit();
 
-        OpenMap();
+        OpenClearMap();
 
 //        FragmentTransaction ft1 = getFragmentManager().beginTransaction();
 //        ft1.replace(R.id.main_activity_fragment_custom_toolbar, customToolbar);
@@ -180,6 +183,11 @@ public class MainActivity extends AppCompatActivity
         AppData.getInstance().setAppForeground(false);
     }
 
+    public void OpenPlansMenu() {
+        ChangeFragment(fragmentPlans);
+        CloseMenus();
+    }
+
     public void OpenProfileMenu() {
 //        Log.d("taxi5", "onProfileButtonClick");
 
@@ -197,6 +205,11 @@ public class MainActivity extends AppCompatActivity
 //        mapFragment.RefreshView();
 //        if(mapFragment.isVisible()) {
 //        }
+    }
+
+    public void OpenAboutUs() {
+        ChangeFragment(fragmentAboutUs);
+        CloseMenus();
     }
 
     public void OpenClearMap() {

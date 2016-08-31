@@ -4,7 +4,6 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -98,7 +97,7 @@
 
 
         <Button
-            android:id="@+id/fragment_status_order_complete_aprove_button"
+            android:id="@+id/fragment_status_order_complete_review_button"
 
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"

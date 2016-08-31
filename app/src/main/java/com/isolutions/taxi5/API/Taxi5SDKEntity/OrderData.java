@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fedar.trukhan on 22.08.16.
@@ -78,8 +79,7 @@ public class OrderData {
     @Expose
     public List<AmountData> amountPaid;
 
-    @Override
-    public String toString() {
-        return "test";
-    }
+    @SerializedName("events")
+    @Expose
+    public Map<String, Long> events;
 }

@@ -1,5 +1,6 @@
 <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="56dp"
+    android:background="@color/whiteColor"
     android:id="@+id/toolbar_main_constraint"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -37,6 +38,7 @@
         />
 
     <ImageView
+        android:id="@+id/toolbar_right_menu_icon"
         android:layout_width="18dp"
         android:layout_height="22dp"
         android:src="@drawable/toolbar_right_menu_icon"
@@ -47,6 +49,35 @@
         app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
         app:layout_constraintRight_toRightOf="@id/toolbar_main_constraint"
         />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/toolbar_orders_count_background"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+
+        android:src="@color/defaultRed"
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/toolbar_right_menu_icon"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_right_menu_icon"
+        />
+
+    <TextView
+        android:id="@+id/toolbar_orders_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/defaultWhite"
+        android:textSize="10sp"
+        android:fontFamily="sans-serif"
+
+        app:layout_constraintCenterX_toCenterX="@id/toolbar_orders_count_background"
+        app:layout_constraintCenterY_toCenterY="@id/toolbar_orders_count_background"
+        />
+
     <Button
         android:id="@+id/toolbar_right_menu_button"
         android:layout_width="40dp"

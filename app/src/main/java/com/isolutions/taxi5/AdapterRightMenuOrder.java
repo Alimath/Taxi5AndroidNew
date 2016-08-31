@@ -129,7 +129,7 @@ public class AdapterRightMenuOrder extends BaseAdapter {
                     toTextView.setText(order.to.getStringDescription());
                 }
                 else {
-                    toTextView.setText("");
+                    toTextView.setText(AppData.getInstance().getAppContext().getString(R.string.history_order_cell_to_point_not_defined));
                 }
                 if (order.status != null && order.status.status != null) {
                     if(order.status.status == OrderStatusType.CarDelivering && order.eta != null) {
@@ -141,7 +141,7 @@ public class AdapterRightMenuOrder extends BaseAdapter {
                     }
                 }
                 else {
-                    statusTextView.setText("");
+                    statusTextView.setText(AppData.getInstance().getAppContext().getString(R.string.history_order_cell_to_point_not_defined));
                 }
 
 
