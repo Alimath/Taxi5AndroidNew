@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity
 //                super.onBackPressed();
             }
         }
+        if(mapFragment!= null && mapFragment.isVisible() && mapFragment.statusCreateOrderFindAddressFragment != null && mapFragment.statusCreateOrderFindAddressFragment.isVisible()) {
+            mapFragment.HideSearhAddressView();
+        }
     }
 
     @Override

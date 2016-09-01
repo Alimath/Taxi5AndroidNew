@@ -106,7 +106,7 @@ public class FragmentLoginSMS extends Fragment {
         if(taxi5SDK == null) {
             return;
         }
-        Call<TokenData> call = taxi5SDK.Authorization("friday_sms", numberStr, "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", code);
+        Call<TokenData> call = taxi5SDK.Authorization("friday_sms", numberStr, AppData.client_id, AppData.client_secret, code);
 
         call.enqueue(new Callback<TokenData>() {
             @Override
@@ -184,7 +184,7 @@ public class FragmentLoginSMS extends Fragment {
 
 
     public void onResponseAuthorization(Call<TokenData> call, Response<TokenData> response) {
-        if(response.code() == 200) {
+        if(response.isSuccessful()) {
 //            Log.d("taxi5", "response: " + response.body());
             response.body().setAuthorized(true);
             response.body().saveTokenData();

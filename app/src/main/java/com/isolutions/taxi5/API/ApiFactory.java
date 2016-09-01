@@ -41,13 +41,9 @@ public class ApiFactory {
 
     public static Taxi5SDK getTaxi5SDK() {
         if(isNetworkConnected()) {
-            Log.d("taxi5", "has inet connection");
             return getRetrofit().create(Taxi5SDK.class);
         }
         else {
-            Log.d("taxi5", "no inet connection");
-
-
             Intent intent = new Intent(AppData.getInstance().currentActivity, NoInternetActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             AppData.getInstance().currentActivity.startActivity(intent);

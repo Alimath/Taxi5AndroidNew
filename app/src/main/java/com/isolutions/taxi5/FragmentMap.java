@@ -76,7 +76,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     LatLng latLng = new LatLng(AppData.getInstance().getCurrentOrder().from.latitude, AppData.getInstance().getCurrentOrder().from.longitude);
                     statusCreateOrderFragment.setFromLocation(AppData.getInstance().getCurrentOrder().from);
                     if(AppData.getInstance().getCurrentOrder().to != null) {
-                        statusCreateOrderFragment.setFromLocation(AppData.getInstance().getCurrentOrder().to);
+                        statusCreateOrderFragment.setToLocation(AppData.getInstance().getCurrentOrder().to);
                     }
                     ScrollMaptoPos(latLng, true);
                 }
@@ -392,7 +392,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
             ft.replace(R.id.fragment_search_addresses, statusCreateOrderFindAddressFragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.addToBackStack("find_addresses");
             ft.commit();
 
             if(AppData.getInstance().toolbar != null) {
@@ -406,14 +405,18 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void HideSearhAddressView() {
         if(this.statusCreateOrderFindAddressFragment.isVisible()) {
+//            this.statusCreateOrderFindAddressFragment.
+
+            AppData.getInstance().toolbar.ConvertToDefaultToolbar();
+
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-
-            ft.replace(R.id.fragment_search_addresses, null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.addToBackStack("find_addresses");
+//
+            ft.remove(this.statusCreateOrderFindAddressFragment);
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            ft.addToBackStack("find_addresses");
             ft.commit();
-
-            getChildFragmentManager();
+//
+            getChildFragmentManager().executePendingTransactions();
         }
     }
 

@@ -127,7 +127,10 @@ public class FragmentScreenProfile extends Fragment {
             emailEditText.setText(ProfileData.getInstance().getEmail());
         }
 
-        if(ProfileData.getInstance().getAvatarURL() != null) {
+        if(ProfileData.getInstance().getAvatarImage() != null) {
+            this.avatarImage.setImageBitmap(ProfileData.getInstance().getAvatarImage());
+        }
+        else if(ProfileData.getInstance().getAvatarURL() != null) {
             if(!ProfileData.getInstance().getAvatarURL().isEmpty()) {
                 Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
             }
@@ -162,6 +165,7 @@ public class FragmentScreenProfile extends Fragment {
                 isUploading = false;
                 HideProgressBar();
                 refreshProfile();
+                newAvatarImage = null;
                 if(response.isSuccessful()) {
                     Log.d("taxi5", "ok to load profile");
                 }
@@ -198,12 +202,13 @@ public class FragmentScreenProfile extends Fragment {
 
     @OnClick(R.id.fragment_screen_profile_choose_avatar_btn)
     public void onChooseAvatarClick() {
-//        RxImagePicker.with(AppData.getInstance().getAppContext()).requestImage(Sources.GALLERY).subscribe(new Action1<Uri>() {
-//            @Override
-//            public void call(Uri uri) {
-//                Picasso.with(getActivity().getApplicationContext()).load(uri).resize(300, 300).onlyScaleDown().into(target);
-//            }
-//        });
+        RxImagePicker.with(AppData.getInstance().getAppContext()).requestImage(Sources.GALLERY).subscribe(new Action1<Uri>() {
+            @Override
+            public void call(Uri uri) {
+                Picasso.with(getActivity().getApplicationContext()).load(uri).resize(400, 400).onlyScaleDown().into(target);
+
+            }
+        });
     }
 
 }

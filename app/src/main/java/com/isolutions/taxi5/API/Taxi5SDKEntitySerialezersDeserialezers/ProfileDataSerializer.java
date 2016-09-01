@@ -29,7 +29,7 @@ public class ProfileDataSerializer implements JsonSerializer<ProfileData> {
         result.remove("avatar");
         if(src.getAvatarImage() != null) {
             String encodedImage = encodeToBase64(src.getAvatarImage(), Bitmap.CompressFormat.PNG, 100);
-            result.addProperty("avatar", encodedImage);
+            result.addProperty("avatar", "data:image/png;base64,"+encodedImage);
         }
 
 

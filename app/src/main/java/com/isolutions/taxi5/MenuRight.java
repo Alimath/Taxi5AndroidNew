@@ -101,8 +101,6 @@ public class MenuRight extends Fragment {
                         isHistorySelected = true;
                     }
 
-//                    TODO: Сделать запись orderdata в appdata, после чего просто открывать карту. а уже в самой карте при инициализации сделать проверку и обновление статусов.
-
                     if (!isHistorySelected) {
                         AppData.getInstance().setCurrentOrder(activeOrders.get(realPos), false);
                         if (AppData.getInstance().mainActivity != null) {

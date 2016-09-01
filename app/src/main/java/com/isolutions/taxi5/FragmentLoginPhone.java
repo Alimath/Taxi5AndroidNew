@@ -95,7 +95,7 @@ public class FragmentLoginPhone extends Fragment {
         if(taxi5SDK == null) {
             return;
         }
-        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, "taxi5_ios_app");
+        Call<Void> call = taxi5SDK.GetSMSCode("friday_sms", numberStr, AppData.client_id);
 
         call.enqueue(new Callback<Void>() {
             @Override

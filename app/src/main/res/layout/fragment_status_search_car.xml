@@ -11,16 +11,11 @@
 
     <ImageView
         android:id="@+id/fragment_status_search_car_rotation_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/status_search_car_rotatet_image"
 
         android:clickable="true"
-
-        android:indeterminateOnly="true"
-        android:indeterminateBehavior="cycle"
-        android:indeterminateDuration="3500"
-        android:scaleType="fitCenter"
 
         app:layout_constraintCenterX_toCenterX="@id/fragment_status_search_car_main"
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_search_car_main"

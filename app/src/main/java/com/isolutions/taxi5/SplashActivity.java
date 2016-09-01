@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         if(taxi5SDK == null) {
             return;
         }
-        Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", "taxi5_ios_app", "cri2thrauoau6whucizem8aukeo9traa", TokenData.getInstance().getRefreshToken());
+        Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", AppData.client_id, AppData.client_secret, TokenData.getInstance().getRefreshToken());
 
         call.enqueue(new Callback<TokenData>() {
             @Override
@@ -78,7 +78,6 @@ public class SplashActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-            //TODO: make a clear
         }
     }
 

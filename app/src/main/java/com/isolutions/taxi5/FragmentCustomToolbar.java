@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,9 @@ public class FragmentCustomToolbar extends Fragment {
 
     @BindView(R.id.toolbar_main_search_bar)
     ConstraintLayout searchToolbar;
+
+    @BindView(R.id.toolbar_main_search_edit_text)
+    EditText searchEditText;
 
     FragmentStatusCreateOrderFindAddress createOrderFindAddress;
 
@@ -83,14 +87,16 @@ public class FragmentCustomToolbar extends Fragment {
     }
 
     public void ConvertToDefaultToolbar() {
+
         defaultToolbar.setVisibility(View.VISIBLE);
         searchToolbar.setVisibility(View.INVISIBLE);
+        searchEditText.setText("");
     }
 
     @OnTextChanged(R.id.toolbar_main_search_edit_text)
     public void onTextChanged(CharSequence text) {
         if(createOrderFindAddress != null) {
-            if(text.length() > 2) {
+            if(text.length() > 0) {
                 createOrderFindAddress.SearchAddressesWithString(text.toString());
             }
         }

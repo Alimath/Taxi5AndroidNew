@@ -64,6 +64,7 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
         startRotateSearchCircleAnimation();
 
+//        rotatedImage.setVisibility(View.INVISIBLE);
 
         HideEstimatedPrice();
         HideCancelProgressBar();

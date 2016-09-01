@@ -58,7 +58,7 @@ public class LocationData {
             return locationStringDescription;
         }
         else {
-            String longitudeString = Location.convert(longitude, Location.FORMAT_SECONDS);
+                String longitudeString = Location.convert(longitude, Location.FORMAT_SECONDS);
             String latitudeString = Location.convert(latitude, Location.FORMAT_SECONDS);
 
             String[] separatedLng = longitudeString .split(":");
@@ -75,13 +75,16 @@ public class LocationData {
 
             Context appCtx = AppData.getInstance().getAppContext();
 
+            double secondsLng = Double.parseDouble(separatedLng[2]);
+            double secondsLat = Double.parseDouble(separatedLat[2]);
+
             longitudeString = separatedLng[0] + appCtx.getString(R.string.degree_sign) +
                     separatedLng[1] + appCtx.getString(R.string.degree_minute_sign) +
-                    separatedLng[2].split(",")[0] + appCtx.getString(R.string.degree_second_sign)+longWE;
+                    (int)secondsLng + appCtx.getString(R.string.degree_second_sign)+longWE;
 
             latitudeString = separatedLat[0] + appCtx.getString(R.string.degree_sign) +
                     separatedLat[1] + appCtx.getString(R.string.degree_minute_sign) +
-                    separatedLat[2].split(",")[0] + appCtx.getString(R.string.degree_second_sign)+latNS;
+                    (int)secondsLat + appCtx.getString(R.string.degree_second_sign)+latNS;
 
             return latitudeString + " " + longitudeString;
         }

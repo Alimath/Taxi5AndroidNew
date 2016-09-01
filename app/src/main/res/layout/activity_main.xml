@@ -30,7 +30,7 @@
         android:id="@+id/main_activity_fragment_map_layout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp">
+        android:paddingTop="56dp">
         </FrameLayout>
 
     <android.support.design.widget.NavigationView
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="false">
 
         <fragment
             android:layout_width="match_parent"
@@ -52,13 +52,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         >
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.isolutions.taxi5.MenuRight"
-            tools:layout="@layout/left_drawer"/>
+            tools:layout="@layout/right_drawer"/>
 
     </android.support.design.widget.NavigationView>
 

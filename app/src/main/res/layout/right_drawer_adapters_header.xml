@@ -21,8 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:text="Текущие заказы"
-
         android:textColor="@color/defaultBlack"
         android:fontFamily="sans-serif"
         android:textSize="12sp"

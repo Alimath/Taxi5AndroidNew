@@ -63,7 +63,10 @@ public class MenuLeft extends Fragment {
     }
 
     public void RefreshProfileData() {
-        if(ProfileData.getInstance().getAvatarURL() != null) {
+        if(ProfileData.getInstance().getAvatarImage() != null) {
+            this.avatarImage.setImageBitmap(ProfileData.getInstance().getAvatarImage());
+        }
+        else if(ProfileData.getInstance().getAvatarURL() != null) {
             if(!ProfileData.getInstance().getAvatarURL().isEmpty()) {
                 Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
             }
