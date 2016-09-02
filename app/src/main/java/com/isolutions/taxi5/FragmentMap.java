@@ -1,5 +1,6 @@
 package com.isolutions.taxi5;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.CountDownTimer;
@@ -9,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,7 +35,7 @@ import retrofit2.Response;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener {
     private GoogleMap mMap;
-    public LatLng nullPoint = new LatLng(53.902464, 27.56149);
+
     private CountDownTimer readOrderStatusTimer;
 
 
@@ -65,6 +67,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void RefreshView() {
+
         if(AppData.getInstance().isOrderHistory) {
             if(readOrderCall != null) {
                 readOrderCall.cancel();
@@ -78,10 +81,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     if(AppData.getInstance().getCurrentOrder().to != null) {
                         statusCreateOrderFragment.setToLocation(AppData.getInstance().getCurrentOrder().to);
                     }
+                    else {
+                        statusCreateOrderFragment.setToLocation(null);
+                    }
                     ScrollMaptoPos(latLng, true);
                 }
                 else {
-                    ScrollMaptoPos(nullPoint, false);
+                    AppData.getInstance().setCurrentOrder(null, false);
+                    statusCreateOrderFragment.setToLocation(null);
+                    ScrollMaptoPos(AppData.getInstance().nullPoint, false);
                 }
             }
             else {
@@ -204,7 +212,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nullPoint, 17));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(AppData.getInstance().nullPoint, 17));
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
         mMap.setOnCameraIdleListener(this);
@@ -394,6 +402,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
 
+            statusCreateOrderFindAddressFragment.isFromLocationSelect = isFromAddress;
+
             if(AppData.getInstance().toolbar != null) {
                 AppData.getInstance().toolbar.ConvertToSearchBar();
             }
@@ -405,18 +415,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void HideSearhAddressView() {
         if(this.statusCreateOrderFindAddressFragment.isVisible()) {
-//            this.statusCreateOrderFindAddressFragment.
-
-            AppData.getInstance().toolbar.ConvertToDefaultToolbar();
-
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-//
             ft.remove(this.statusCreateOrderFindAddressFragment);
 //            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //            ft.addToBackStack("find_addresses");
             ft.commit();
 //
             getChildFragmentManager().executePendingTransactions();
+
+            AppData.getInstance().toolbar.ConvertToDefaultToolbar();
         }
     }
 

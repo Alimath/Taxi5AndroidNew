@@ -87,7 +87,7 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
             public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
                 HideCancelProgressBar();
                 if (response.isSuccessful()) {
-                    appData.setCurrentOrder(null, false);
+                    appData.setCurrentOrder(FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder(), true);
                     FragmentMap.getMapFragment().RefreshView();
                 }
             }

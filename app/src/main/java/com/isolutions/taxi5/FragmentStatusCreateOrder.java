@@ -97,6 +97,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         }
     }
 
+    public void ClearFields() {
+        setFromLocation(null);
+        setToLocation(null);
+        commentEditText.setText("");
+    }
+
     public void setToLocation(LocationData toLoc) {
         if(toLoc != null) {
             toLocation = toLoc;
@@ -179,7 +185,6 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         order.options.developer = true;
 
         if(fromLocation != null) {
-            Log.d("taxi5", fromLocation.getStringDescription());
             order.from = fromLocation;
         }
         if(toLocation != null) {
@@ -191,7 +196,6 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @Override
     public void fillWithOrder() {
-
     }
 
     void SetCreateOrderButtonAvailableState(boolean state) {
@@ -238,7 +242,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_create_order_from_to_view_search_from_address)
     public void OnSearchFromAddressClick() {
-        Log.d("taxi5", "Show search addresse");
+//        Log.d("taxi5", "Show search addresse");
         if(FragmentMap.getMapFragment() != null) {
             FragmentMap.getMapFragment().ShowSearchAddressView(true);
         }
@@ -246,7 +250,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address)
     public void OnSearhToAddressClick() {
-        Log.d("taxi5", "Show search addresse");
+//        Log.d("taxi5", "Show search addresse");
         FragmentMap.getMapFragment().ShowSearchAddressView(false);
+    }
+
+    @OnClick(R.id.fragment_status_create_order_my_location_button)
+    public void OnMyLocationClick() {
+        FragmentMap.getMapFragment().ScrollMaptoPos(AppData.getInstance().nullPoint, false);
     }
 }

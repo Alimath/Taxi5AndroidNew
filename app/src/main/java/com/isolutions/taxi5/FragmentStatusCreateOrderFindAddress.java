@@ -31,6 +31,8 @@ import retrofit2.Response;
 
 public class FragmentStatusCreateOrderFindAddress extends Fragment {
 
+    public boolean isFromLocationSelect = true;
+
     AdapterSearchAddress adapter;
 
     private ArrayList<LocationData> mData = new ArrayList<>();
@@ -46,6 +48,7 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
         View view= inflater.inflate(R.layout.fragment_status_create_order_find_address, container, false);
         ButterKnife.bind(this, view);
 
+        Log.d("taxi5", "address view showed");
         adapter = new AdapterSearchAddress(AppData.getInstance().getAppContext(), mData);
 
         listView.setAdapter(adapter);
@@ -65,6 +68,34 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
     }
 
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d("taxi5", adapter.getItem(i).getStringDescription());
+        LocationData selectedLocation = adapter.getItem(i);
+        if((selectedLocation.details != null && selectedLocation.details.address.building != null) ||
+                (selectedLocation.details != null && selectedLocation.details.locationObject != null)) {
+            if (AppData.getInstance().mainActivity != null) {
+                AppData.getInstance().mainActivity.onBackPressed();
+
+                if (FragmentMap.getMapFragment() != null && FragmentMap.getMapFragment().statusCreateOrderFragment != null &&
+                        FragmentMap.getMapFragment().statusCreateOrderFragment.isAdded()) {
+                    if (isFromLocationSelect) {
+                        FragmentMap.getMapFragment().statusCreateOrderFragment.setFromLocation(selectedLocation);
+                    } else {
+                        FragmentMap.getMapFragment().statusCreateOrderFragment.setToLocation(selectedLocation);
+                    }
+                    OrderData orderData = FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder();
+                    AppData.getInstance().setCurrentOrder(orderData, true);
+                    FragmentMap.getMapFragment().RefreshView();
+
+                }
+            }
+        }
+        else {
+            if(AppData.getInstance().toolbar != null && AppData.getInstance().toolbar.searchToolbar.getVisibility() != View.INVISIBLE) {
+                AppData.getInstance().toolbar.searchEditText.setText(selectedLocation.getStringDescription());
+                AppData.getInstance().toolbar.searchEditText.requestFocus();
+                AppData.getInstance().toolbar.searchEditText.setSelection(AppData.getInstance().toolbar.searchEditText.getText().toString().length());
+            }
+        }
 
     }
 

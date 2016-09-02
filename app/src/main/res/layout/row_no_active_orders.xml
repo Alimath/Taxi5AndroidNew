@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row_active_order_main">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:textAlignment="center"
+
+        android:textSize="14sp"
+        android:text="@string/row_no_active_orders_text"
+        android:textColor="@color/registrationColorHeader2"
+
+        app:layout_constraintCenterY_toCenterY="parent"
+        app:layout_constraintCenterX_toCenterX="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

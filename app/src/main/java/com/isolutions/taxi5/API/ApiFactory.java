@@ -80,7 +80,7 @@ public class ApiFactory {
         return stackOfCalls;
     }
 
-    private static boolean isNetworkConnected() {
+    public static boolean isNetworkConnected() {
         if(AppData.getInstance() != null && AppData.getInstance().getAppContext() != null) {
             ConnectivityManager cm = (ConnectivityManager) AppData.getInstance().getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             return cm.getActiveNetworkInfo() != null;

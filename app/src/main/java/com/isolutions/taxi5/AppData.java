@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 
 import java.io.ByteArrayOutputStream;
@@ -57,6 +58,8 @@ public class AppData {
     public void setServerTimeZoneOffset(Long serverTimeZoneOffset) {
         this.serverTimeZoneOffset = serverTimeZoneOffset;
     }
+
+    public LatLng nullPoint = new LatLng(53.902464, 27.56149);
 
     public Long getServerClientOffset() {
         return serverClientOffset;

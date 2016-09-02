@@ -75,8 +75,11 @@ public class LocationData {
 
             Context appCtx = AppData.getInstance().getAppContext();
 
-            double secondsLng = Double.parseDouble(separatedLng[2]);
-            double secondsLat = Double.parseDouble(separatedLat[2]);
+            int secondsLng = Integer.parseInt(separatedLng[2].split(",")[0]);
+            int secondsLat = Integer.parseInt(separatedLat[2].split(",")[0]);
+
+//            double secondsLng = Double.parseDouble(separatedLng[2]);
+//            double secondsLat = Double.parseDouble(separatedLat[2]);
 
             longitudeString = separatedLng[0] + appCtx.getString(R.string.degree_sign) +
                     separatedLng[1] + appCtx.getString(R.string.degree_minute_sign) +

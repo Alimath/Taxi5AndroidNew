@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.adamstyrc.cookiecutter.CookieCutterImageView;
+import com.adamstyrc.cookiecutter.CookieCutterShape;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -47,7 +50,7 @@ import rx.functions.Action1;
 
 public class FragmentScreenProfile extends Fragment {
 
-    private boolean isUploading = false;
+    private static volatile boolean isUploading = false;
 
     @BindView(R.id.profile_screen_name_edit_text)
     EditText nameEditText;
@@ -63,6 +66,14 @@ public class FragmentScreenProfile extends Fragment {
 
     @BindView(R.id.fragment_screen_profile_upload_btn_progress_bar)
     ProgressBar uploadProgressBar;
+    @BindView(R.id.fragment_screen_profile_upload_btn)
+    Button uploadButton;
+
+    @BindView(R.id.fragment_screen_profile_image_croper)
+    CookieCutterImageView croper;
+
+    @BindView(R.id.fragment_screen_profile_image_croper_button)
+    Button croperButton;
 
     ProfileData profileData;
 
@@ -71,9 +82,11 @@ public class FragmentScreenProfile extends Fragment {
     private Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            // loading of the bitmap was a success
-            newAvatarImage = bitmap;
-            avatarImage.setImageBitmap(bitmap);
+            croper.setVisibility(View.VISIBLE);
+            croper.getParams().setShape(CookieCutterShape.SQUARE);
+            croperButton.setVisibility(View.VISIBLE);
+            croper.setImageBitmap(bitmap);
+
         }
 
         @Override
@@ -98,7 +111,13 @@ public class FragmentScreenProfile extends Fragment {
 
         nameEditText.clearFocus();
         phoneTextView.clearFocus();
-        HideProgressBar();
+
+        if(isUploading) {
+            ShowProgressBar();
+        }
+        else {
+            HideProgressBar();
+        }
 
         return screenView;
     }
@@ -140,48 +159,50 @@ public class FragmentScreenProfile extends Fragment {
 
     @OnClick(R.id.fragment_screen_profile_upload_btn)
     public void OnUploadProfileClick() {
-        isUploading = true;
-        ShowProgressBar();
+        if(!isUploading) {
+            isUploading = true;
+            ShowProgressBar();
 
-        ProfileData profileData = ProfileData.getInstance();
+            ProfileData profileData = ProfileData.getInstance();
 
-        profileData.setName(this.nameEditText.getText().toString());
-        profileData.setEmail(this.emailEditText.getText().toString());
-        if(newAvatarImage != null) {
-            profileData.setAvatarImage(newAvatarImage);
-        }
-
-        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
-        if(taxi5SDK == null) {
-            return;
-        }
-        Call<OrderResponseActionData> call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(), profileData);
-
-        this.profileData = profileData;
-
-        call.enqueue(new Callback<OrderResponseActionData>() {
-            @Override
-            public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
-                isUploading = false;
-                HideProgressBar();
-                refreshProfile();
-                newAvatarImage = null;
-                if(response.isSuccessful()) {
-                    Log.d("taxi5", "ok to load profile");
-                }
-                else {
-                    Log.d("taxi5", "error to load profile");
-
-                }
+            profileData.setName(this.nameEditText.getText().toString());
+            profileData.setEmail(this.emailEditText.getText().toString());
+            if (newAvatarImage != null) {
+                profileData.setAvatarImage(newAvatarImage);
             }
 
-            @Override
-            public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
-                isUploading = false;
-                HideProgressBar();
-                Log.d("taxi5", "failure to load profile: " + t.getLocalizedMessage());
+            Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+            if (taxi5SDK == null) {
+                return;
             }
-        });
+            Call<OrderResponseActionData> call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(), profileData);
+
+            this.profileData = profileData;
+
+            call.enqueue(new Callback<OrderResponseActionData>() {
+                @Override
+                public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+                    isUploading = false;
+                    HideProgressBar();
+                    refreshProfile();
+                    newAvatarImage = null;
+                    if (response.isSuccessful()) {
+                        Log.d("taxi5", "ok to load profile");
+                    } else {
+                        Log.d("taxi5", "error to load profile");
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+                    isUploading = false;
+                    newAvatarImage = null;
+                    HideProgressBar();
+                    Log.d("taxi5", "failure to load profile: " + t.getLocalizedMessage());
+                }
+            });
+        }
     }
 
     private void refreshProfile() {
@@ -193,10 +214,12 @@ public class FragmentScreenProfile extends Fragment {
     }
 
     public void ShowProgressBar() {
+        uploadButton.setClickable(false);
         uploadProgressBar.setVisibility(View.VISIBLE);
     }
 
     public void HideProgressBar() {
+        uploadButton.setClickable(true);
         uploadProgressBar.setVisibility(View.INVISIBLE);
     }
 
@@ -205,10 +228,18 @@ public class FragmentScreenProfile extends Fragment {
         RxImagePicker.with(AppData.getInstance().getAppContext()).requestImage(Sources.GALLERY).subscribe(new Action1<Uri>() {
             @Override
             public void call(Uri uri) {
-                Picasso.with(getActivity().getApplicationContext()).load(uri).resize(400, 400).onlyScaleDown().into(target);
-
+                Picasso.with(getActivity().getApplicationContext()).load(uri).into(target);
             }
         });
+    }
+
+    @OnClick(R.id.fragment_screen_profile_image_croper_button)
+    public void onPickImageClick() {
+        newAvatarImage = croper.getCroppedBitmap();
+        avatarImage.setImageBitmap(newAvatarImage);
+        croper.setImageBitmap(null);
+        croper.setVisibility(View.INVISIBLE);
+        croperButton.setVisibility(View.INVISIBLE);
     }
 
 }

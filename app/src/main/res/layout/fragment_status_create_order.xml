@@ -441,4 +441,20 @@
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_create_order_main"
         />
 
+    <Button
+        android:id="@+id/fragment_status_create_order_my_location_button"
+
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:background="@drawable/my_location_button_icon"
+
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+
+        app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view"
+        app:layout_constraintBottom_toTopOf="@id/fragment_status_create_order_from_to_view"
+        />
+
 </android.support.constraint.ConstraintLayout>

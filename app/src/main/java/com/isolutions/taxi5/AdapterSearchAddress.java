@@ -39,7 +39,7 @@ public class AdapterSearchAddress extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public LocationData getItem(int position) {
         return mDataSource.get(position);
     }
 

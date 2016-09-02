@@ -91,6 +91,7 @@ public class MenuRight extends Fragment {
                         AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
                     }
                     AppData.getInstance().mainActivity.OpenClearMap();
+                    FragmentMap.getMapFragment().statusCreateOrderFragment.ClearFields();
 
                     boolean isHistorySelected = false;
 
@@ -117,30 +118,6 @@ public class MenuRight extends Fragment {
 
                         FragmentMap.getMapFragment().RefreshView();
                     }
-//                        AppData.getInstance().setCurrentOrder(historyOrders.get(realPos), true);
-//                        AppData.getInstance().mainActivity.OpenMap();
-//
-//                        if (AppData.getInstance().mainActivity != null) {
-//                            AppData.getInstance().mainActivity.CloseRightMenu();
-//                        }
-//
-//                        FragmentMap.getMapFragment().RefreshView();
-
-//                        if (order != null) {
-//                            if (order.from != null) {
-//                                mapFragment.statusCreateOrderFragment.setFromLocation(order.from);
-//                                mapFragment.ScrollMaptoPos(new LatLng(order.from.latitude, order.from.longitude), true);
-//                            } else {
-//                                mapFragment.ScrollMaptoPos(mapFragment.nullPoint, false);
-//                            }
-//                            if (order.to != null) {
-//                                mapFragment.statusCreateOrderFragment.setToLocation(order.to);
-//                            } else {
-//                                mapFragment.statusCreateOrderFragment.setToLocation(null);
-//                            }
-//
-//                        }
-//                    }
                 }
             }
 

@@ -119,6 +119,7 @@
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
     <string name="profile_screen_upload_data">Сохранить</string>
+    <string name="profile_screen_upload_pick_image_title">Выбрать</string>
 
     <string name="status_order_review_send_review_button_title">ОТПРАВИТЬ ОТЗЫВ</string>
     <string name="status_order_review_stars_header">Оценки по критериям</string>
@@ -141,5 +142,10 @@
     <string name="row_plan_data_idle_title">Час простоя</string>
     <string name="row_plan_data_base_title">Посадка</string>
     <string name="row_plan_data_airport_title">Аэропорт</string>
+    
+    <string name="permission_location_rationale_message">Для более удобного и быстрого заказа такси, пожалуйста, разрешите приложению определять ваше местоположение.</string>
+    <string name="permission_location_denied_message">Данному приложению запрещено использовать вашу геопозицию.\nДля более удобного и быстрого заказа такси, пожалуйста, разрешите приложению определять ваше местоположение.</string>
+    <string name="row_no_active_orders_text">В данный момент\nактивных заказов нет</string>
+
 
 </resources>

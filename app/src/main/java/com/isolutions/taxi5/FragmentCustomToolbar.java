@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by fedar.trukhan on 22.08.16.
@@ -87,10 +90,18 @@ public class FragmentCustomToolbar extends Fragment {
     }
 
     public void ConvertToDefaultToolbar() {
-
         defaultToolbar.setVisibility(View.VISIBLE);
         searchToolbar.setVisibility(View.INVISIBLE);
         searchEditText.setText("");
+        if(AppData.getInstance().mainActivity != null) {
+            try {
+                InputMethodManager inputManager = (InputMethodManager) AppData.getInstance().mainActivity.getSystemService(INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(AppData.getInstance().mainActivity.getCurrentFocus().getWindowToken(), 0);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @OnTextChanged(R.id.toolbar_main_search_edit_text)

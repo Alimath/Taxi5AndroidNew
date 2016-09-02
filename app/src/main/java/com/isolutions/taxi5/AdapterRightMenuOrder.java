@@ -44,12 +44,22 @@ public class AdapterRightMenuOrder extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDataSource.size();
+        if(isActiveOrders && mDataSource.size() == 0) {
+            return 1;
+        }
+         else {
+            return mDataSource.size();
+        }
     }
 
     @Override
     public OrderData getItem(int position) {
-        return mDataSource.get(position);
+        if(isActiveOrders && mDataSource.size() == 0) {
+            return null;
+        }
+        else {
+            return mDataSource.get(position);
+        }
     }
 
     @Override
@@ -59,9 +69,15 @@ public class AdapterRightMenuOrder extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if(isActiveOrders && mDataSource.size() == 0) {
+            View retView = mInflater.inflate(R.layout.row_no_active_orders, parent, false);
+
+            return retView;
+        }
+
         ViewHolder holder;
 
-        if(convertView == null) {
+        if(convertView == null || (ViewHolder)convertView.getTag() == null) {
             convertView = mInflater.inflate(R.layout.row_active_order, parent, false);
 
             holder = new ViewHolder();

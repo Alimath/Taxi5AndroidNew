@@ -36,8 +36,8 @@ public class MenuLeft extends Fragment {
     TextView mapTextView;
     @BindView(R.id.left_drawer_my_places_text_view)
     TextView myPlacesTextView;
-    @BindView(R.id.left_drawer_payments_text_view)
-    TextView paymentsTextView;
+//    @BindView(R.id.left_drawer_payments_text_view)
+//    TextView paymentsTextView;
     @BindView(R.id.left_drawer_plans_text_view)
     TextView plansTextView;
     @BindView(R.id.left_drawer_about_text_view)
@@ -128,6 +128,7 @@ public class MenuLeft extends Fragment {
     @OnClick(R.id.left_drawer_map_button)
     public void onMapButtonClick() {
         if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().setCurrentOrder(null, false);
             AppData.getInstance().mainActivity.OpenClearMap();
             HighlightMenuItem(OpenFragmentTypes.Map);
         }
@@ -136,7 +137,7 @@ public class MenuLeft extends Fragment {
     public void ClearSelecting() {
         mapTextView.setTextColor(colorBlack);
         myPlacesTextView.setTextColor(colorBlack);
-        paymentsTextView.setTextColor(colorBlack);
+//        paymentsTextView.setTextColor(colorBlack);
         plansTextView.setTextColor(colorBlack);
         aboutUsTextView.setTextColor(colorBlack);
     }
@@ -152,7 +153,7 @@ public class MenuLeft extends Fragment {
                 myPlacesTextView.setTextColor(colorBlue);
                 break;
             case Payments:
-                paymentsTextView.setTextColor(colorBlue);
+//                paymentsTextView.setTextColor(colorBlue);
                 break;
             case Plans:
                 plansTextView.setTextColor(colorBlue);

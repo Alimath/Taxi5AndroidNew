@@ -1,10 +1,20 @@
 package com.isolutions.taxi5;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,7 +26,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.FragmentPlans;
@@ -24,11 +38,19 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,14 +64,81 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
 
+    LocationManager locationManager;
+    private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
+
+    private boolean isLocationEnabled() {
+        if(locationManager != null) {
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+        else {
+            return false;
+        }
+    }
+
+    PermissionListener locatioPermissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+//            Log.d("taxi5", "location check granted");
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//            Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//            Toast.makeText(MainActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
+    private LocationListener locationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            AppData.getInstance().nullPoint = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+//            checkEnabled();
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+//            checkEnabled();
+//            showLocation(locationManager.getLastKnownLocation(provider));
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+//            if (provider.equals(LocationManager.GPS_PROVIDER)) {
+//                tvStatusGPS.setText("Status: " + String.valueOf(status));
+//            } else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
+//                tvStatusNet.setText("Status: " + String.valueOf(status));
+//            }
+        }
+    };
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+//                    PERMISSION_ACCESS_COARSE_LOCATION);
+//        }
+        new TedPermission(this).setPermissionListener(this.locatioPermissionListener).setRationaleMessage(R.string.permission_location_rationale_message)
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION).setDeniedMessage(R.string.permission_location_denied_message).check();
+
         setContentView(R.layout.activity_main);
 
         AppData.getInstance().mainActivity = this;
         AppData.getInstance().currentActivity = this;
         OpenClearMap();
+
     }
 
     @Override
@@ -140,11 +229,17 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         AppData.getInstance().setAppForeground(true);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                0, 10, locationListener);
+        locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 0, 10,
+                locationListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        locationManager.removeUpdates(locationListener);
         AppData.getInstance().setAppForeground(false);
     }
 
@@ -174,7 +269,7 @@ public class MainActivity extends AppCompatActivity
         AppData.getInstance().setCurrentOrder(null, false);
         ChangeFragment(mapFragment);
         mapFragment.RefreshView();
-        mapFragment.ScrollMaptoPos(mapFragment.nullPoint, false);
+        mapFragment.ScrollMaptoPos(AppData.getInstance().nullPoint, false);
     }
 
     public void CloseMenus() {
