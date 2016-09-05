@@ -101,6 +101,9 @@ public class MenuRight extends Fragment {
                         realPos -= 1;
                         isHistorySelected = true;
                     }
+                    if(activeOrders.size() == 0) {
+                        realPos -= 1;
+                    }
 
                     if (!isHistorySelected) {
                         AppData.getInstance().setCurrentOrder(activeOrders.get(realPos), false);
@@ -156,9 +159,7 @@ public class MenuRight extends Fragment {
         }
         this.checkActiveOrderTimer = new CountDownTimer(3000, 1000) {
             public void onTick(long l) {
-
             }
-
             public void onFinish() {
                 CheckActiveOrders();
             }
@@ -169,7 +170,7 @@ public class MenuRight extends Fragment {
         if(this.checkHistoryOrderTimer != null) {
             this.checkHistoryOrderTimer.cancel();
         }
-        this.checkHistoryOrderTimer = new CountDownTimer(1500, 1000) {
+        this.checkHistoryOrderTimer = new CountDownTimer(300*1000, 1000) {
             @Override
             public void onTick(long l) {
 

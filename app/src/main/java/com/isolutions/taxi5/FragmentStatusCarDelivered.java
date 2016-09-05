@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,13 @@ public class FragmentStatusCarDelivered extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_car_delivered_call_to_driver)
     public void CallToDriverBtnClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity());
+        }
+        else {
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        }
         builder.setMessage(R.string.status_car_on_way_call_driver_dialog_message).setTitle(R.string.status_car_on_way_call_driver_dialog_title);
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
             @Override

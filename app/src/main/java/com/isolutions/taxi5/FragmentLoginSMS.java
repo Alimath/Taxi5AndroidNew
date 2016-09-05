@@ -212,10 +212,10 @@ public class FragmentLoginSMS extends Fragment {
 
                         loginActivity.OpenMainActivity();
                     }
-                    else {
-                        LoginActivity loginActivity = (LoginActivity) getActivity();
-                        loginActivity.OpenNameFragment();
-                    }
+//                    else {
+//                        LoginActivity loginActivity = (LoginActivity) getActivity();
+//                        loginActivity.OpenNameFragment();
+//                    }
                 }
 
                 @Override

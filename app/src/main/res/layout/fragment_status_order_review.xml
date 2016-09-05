@@ -8,9 +8,12 @@
 
 
     <View
+        android:id="@+id/fragment_status_review_main_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/whiteColor"
+        android:clickable="true"
+        android:soundEffectsEnabled="false"
         />
 
 

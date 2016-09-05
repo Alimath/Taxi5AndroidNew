@@ -21,6 +21,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +53,7 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
     Button cancelBtn;
 
     @BindView(R.id.fragment_status_search_car_cancel_button_progress_bar)
-    ProgressBar buttonCancelProgressBar;
+    AVLoadingIndicatorView buttonCancelProgressBar;
 
 
     @Override
@@ -96,9 +97,15 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
             if(order.from != null) {
                 fromLoc.setText(order.from.getStringDescription());
             }
+            else {
+                fromLoc.setText("");
+            }
         }
         if(order != null && order.to != null) {
             toLoc.setText(order.to.getStringDescription());
+        }
+        else {
+            toLoc.setText("");
         }
     }
 

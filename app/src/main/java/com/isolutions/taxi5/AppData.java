@@ -25,7 +25,6 @@ public class AppData {
     public static final String client_id = "taxi5_android_app";
     public static final String client_secret = "jasjh8afskjb3nbmansufi82jk2bdask";
 
-
     private static volatile AppData instance;
 
     private volatile OrderData currentOrder;

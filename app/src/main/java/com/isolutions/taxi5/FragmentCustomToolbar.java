@@ -1,5 +1,7 @@
 package com.isolutions.taxi5;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -42,6 +44,12 @@ public class FragmentCustomToolbar extends Fragment {
 
     @BindView(R.id.toolbar_main_search_edit_text)
     EditText searchEditText;
+
+    @BindView(R.id.toolbar_logo_image)
+    ImageView toolbarLogo;
+
+    @BindView(R.id.toolbar_title)
+    TextView titleTextView;
 
     FragmentStatusCreateOrderFindAddress createOrderFindAddress;
 
@@ -87,12 +95,19 @@ public class FragmentCustomToolbar extends Fragment {
     public void ConvertToSearchBar() {
         defaultToolbar.setVisibility(View.INVISIBLE);
         searchToolbar.setVisibility(View.VISIBLE);
+        searchEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) AppData.getInstance().currentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
     }
 
     public void ConvertToDefaultToolbar() {
         defaultToolbar.setVisibility(View.VISIBLE);
         searchToolbar.setVisibility(View.INVISIBLE);
         searchEditText.setText("");
+
+        this.titleTextView.setVisibility(View.INVISIBLE);
+        this.toolbarLogo.setVisibility(View.VISIBLE);
+
         if(AppData.getInstance().mainActivity != null) {
             try {
                 InputMethodManager inputManager = (InputMethodManager) AppData.getInstance().mainActivity.getSystemService(INPUT_METHOD_SERVICE);
@@ -102,6 +117,14 @@ public class FragmentCustomToolbar extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void ConvertToDefaultWithTitle(String title) {
+        this.ConvertToDefaultToolbar();
+        this.toolbarLogo.setVisibility(View.INVISIBLE);
+        this.titleTextView.setVisibility(View.VISIBLE);
+
+        this.titleTextView.setText(title);
     }
 
     @OnTextChanged(R.id.toolbar_main_search_edit_text)

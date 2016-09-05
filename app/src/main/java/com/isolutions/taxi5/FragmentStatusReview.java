@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.isolutions.taxi5.API.ApiFactory;
@@ -21,6 +22,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by fedar.trukhan on 30.08.16.
@@ -121,5 +124,16 @@ public class FragmentStatusReview extends StatusesBaseFragment {
         civilityFragment.setValue(5);
         velocityFragment.setValue(5);
         commentEditText.setText("");
+    }
+
+    @OnClick(R.id.fragment_status_review_main_back)
+    public void OnBackClick() {
+        try {
+            InputMethodManager inputManager = (InputMethodManager) AppData.getInstance().mainActivity.getSystemService(INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(AppData.getInstance().mainActivity.getCurrentFocus().getWindowToken(), 0);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

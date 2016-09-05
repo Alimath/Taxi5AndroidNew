@@ -3,6 +3,7 @@ package com.isolutions.taxi5;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.FragmentPlans;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
@@ -160,12 +162,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -229,17 +231,57 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         AppData.getInstance().setAppForeground(true);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                0, 10, locationListener);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 0, 10,
-                locationListener);
+        if(locationManager != null) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    0, 10, locationListener);
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 0, 10,
+                    locationListener);
+        }
+
+        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
+        Call<TokenData> call = taxi5SDK.RefreshToken("refresh_token", AppData.client_id, AppData.client_secret, TokenData.getInstance().getRefreshToken());
+        call.enqueue(new Callback<TokenData>() {
+            @Override
+            public void onResponse(Call<TokenData> call, Response<TokenData> response) {
+                onResponseRefreshToken(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<TokenData> call, Throwable t) {
+                onFailureRefreshToken(call, t);
+            }
+        });
+    }
+    public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
+        if(response.isSuccessful()) {
+            response.body().setAuthorized(true);
+            response.body().saveTokenData();
+        }
+        else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    public void onFailureRefreshToken(Call<TokenData> call, Throwable t) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        locationManager.removeUpdates(locationListener);
+        if(locationManager != null) {
+            locationManager.removeUpdates(locationListener);
+        }
         AppData.getInstance().setAppForeground(false);
     }
 

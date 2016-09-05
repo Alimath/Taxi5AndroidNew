@@ -1,5 +1,6 @@
 package com.isolutions.taxi5;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,13 @@ public class FragmentAboutUs extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(AppData.getInstance().toolbar != null) {
+            AppData.getInstance().toolbar.ConvertToDefaultWithTitle(getString(R.string.left_drawer_menu_item_about));
+        }
+    }
 
     @OnClick(R.id.fragment_about_us_fb_button)
     public void OnFBButtonClick() {

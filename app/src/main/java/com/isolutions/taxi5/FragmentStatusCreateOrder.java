@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderOptions;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,11 +52,18 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @BindView(R.id.fragment_status_create_order_to_text)
     TextView toText;
 
-    @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar)
-    ProgressBar progressBar;
+    @BindView(R.id.fragment_status_create_order_from_to_view_search_to_icon)
+    ImageView toSearchIcon;
+
+//    @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar)
+//    ProgressBar progressBar;
+
+
+    @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar_2)
+    AVLoadingIndicatorView progressBar2;
 
     @BindView(R.id.fragment_status_create_order_button_progress_bar)
-    ProgressBar buttonProgressBar;
+    AVLoadingIndicatorView buttonProgressBar;
 
     @BindView(R.id.fragment_status_create_order_button)
     Button createOrderButton;
@@ -77,8 +86,15 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             setFromText(fromLocation.getStringDescription());
             HideProgressBar();
         }
+        else {
+            ShowProgressBar();
+            setFromText("");
+        }
         if(toLocation != null) {
             setToText(toLocation.getStringDescription());
+        }
+        else {
+            setToText("");
         }
 
         return createOrder;
@@ -105,10 +121,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     public void setToLocation(LocationData toLoc) {
         if(toLoc != null) {
+            toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.clear_edit_text_icon));
             toLocation = toLoc;
             setToText(toLoc.getStringDescription());
         }
         else {
+            toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.status_icon_find));
             toLocation = null;
             setToText("");
         }
@@ -153,12 +171,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             @Override
             public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
                 EndCreateButtonProgress();
-                if (response.body().getStatusCode() == 201) {
+                if (response.isSuccessful()) {
                     OrderData order = response.body().getOrderData();
                     appData.setCurrentOrder(order, false);
                     FragmentMap.getMapFragment().RefreshView();
                 } else {
-                    Log.d("taxi5", "status code: " + response.body().getStatusCode());
+                    Log.d("taxi5", "status code: " + response.raw().code());
                 }
             }
 
@@ -182,7 +200,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         order.customerData.msid = ProfileData.getInstance().getMsid();
 
         order.options= new OrderOptions();
-        order.options.developer = true;
+        if(BuildConfig.DEBUG) {
+            order.options.developer = true;
+        }
 
         if(fromLocation != null) {
             order.from = fromLocation;
@@ -196,6 +216,22 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @Override
     public void fillWithOrder() {
+        if(isVisible()) {
+            OrderData order = AppData.getInstance().getCurrentOrder();
+            if (order != null && order.from != null) {
+                setFromLocation(order.from);
+                HideProgressBar();
+            } else {
+                ShowProgressBar();
+                setFromLocation(null);
+            }
+            if (order != null && order.to != null) {
+                setToLocation(order.to);
+            } else {
+                setToLocation(null);
+//                setToText("");
+            }
+        }
     }
 
     void SetCreateOrderButtonAvailableState(boolean state) {
@@ -228,14 +264,16 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     private void ShowProgressBar() {
         if(isVisible()) {
-            progressBar.setVisibility(View.VISIBLE);
+            progressBar2.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
             SetCreateOrderButtonAvailableState(false);
         }
     }
 
     private void HideProgressBar() {
         if(isVisible()) {
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar2.setVisibility(View.INVISIBLE);
+//            progressBar.setVisibility(View.INVISIBLE);
             SetCreateOrderButtonAvailableState(true);
         }
     }
@@ -251,7 +289,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address)
     public void OnSearhToAddressClick() {
 //        Log.d("taxi5", "Show search addresse");
-        FragmentMap.getMapFragment().ShowSearchAddressView(false);
+        if(toLocation != null) {
+            this.setToLocation(null);
+        }
+        else {
+            FragmentMap.getMapFragment().ShowSearchAddressView(false);
+        }
     }
 
     @OnClick(R.id.fragment_status_create_order_my_location_button)

@@ -31,7 +31,16 @@ public interface Taxi5SDK {
     Call<Void> GetSMSCode(
             @Query("response_type") String responseType,
             @Query("msid") String msid,
-            @Query("client_id") String clientID);
+            @Query("client_id") String clientID
+    );
+
+    @GET("http://api.taxi5.by/oauth/auth")
+    Call<Void> GetSMSWithName(
+            @Query("response_type") String responseType,
+            @Query("msid") String msid,
+            @Query("client_id") String clientID,
+            @Query("name") String regName
+    );
 
     @FormUrlEncoded
     @POST("http://api.taxi5.by/oauth/token")

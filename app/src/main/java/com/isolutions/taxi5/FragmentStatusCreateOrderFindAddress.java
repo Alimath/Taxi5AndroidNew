@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
@@ -64,27 +65,40 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
             AppData.getInstance().toolbar.createOrderFindAddress = this;
         }
 
+
+
         return view;
     }
 
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d("taxi5", adapter.getItem(i).getStringDescription());
         LocationData selectedLocation = adapter.getItem(i);
         if((selectedLocation.details != null && selectedLocation.details.address.building != null) ||
                 (selectedLocation.details != null && selectedLocation.details.locationObject != null)) {
             if (AppData.getInstance().mainActivity != null) {
-                AppData.getInstance().mainActivity.onBackPressed();
+//                AppData.getInstance().mainActivity.onBackPressed();
 
                 if (FragmentMap.getMapFragment() != null && FragmentMap.getMapFragment().statusCreateOrderFragment != null &&
                         FragmentMap.getMapFragment().statusCreateOrderFragment.isAdded()) {
                     if (isFromLocationSelect) {
                         FragmentMap.getMapFragment().statusCreateOrderFragment.setFromLocation(selectedLocation);
+                        FragmentMap.getMapFragment().HideSearhAddressView();
+                        FragmentMap.getMapFragment().ScrollMaptoPos(new LatLng(selectedLocation.latitude, selectedLocation.longitude), true);
                     } else {
+                        FragmentMap.getMapFragment().HideSearhAddressView();
                         FragmentMap.getMapFragment().statusCreateOrderFragment.setToLocation(selectedLocation);
+
+                        if(AppData.getInstance().getCurrentOrder() != null) {
+                            OrderData orderData = AppData.getInstance().getCurrentOrder();
+                            orderData.to = selectedLocation;
+                            AppData.getInstance().setCurrentOrder(orderData, AppData.getInstance().isOrderHistory);
+                        }
                     }
-                    OrderData orderData = FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder();
-                    AppData.getInstance().setCurrentOrder(orderData, true);
-                    FragmentMap.getMapFragment().RefreshView();
+//                    OrderData orderData = FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder();
+//                    AppData.getInstance().setCurrentOrder(orderData, true);
+//                    if(!isFromLocationSelect) {
+//                        FragmentMap.getMapFragment().noNeedGeocoding = false;
+//                    }
+//                    FragmentMap.getMapFragment().RefreshView();
 
                 }
             }

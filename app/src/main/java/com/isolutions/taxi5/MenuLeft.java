@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,16 +72,29 @@ public class MenuLeft extends Fragment {
                 Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
             }
         }
+        else {
+            this.avatarImage.setImageBitmap(null);
+        }
         if(ProfileData.getInstance().getName() != null) {
             if(!ProfileData.getInstance().getName().isEmpty()) {
                 profileNameTextView.setText(ProfileData.getInstance().getName());
+            }
+            else {
+                profileNameTextView.setText("");
             }
         }
     }
 
     @OnClick(R.id.left_drawer_call_to_us_btn)
     public void onClickCallUsListener() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity());
+        }
+        else {
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        }
+
         builder.setMessage("+375 (29) 133-75-00");
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
             @Override

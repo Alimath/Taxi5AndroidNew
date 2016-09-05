@@ -91,6 +91,9 @@ public class FragmentLoginPhone extends Fragment {
         this.StartGetSMSButtonLoadingAnimation();
 
         String numberStr = countryCodePicker.getSelectedCountryCode() + this.phoneEditText.getText();
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+        loginActivity.phoneNumber = numberStr;
+
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         if(taxi5SDK == null) {
             return;
@@ -113,7 +116,7 @@ public class FragmentLoginPhone extends Fragment {
     public void onResponseCallback(Call<Void> call, Response<Void> response) {
         StopGetSMSButtonLoadinganimation();
 //        Log.d("taxi5", TokenData.getInstance().GetDescription());
-        if(response.code() == 200) {
+        if(response.isSuccessful()) {
             Log.d("taxi5", "response: " + response.body());
 
             LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -127,6 +130,8 @@ public class FragmentLoginPhone extends Fragment {
         }
         else {
             try {
+                LoginActivity loginActivity = (LoginActivity) getActivity();
+                loginActivity.OpenNameFragment();
                 Log.d("taxi5", "responseCode: " + response.errorBody().string());
             } catch (IOException e) {
                 e.printStackTrace();

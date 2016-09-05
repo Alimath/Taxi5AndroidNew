@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -144,7 +143,9 @@
 
             app:layout_constraintRight_toRightOf="@+id/fragment_status_create_order_from_to_view"
             app:layout_constraintTop_toTopOf="@+id/fragment_status_create_order_from_to_view"/>
+
         <ImageView
+            android:id="@+id/fragment_status_create_order_from_to_view_search_to_icon"
             android:layout_width="16dp"
             android:layout_height="16dp"
 
@@ -276,10 +277,17 @@
 
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/fragment_status_create_order_from_to_view_progress_bar"
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/fragment_status_create_order_from_to_view_progress_bar_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            app:indicatorName="BallClipRotateIndicator"
+
+            style="@style/AVLoadingIndicatorView"
+            app:indicatorColor="@color/defaultBlack"
+            android:visibility="visible"
+
 
             app:layout_constraintCenterX_toCenterX="@id/fragment_status_create_order_from_to_view"
             app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view"
@@ -388,7 +396,7 @@
 
 
     </android.support.constraint.ConstraintLayout>
-    
+
     
     <Button
         android:id="@+id/fragment_status_create_order_button"
@@ -415,18 +423,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/fragment_status_create_order_main"
         />
 
-    <ProgressBar
+    <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/fragment_status_create_order_button_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:indeterminate="true"
-        android:indeterminateOnly="true"
-        android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_button"
+        app:indicatorName="BallClipRotateIndicator"
+
+        style="@style/AVLoadingIndicatorView"
+        app:indicatorColor="@color/whiteColor"
+
+        android:elevation="3dp"
+
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_create_order_button"
         app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_button"
-        app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_button"
         />
 
     <ImageView

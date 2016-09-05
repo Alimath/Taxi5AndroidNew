@@ -16,6 +16,7 @@ import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.w3c.dom.Text;
 
@@ -44,10 +45,10 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
 
 
     @BindView(R.id.fragment_status_car_find_approve_button_progress_bar)
-    ProgressBar buttonApproveProgressBar;
+    AVLoadingIndicatorView buttonApproveProgressBar;
 
     @BindView(R.id.fragment_status_car_find_cancel_button_progress_bar)
-    ProgressBar buttonCancelProgressBar;
+    AVLoadingIndicatorView buttonCancelProgressBar;
 
     @BindView(R.id.fragment_status_car_find_approve_button)
     Button approveBtn;

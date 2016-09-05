@@ -15,4 +15,6 @@ public class ApplicationLauncher extends Application {
 
         AppData.getInstance().setAppContext(this);
     }
+
+
 }

@@ -38,11 +38,31 @@
             app:layout_constraintLeft_toLeftOf="@id/toolbar_main_constraint"/>
 
         <ImageView
+            android:id="@+id/toolbar_logo_image"
             android:layout_width="140dp"
             android:layout_height="26dp"
             android:src="@drawable/toolbar_logo"
+            android:visibility="visible"
 
             app:layout_constraintCenterX_toCenterX="@id/toolbar_main_constraint"
+            app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
+            />
+        
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:visibility="invisible"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/defaultBlack"
+
+            android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"
+
+
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintCenterY_toCenterY="@id/toolbar_main_constraint"
             />
 

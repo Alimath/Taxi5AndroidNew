@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
-        if(response.code() == 200) {
+        if(response.isSuccessful()) {
             response.body().setAuthorized(true);
             response.body().saveTokenData();
             Log.d("taxi5", TokenData.getInstance().getDescription());

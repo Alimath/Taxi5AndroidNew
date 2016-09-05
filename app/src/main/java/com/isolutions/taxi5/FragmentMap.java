@@ -23,6 +23,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatus;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatusType;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
@@ -66,8 +67,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         RefreshView();
     }
 
-    public void RefreshView() {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
+        if(AppData.getInstance().toolbar != null) {
+            AppData.getInstance().toolbar.ConvertToDefaultToolbar();
+        }
+    }
+
+    public void RefreshView() {
         if(AppData.getInstance().isOrderHistory) {
             if(readOrderCall != null) {
                 readOrderCall.cancel();
@@ -113,7 +122,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     ReadOrderState();
                 }
                 else {
-                    changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+                    if(AppData.getInstance().getCurrentOrder().status == null || AppData.getInstance().getCurrentOrder().status.status == null) {
+                        changeStatus(statusCreateOrderFragment);
+                    }
+                    else {
+                        changeStatusByEnum(AppData.getInstance().getCurrentOrder().status.status);
+                    }
                 }
             }
         }
@@ -152,28 +166,31 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             readOrderCall.enqueue(new Callback<OrderResponseData>() {
                 @Override
                 public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
-                    if(AppData.getInstance().getCurrentOrder() == null) {
-                        return;
-                    }
-                    OrderData order = response.body().getOrderData();
-                    if (order != null) {
-                        AppData.getInstance().setCurrentOrder(response.body().getOrderData(), false);
-                        if (order.status != null && order.status.status != null) {
-                            changeStatusByEnum(order.status.status);
+                    if(response.isSuccessful()) {
+                        if (AppData.getInstance().getCurrentOrder() == null) {
+                            return;
                         }
-                        if(order.status != null) {
-                            if(order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
-                                AppData.getInstance().isOrderHistory = true;
-                                return;
+                        OrderData order = response.body().getOrderData();
+                        if (order != null) {
+                            AppData.getInstance().setCurrentOrder(response.body().getOrderData(), false);
+                            if (order.status != null && order.status.status != null) {
+                                changeStatusByEnum(order.status.status);
+                            }
+                            if (order.status != null) {
+                                if (order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
+                                    AppData.getInstance().isOrderHistory = true;
+                                    return;
+                                }
                             }
                         }
                     }
                     startTimer();
+
                 }
 
                 @Override
                 public void onFailure(Call<OrderResponseData> call, Throwable t) {
-
+                    startTimer();
                 }
             });
         }
@@ -224,6 +241,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     boolean noNeedGeocoding = false;
     public void ScrollMaptoPos(LatLng point, boolean noNeedGeocod) {
+        if(noNeedGeocod) {
+            Log.d("taxi5", "CHANGE NO NEED GEOCODING TRUE");
+        }
         this.noNeedGeocoding = noNeedGeocod;
         if(mMap != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
@@ -263,7 +283,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         Call<LocationsListResponseData> call = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
 
         if(statusCreateOrderFragment.isVisible()) {
-            statusCreateOrderFragment.setFromText("");
+            statusCreateOrderFragment.setFromLocation(null);
         }
 
         call.enqueue(new Callback<LocationsListResponseData>() {
@@ -271,7 +291,22 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             public void onResponse(Call<LocationsListResponseData> call, Response<LocationsListResponseData> response) {
                 if(response.isSuccessful()) {
                     if(AppData.getInstance().isOrderHistory) {
-                        AppData.getInstance().setCurrentOrder(null, false);
+                        OrderData orderData = new OrderData();
+                        if(AppData.getInstance().getCurrentOrder().to != null) {
+                            orderData.to = AppData.getInstance().getCurrentOrder().to;
+                        }
+                        if(AppData.getInstance().getCurrentOrder().options != null) {
+                            orderData.options = AppData.getInstance().getCurrentOrder().options;
+                        }
+                        if(AppData.getInstance().getCurrentOrder().comment != null) {
+                            orderData.comment = AppData.getInstance().getCurrentOrder().comment;
+                        }
+                        if(AppData.getInstance().getCurrentOrder().features != null) {
+                            orderData.features = AppData.getInstance().getCurrentOrder().features;
+                        }
+
+
+                        AppData.getInstance().setCurrentOrder(orderData, false);
                     }
                     RefreshView();
                     if(response.body().getResponseData().size() > 0) {

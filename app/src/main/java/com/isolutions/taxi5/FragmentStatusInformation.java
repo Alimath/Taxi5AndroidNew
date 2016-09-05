@@ -15,6 +15,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatusType;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +42,7 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
     Button button;
 
     @BindView(R.id.fragment_status_information_button_progress_bar)
-    ProgressBar buttonProgressBar;
+    AVLoadingIndicatorView buttonProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +121,9 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
                     @Override
                     public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
                         HideProgressBar();
+                        if(FragmentMap.getMapFragment() != null) {
+                            FragmentMap.getMapFragment().ReadOrderState();
+                        }
                     }
 
                     @Override
