@@ -5,8 +5,14 @@ package com.isolutions.taxi5;
  */
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +29,12 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.gson.Gson;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.AmountData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.CustomerData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.EstimatedPriceAndRouteResponceData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderFeatures;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderOptions;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
@@ -52,6 +61,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @BindView(R.id.fragment_status_create_order_to_text)
     TextView toText;
 
+    @BindView(R.id.fragment_status_create_order_approximate_price_text)
+    TextView estimatedPriceTextView;
+
     @BindView(R.id.fragment_status_create_order_from_to_view_search_to_icon)
     ImageView toSearchIcon;
 
@@ -70,6 +82,36 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     private LocationData fromLocation;
     private LocationData toLocation;
+
+
+    @BindView(R.id.fragment_status_create_order_from_to_view)
+    ConstraintLayout fromToLayout;
+
+    @BindView(R.id.fragment_status_create_order_options)
+    ConstraintLayout featuresLayout;
+
+    @BindView(R.id.fragment_status_create_order_features_view_back_image)
+    ImageView featuresButtonBackImage;
+
+
+    @BindView(R.id.fragment_status_create_order_options_baby_icon)
+    ImageView isBabyIconImage;
+    @BindView(R.id.fragment_status_create_order_options_baggage_icon)
+    ImageView isEscortIconImage;
+    @BindView(R.id.fragment_status_create_order_options_animal_icon)
+    ImageView isAnimalIconImage;
+
+    @BindView(R.id.fragment_status_create_order_options_baby_text)
+    TextView isBabyTextView;
+    @BindView(R.id.fragment_status_create_order_options_baggage_text)
+    TextView isEscortTextView;
+    @BindView(R.id.fragment_status_create_order_options_animal_text)
+    TextView isAnimalTextView;
+
+
+    private boolean isBaby = false;
+    private boolean isEscort = false;
+    private boolean isAnimal = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,7 +142,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         return createOrder;
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        featuresButtonBackImage.setColorFilter(AppData.getInstance().getColor(R.color.hintsColor), PorterDuff.Mode.SRC_ATOP);
+        fillWithOrder();
+    }
 
     public void setFromLocation(LocationData fromLoc) {
         if(fromLoc != null) {
@@ -111,6 +158,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             fromLocation = null;
             setFromText("");
         }
+        CheckAndLoadPriceAndRoute();
     }
 
     public void ClearFields() {
@@ -130,6 +178,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             toLocation = null;
             setToText("");
         }
+        CheckAndLoadPriceAndRoute();
     }
 
     public void setFromText(String fromDescription) {
@@ -210,14 +259,32 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         if(toLocation != null) {
             order.to = toLocation;
         }
+        if(this.isBaby || this.isAnimal || this.isEscort) {
+            order.features = new OrderFeatures();
+            order.features.animal = this.isAnimal;
+            order.features.baby = this.isBaby;
+            order.features.escort = this.isEscort;
+        }
 
         return order;
     }
 
     @Override
     public void fillWithOrder() {
+        OrderData order = AppData.getInstance().getCurrentOrder();
+        if(order != null && order.features != null) {
+            if(order.features.baby != null) {
+                this.isBaby = order.features.baby;
+            }
+            if(order.features.escort != null) {
+                this.isEscort = order.features.escort;
+            }
+            if(order.features.animal != null) {
+                this.isAnimal = order.features.animal;
+            }
+        }
+
         if(isVisible()) {
-            OrderData order = AppData.getInstance().getCurrentOrder();
             if (order != null && order.from != null) {
                 setFromLocation(order.from);
                 HideProgressBar();
@@ -231,6 +298,8 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
                 setToLocation(null);
 //                setToText("");
             }
+
+            RefillFeatures();
         }
     }
 
@@ -243,13 +312,29 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         }
     }
 
-    public void ShowEstimatedPrice(int price) {
-        estimatedPriceLayout.setVisibility(View.VISIBLE);
+    public void ShowEstimatedPrice(Long price) {
+        if(isVisible()) {
+            if(price > 0) {
+                estimatedPriceLayout.setVisibility(View.VISIBLE);
+                Long rubles = price / 100L;
+                Long copeek = price - (price/100L)*100L;
+
+
+                estimatedPriceTextView.setText(" " + rubles + " " + getString(R.string.rubles_short) + " " +
+                copeek + " " + getString(R.string.copeeks_short));
+//                estimatedPriceTextView.setText("20 руб");
+            }
+            else {
+                estimatedPriceLayout.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
 
     public void HideEstimatedPrice() {
-        estimatedPriceLayout.setVisibility(View.INVISIBLE);
+        if(isVisible()) {
+            estimatedPriceLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     void StartCreateButtonProgress() {
@@ -300,5 +385,127 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     @OnClick(R.id.fragment_status_create_order_my_location_button)
     public void OnMyLocationClick() {
         FragmentMap.getMapFragment().ScrollMaptoPos(AppData.getInstance().nullPoint, false);
+    }
+
+    public void CheckAndLoadPriceAndRoute() {
+        HideEstimatedPrice();
+        if(fromLocation != null && toLocation != null) {
+            LoadAndShowPriceAndRoute(fromLocation.latitude, fromLocation.longitude, toLocation.latitude, toLocation.longitude);
+        }
+    }
+
+    Call<EstimatedPriceAndRouteResponceData> priceAndRouteCall;
+    void LoadAndShowPriceAndRoute(double startLatitude, double startLongitude, double finishLatitude, double finishLongitude) {
+        if(priceAndRouteCall != null) {
+            priceAndRouteCall.cancel();
+        }
+        Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
+        if(taxi5SDK == null) {
+            return;
+        }
+        priceAndRouteCall = taxi5SDK.GetPriceAndRoute(TokenData.getInstance().getToken(),
+                startLatitude, startLongitude, finishLatitude, finishLongitude);
+
+        priceAndRouteCall.enqueue(new Callback<EstimatedPriceAndRouteResponceData>() {
+            @Override
+            public void onResponse(Call<EstimatedPriceAndRouteResponceData> call, Response<EstimatedPriceAndRouteResponceData> response) {
+                if(response.isSuccessful()) {
+                    if(response.body() != null && response.body().getResponseData() != null &&
+                            response.body().getResponseData().amount != null && response.body().getResponseData().amount.size() > 0) {
+                        Long price = 0L;
+                        for (AmountData amount:response.body().getResponseData().amount) {
+                            if(amount.currency.equalsIgnoreCase("byr")) {
+                                price = amount.value/100;
+                            }
+                            else if(amount.currency.equalsIgnoreCase("byn")) {
+                                price = amount.value;
+                            }
+                        }
+                        ShowEstimatedPrice(price);
+                    }
+                    else {
+                        HideEstimatedPrice();
+                    }
+                }
+                else {
+                    HideEstimatedPrice();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EstimatedPriceAndRouteResponceData> call, Throwable t) {
+                HideEstimatedPrice();
+            }
+        });
+    }
+
+    @OnClick(R.id.fragment_status_create_order_features_view)
+    public void OnFeaturesButtonClick() {
+        Drawable mDrawable = featuresButtonBackImage.getDrawable();
+        if(fromToLayout.getVisibility() == View.VISIBLE) {
+            fromToLayout.setVisibility(View.INVISIBLE);
+            featuresLayout.setVisibility(View.VISIBLE);
+            mDrawable.setColorFilter(AppData.getInstance().getColor(R.color.activeFeaturesButtonBackColor), PorterDuff.Mode.SRC_ATOP);
+            featuresButtonBackImage.setImageDrawable(mDrawable);
+        }
+        else {
+            fromToLayout.setVisibility(View.VISIBLE);
+            featuresLayout.setVisibility(View.INVISIBLE);
+            mDrawable.setColorFilter(AppData.getInstance().getColor(R.color.hintsColor), PorterDuff.Mode.SRC_ATOP);
+            featuresButtonBackImage.setImageDrawable(mDrawable);
+        }
+    }
+
+    private void RefillFeatures() {
+        Drawable babyDrawable = isBabyIconImage.getDrawable();
+        Drawable animalDrawable = isAnimalIconImage.getDrawable();
+        Drawable escortDrawable = isEscortIconImage.getDrawable();
+
+        if(this.isBaby) {
+            babyDrawable.setColorFilter(AppData.getInstance().getColor(R.color.defaultBlue), PorterDuff.Mode.SRC_ATOP);
+            isBabyTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
+        }
+        else {
+            babyDrawable.setColorFilter(AppData.getInstance().getColor(R.color.approximatePriceTextColor), PorterDuff.Mode.SRC_ATOP);
+            isBabyTextView.setTextColor(AppData.getInstance().getColor(R.color.approximatePriceTextColor));
+        }
+
+        if(this.isAnimal) {
+            animalDrawable.setColorFilter(AppData.getInstance().getColor(R.color.defaultBlue), PorterDuff.Mode.SRC_ATOP);
+            isAnimalTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
+        }
+        else {
+            animalDrawable.setColorFilter(AppData.getInstance().getColor(R.color.approximatePriceTextColor), PorterDuff.Mode.SRC_ATOP);
+            isAnimalTextView.setTextColor(AppData.getInstance().getColor(R.color.approximatePriceTextColor));
+        }
+
+        if(this.isEscort) {
+            escortDrawable.setColorFilter(AppData.getInstance().getColor(R.color.defaultBlue), PorterDuff.Mode.SRC_ATOP);
+            isEscortTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
+        }
+        else {
+            escortDrawable.setColorFilter(AppData.getInstance().getColor(R.color.approximatePriceTextColor), PorterDuff.Mode.SRC_ATOP);
+            isEscortTextView.setTextColor(AppData.getInstance().getColor(R.color.approximatePriceTextColor));
+        }
+
+        this.isBabyIconImage.setImageDrawable(babyDrawable);
+        this.isEscortIconImage.setImageDrawable(escortDrawable);
+        this.isAnimalIconImage.setImageDrawable(animalDrawable);
+    }
+
+    @OnClick(R.id.fragment_status_create_order_options_baggage_button)
+    public void OnFeatureEscortClick() {
+        this.isEscort = !this.isEscort;
+        RefillFeatures();
+    }
+    @OnClick(R.id.fragment_status_create_order_options_baby_button)
+    public void OnFeatureBabyClick() {
+        this.isBaby = !this.isBaby;
+        RefillFeatures();
+    }
+    @OnClick(R.id.fragment_status_create_order_options_animal_button)
+    public void OnFeatureAnimalClick() {
+        this.isAnimal = !this.isAnimal;
+        RefillFeatures();
     }
 }

@@ -186,11 +186,12 @@ public class FragmentScreenProfile extends Fragment {
     }
 
     public void RefreshView() {
-        if(ProfileData.getInstance().getMsid() != null) {
-            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        if(!isUploading) {
+            if (ProfileData.getInstance().getMsid() != null) {
+                PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
 
-            String formatedPhone = PhoneNumberUtils.formatNumber("+" + ProfileData.getInstance().getMsid());
+                String formatedPhone = PhoneNumberUtils.formatNumber("+" + ProfileData.getInstance().getMsid());
 //            try {
 //                Phonenumber.PhoneNumber numberProto = phoneUtil.parse(ProfileData.getInstance().getMsid(), "");
 //                PhoneNumberUtils.formatNumber()
@@ -200,24 +201,27 @@ public class FragmentScreenProfile extends Fragment {
 //            catch (NumberParseException e) {
 //                phoneTextView.setText(formatedPhone);
 //            }
-        }
-
-        if(ProfileData.getInstance().getName() != null) {
-            nameEditText.setText(ProfileData.getInstance().getName());
-        }
-        if(ProfileData.getInstance().getEmail() != null) {
-            emailEditText.setText(ProfileData.getInstance().getEmail());
-        }
-
-        if(ProfileData.getInstance().getAvatarImage() != null) {
-            this.avatarImage.setImageBitmap(ProfileData.getInstance().getAvatarImage());
-        }
-        else if(ProfileData.getInstance().getAvatarURL() != null) {
-            if(!ProfileData.getInstance().getAvatarURL().isEmpty()) {
-                Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
             }
-        }
 
+            if (ProfileData.getInstance().getName() != null) {
+                nameEditText.setText(ProfileData.getInstance().getName());
+            }
+            if (ProfileData.getInstance().getEmail() != null) {
+                emailEditText.setText(ProfileData.getInstance().getEmail());
+            }
+
+            if (ProfileData.getInstance().getAvatarImage() != null) {
+                this.avatarImage.setImageBitmap(ProfileData.getInstance().getAvatarImage());
+            } else if (ProfileData.getInstance().getAvatarURL() != null) {
+                if (!ProfileData.getInstance().getAvatarURL().isEmpty()) {
+                    Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
+                }
+            }
+            HideProgressBar();
+        }
+        else {
+            ShowProgressBar();
+        }
     }
 
     @OnClick(R.id.fragment_screen_profile_upload_btn)
@@ -268,6 +272,7 @@ public class FragmentScreenProfile extends Fragment {
                     isUploading = false;
                     HideProgressBar();
                     refreshProfile();
+                    newAvatarImage = null;
                 }
 
                 @Override
@@ -282,12 +287,12 @@ public class FragmentScreenProfile extends Fragment {
     }
 
     private void refreshProfile() {
-        if(profileData != null) {
-            profileData.setAvatarImage(newAvatarImage);
-            profileData.saveProfileData();
-            AppData.getInstance().leftDrawer.RefreshProfileData();
+        profileData.setAvatarImage(newAvatarImage);
+        profileData.saveProfileData();
+        if(profileData != null && isVisible()) {
             RefreshView();
         }
+        AppData.getInstance().leftDrawer.RefreshProfileData();
     }
 
     private void ShowProgressBar() {
@@ -296,8 +301,10 @@ public class FragmentScreenProfile extends Fragment {
     }
 
     private void HideProgressBar() {
-        uploadButton.setClickable(true);
-        uploadProgressBar.setVisibility(View.INVISIBLE);
+        if(isVisible()) {
+            uploadButton.setClickable(true);
+            uploadProgressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @OnClick(R.id.fragment_screen_profile_choose_avatar_btn)
@@ -314,9 +321,7 @@ public class FragmentScreenProfile extends Fragment {
 
     @OnClick(R.id.fragment_screen_profile_image_croper_button)
     public void onPickImageClick() {
-        Log.d("taxi5", croper.getCroppedImage().getHeight() + "x" + croper.getCroppedImage().getWidth());
-        newAvatarImage = Bitmap.createScaledBitmap(croper.getCroppedImage(), 400, 400, false);
-        Log.d("taxi5", newAvatarImage.getHeight() + "x" + newAvatarImage.getWidth());
+        newAvatarImage = Bitmap.createScaledBitmap(croper.getCroppedImage(), 300, 300, false);
         avatarImage.setImageBitmap(newAvatarImage);
         croper.setVisibility(View.INVISIBLE);
         croperButton.setVisibility(View.INVISIBLE);
@@ -430,7 +435,17 @@ public class FragmentScreenProfile extends Fragment {
 //        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             Uri imageUri = getPickImageResultUri(data);
-            Picasso.with(getActivity().getApplicationContext()).load(imageUri).into(target);
+
+            croper.setVisibility(View.VISIBLE);
+            croper.setFixedAspectRatio(true);
+
+//            croper.getParams().setShape(CookieCutterShape.SQUARE);
+            croperButton.setVisibility(View.VISIBLE);
+            croper.setImageUriAsync(imageUri);
+
+//            Picasso.with(getActivity().getApplicationContext()).invalidate(imageUri);
+//            Picasso.with(getActivity().getApplicationContext()).load
+//            Picasso.with(getActivity().getApplicationContext()).load(data).into(target);
 
             // For API >= 23 we need to check specifically that we have permissions to read external storage,
             // but we don't know if we need to for the URI so the simplest is to try open the stream and see if we get error.

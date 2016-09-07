@@ -26,6 +26,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
 
     public FragmentMap mapFragment = new FragmentMap();
-    public FragmentScreenProfile fragmentScreenProfile = new FragmentScreenProfile();
+    public final FragmentScreenProfile fragmentScreenProfile = new FragmentScreenProfile();
     public FragmentAboutUs fragmentAboutUs = new FragmentAboutUs();
     public FragmentPlans fragmentPlans = new FragmentPlans();
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
@@ -84,6 +86,12 @@ public class MainActivity extends AppCompatActivity
         public void onPermissionGranted() {
 //            Log.d("taxi5", "location check granted");
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if(FragmentMap.getMapFragment() != null && FragmentMap.getMapFragment().mMap != null) {
+                FragmentMap.getMapFragment().mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+            }
+            else {
+            }
 //            Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
         }
 
@@ -255,6 +263,11 @@ public class MainActivity extends AppCompatActivity
                 onFailureRefreshToken(call, t);
             }
         });
+
+        if(FragmentMap.getMapFragment().isVisible()) {
+            Log.d("taxi5", "app now is visible");
+            FragmentMap.getMapFragment().RefreshView();
+        }
     }
     public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
         if(response.isSuccessful()) {
@@ -330,4 +343,32 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().executePendingTransactions();
         }
     }
+
+    @BindView(R.id.main_activity_fragment_custom_toolbar)
+    FrameLayout toolbarLayout;
+
+    @BindView(R.id.main_activity_fragment_map_layout)
+    FrameLayout mapLayout;
+
+//    public void HideToolbar() {
+//        FrameLayout.LayoutParams toolbarParams = (FrameLayout.LayoutParams)toolbarLayout.getLayoutParams();
+//        FrameLayout.LayoutParams mapParams = (FrameLayout.LayoutParams)mapLayout.getLayoutParams();
+//
+//        toolbarParams.height = 0;
+//        mapParams.topMargin = 0;
+//
+//        toolbarLayout.setLayoutParams(toolbarParams);
+//        mapLayout.setLayoutParams(mapParams);
+//    }
+//
+//    public void ShowToolbar() {
+//        FrameLayout.LayoutParams toolbarParams = (FrameLayout.LayoutParams)toolbarLayout.getLayoutParams();
+//        FrameLayout.LayoutParams mapParams = (FrameLayout.LayoutParams)mapLayout.getLayoutParams();
+//
+//        toolbarParams.height = 56;
+//        mapParams.topMargin = 56;
+//
+//        toolbarLayout.setLayoutParams(toolbarParams);
+//        mapLayout.setLayoutParams(mapParams);
+//    }
 }

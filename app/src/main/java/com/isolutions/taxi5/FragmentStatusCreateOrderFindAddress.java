@@ -49,7 +49,6 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
         View view= inflater.inflate(R.layout.fragment_status_create_order_find_address, container, false);
         ButterKnife.bind(this, view);
 
-        Log.d("taxi5", "address view showed");
         adapter = new AdapterSearchAddress(AppData.getInstance().getAppContext(), mData);
 
         listView.setAdapter(adapter);
@@ -92,6 +91,9 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
                             orderData.to = selectedLocation;
                             AppData.getInstance().setCurrentOrder(orderData, AppData.getInstance().isOrderHistory);
                         }
+                        else {
+                            AppData.getInstance().setCurrentOrder(FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder(), true);
+                        }
                     }
 //                    OrderData orderData = FragmentMap.getMapFragment().statusCreateOrderFragment.CreateOrder();
 //                    AppData.getInstance().setCurrentOrder(orderData, true);
@@ -127,7 +129,6 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
             @Override
             public void onResponse(Call<LocationsListResponseData> call, Response<LocationsListResponseData> response) {
                 if(response.isSuccessful()) {
-                    Log.d("taxi5", "load locations ok");
                     if(response.body().getResponseData() != null) {
                         adapter.updateResource(response.body().getResponseData());
                     }

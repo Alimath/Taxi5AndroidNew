@@ -29,13 +29,17 @@
     <string name="left_drawer_call_us_btn">СВЯЗАТЬСЯ С НАМИ</string>
     
     
-    <string name="approximate_cost">Примерная стоимость:&#032;</string>
+    <string name="approximate_cost">Примерная стоимость:</string>
     <string name="status_create_order_button_text">ЗАКАЗАТЬ ТАКСИ</string>
     <string name="rubles_short">р.</string>
     <string name="copeeks_short">коп.</string>
     <string name="status_create_order_from_text">Откуда</string>
     <string name="status_create_order_to_text">Куда</string>
     <string name="status_create_order_comment_hint">Введите комментарий к заказу</string>
+    
+    <string name="status_create_order_options_baby_title">Детское\nкресло</string>
+    <string name="status_create_order_options_baggage_title">Сопровождение\nдо двери</string>
+    <string name="status_create_order_options_animal_title">Клетка для\nживотных</string>
 
     <string name="status_search_car_button_text">ОТМЕНИТЬ ЗАКАЗ</string>
 
@@ -75,6 +79,7 @@
     <string name="status_payment_wait_helpheader">Также, вы можете заплатить водителю наличными</string>
     <string name="status_payment_wait_from">Откуда</string>
     <string name="status_payment_wait_to">Куда</string>
+    <string name="status_payment_wait_to_no_place">Не указано</string>
     <string name="status_payment_wait_distance">Расстояние</string>
     <string name="status_payment_wait_pay_with_card_btn">ОПЛАТИТЬ КАРТОЙ</string>
 
@@ -115,7 +120,7 @@
     <string name="right_drawer_history_orders_header">Прошлые заказы</string>
 
     <string name="profile_screen_title">Профиль</string>
-    <string name="profile_screen_header">Личная информация</string>
+    <string name="profile_screen_header">ЛИЧНАЯ ИНФОРМАЦИЯ</string>
     <string name="profile_screen_name_title">Имя</string>
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
@@ -150,4 +155,7 @@
 
     <string name="login_name_please_set_your_name_text">Пожалуйста, укажите ваше имя</string>
     <string name="profile_screen_please_set_valid_email">Пожалуйста, проверьте правильность ввода вашего email</string>
+
+    <string name="status_information_cancel_header">ВАШ ЗАКАЗ БЫЛ ОТМЕНЕН</string>
+    <string name="status_information_cancel_message">По какой-то причине Ваш заказ был отменен, вы можете заказать такси снова, вернувшись к карте.</string>
 </resources>

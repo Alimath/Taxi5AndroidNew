@@ -19,6 +19,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.AmountData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.EstimatedPriceAndRouteResponceData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -35,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener {
-    private GoogleMap mMap;
+    GoogleMap mMap;
 
     private CountDownTimer readOrderStatusTimer;
 
@@ -143,6 +145,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
                 public void onFinish() {
                     ReadOrderState();
+                    Log.d("taxi5", "timer finish");
 
                     if (AppData.getInstance().getCurrentOrder() != null) {
 //                    startTimer();
@@ -168,6 +171,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                 public void onResponse(Call<OrderResponseData> call, Response<OrderResponseData> response) {
                     if(response.isSuccessful()) {
                         if (AppData.getInstance().getCurrentOrder() == null) {
+                            changeStatus(statusCreateOrderFragment);
                             return;
                         }
                         OrderData order = response.body().getOrderData();
@@ -175,13 +179,17 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                             AppData.getInstance().setCurrentOrder(response.body().getOrderData(), false);
                             if (order.status != null && order.status.status != null) {
                                 changeStatusByEnum(order.status.status);
-                            }
-                            if (order.status != null) {
-                                if (order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
-                                    AppData.getInstance().isOrderHistory = true;
+                                if(order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid ||
+                                        order.status.status == OrderStatusType.OrderNotPaid) {
                                     return;
                                 }
                             }
+//                            if (order.status != null) {
+//                                if (order.status.isTerminal || order.status.status == OrderStatusType.OrderPaid) {
+////                                    AppData.getInstance().isOrderHistory = true;
+//                                    return;
+//                                }
+//                            }
                         }
                     }
                     startTimer();
@@ -202,7 +210,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("taxi5", "on create map view");
         if(mapView != null) {
             ViewGroup parent = (ViewGroup) mapView.getParent();
         }
@@ -241,9 +248,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     boolean noNeedGeocoding = false;
     public void ScrollMaptoPos(LatLng point, boolean noNeedGeocod) {
-        if(noNeedGeocod) {
-            Log.d("taxi5", "CHANGE NO NEED GEOCODING TRUE");
-        }
         this.noNeedGeocoding = noNeedGeocod;
         if(mMap != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 17));
@@ -266,8 +270,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         }
     }
 
+    Call<LocationsListResponseData> geocodeCall;
     @Override
     public void onCameraIdle() {
+        if(geocodeCall != null) {
+            geocodeCall.cancel();
+        }
 
         if(noNeedGeocoding) {
             noNeedGeocoding = false;
@@ -280,13 +288,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         if(taxi5SDK == null) {
             return;
         }
-        Call<LocationsListResponseData> call = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
+        geocodeCall = taxi5SDK.ReverseGeocode(TokenData.getInstance().getToken(), pos.latitude, pos.longitude, true);
 
         if(statusCreateOrderFragment.isVisible()) {
             statusCreateOrderFragment.setFromLocation(null);
         }
 
-        call.enqueue(new Callback<LocationsListResponseData>() {
+        geocodeCall.enqueue(new Callback<LocationsListResponseData>() {
             @Override
             public void onResponse(Call<LocationsListResponseData> call, Response<LocationsListResponseData> response) {
                 if(response.isSuccessful()) {
@@ -305,7 +313,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                             orderData.features = AppData.getInstance().getCurrentOrder().features;
                         }
 
-
                         AppData.getInstance().setCurrentOrder(orderData, false);
                     }
                     RefreshView();
@@ -314,6 +321,10 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                         LocationData locationData = response.body().getResponseData().get(0);
                         locationData.latitude = pos.latitude;
                         locationData.longitude = pos.longitude;
+
+//                        Log.d("taxi5", locationData.locationStringDescription);
+                        Log.d("taxi5", "" + locationData.latitude + "," + locationData.longitude);
+
 
                         statusCreateOrderFragment.setFromLocation(locationData);
                     }
@@ -335,6 +346,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     statusCreateOrderFragment.setFromLocation(locationData);
                     Log.d("taxi5", "error to load data");
                 }
+
+//                if(statusCreateOrderFragment.isVisible() && statusCreateOrderFragment.fromLocation != null && statusCreateOrderFragment.toLocation != null) {
+//                    LoadAndShowPriceAndRoute(statusCreateOrderFragment.fromLocation.latitude,
+//                            statusCreateOrderFragment.fromLocation.longitude,
+//                            statusCreateOrderFragment.toLocation.latitude,
+//                            statusCreateOrderFragment.toLocation.longitude);
+//                }
             }
 
             @Override
@@ -395,9 +413,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
                     changeStatus(statusPaymentFragment);
                     break;
                 case OrderPaid:
+                    if(readOrderStatusTimer != null) {
+                        Log.d("taxi5", "timer cancel");
+                        readOrderStatusTimer.cancel();
+                    }
+                    if(readOrderCall != null) {
+                        readOrderCall.cancel();
+                    }
                     changeStatus(statusOrderCompleteFragment);
                     break;
                 case OrderClosed:
+                    if(readOrderStatusTimer != null) {
+                        Log.d("taxi5", "timer cancel");
+                        readOrderStatusTimer.cancel();
+                    }
+                    if(readOrderCall != null) {
+                        readOrderCall.cancel();
+                    }
                     changeStatus(statusOrderCompleteFragment);
                     break;
                 case OrderNotPaid:

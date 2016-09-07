@@ -170,4 +170,20 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
         buttonCancelProgressBar.setVisibility(View.INVISIBLE);
         SetCancelBtnAvailableState(true);
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if(AppData.getInstance().mainActivity != null) {
+//            AppData.getInstance().mainActivity.HideToolbar();
+//        }
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if(AppData.getInstance().mainActivity != null) {
+//            AppData.getInstance().mainActivity.ShowToolbar();
+//        }
+//    }
 }

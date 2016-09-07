@@ -30,6 +30,10 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class FragmentCustomToolbar extends Fragment {
 //    public MainActivity mainActivity;
+
+    @BindView(R.id.toolbar_main)
+    ConstraintLayout toolbarMain;
+
     @BindView(R.id.toolbar_orders_count_background)
     ImageView ordersCountBack;
 
@@ -136,5 +140,10 @@ public class FragmentCustomToolbar extends Fragment {
         }
     }
 
-
+//    public void ConvertToHiddenToolbar() {
+//        toolbarMain.setVisibility(View.INVISIBLE);
+//        ViewGroup.LayoutParams params = toolbarMain.getLayoutParams();
+//        params.height = 0;
+//        toolbarMain.setLayoutParams(params);
+//    }
 }

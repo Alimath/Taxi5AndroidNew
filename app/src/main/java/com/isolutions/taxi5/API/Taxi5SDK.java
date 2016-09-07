@@ -1,6 +1,7 @@
 package com.isolutions.taxi5.API;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ActiveHistoryOrdersResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.EstimatedPriceAndRouteResponceData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -152,5 +153,12 @@ public interface Taxi5SDK {
     );
 
 
-
+    @GET("http://api.taxi5.by/m/v2/routing")
+    Call<EstimatedPriceAndRouteResponceData> GetPriceAndRoute(
+            @Header("X-Authorization") String token,
+            @Query("start[latitude]") double startLatitude,
+            @Query("start[longitude]") double startLongitude,
+            @Query("finish[latitude]") double endLatitude,
+            @Query("finish[longitude]") double endLongitude
+    );
 }

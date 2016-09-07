@@ -15,20 +15,43 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        app:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"
         android:id="@+id/login_activity_toolbar">
-        <TextView
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:id="@+id/registration_toolbar_title"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/login_toolbar_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/registration_phone_title"
-            android:textColor="#353535"
-            android:textStyle="normal"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="18sp"
-            android:gravity="center"
-            />
+            android:layout_height="56dp">
+            <TextView
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:id="@+id/registration_toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/registration_phone_title"
+                android:textColor="#353535"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="18sp"
+                android:gravity="center"
+
+                app:layout_constraintLeft_toLeftOf="@id/login_toolbar_main"
+                app:layout_constraintRight_toRightOf="@id/login_toolbar_main"
+                app:layout_constraintTop_toTopOf="@id/login_toolbar_main"
+                app:layout_constraintBottom_toBottomOf="@id/login_toolbar_main"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="@color/defaultBackgroundGray"
+                app:layout_constraintLeft_toLeftOf="@id/login_toolbar_main"
+                app:layout_constraintRight_toRightOf="@id/login_toolbar_main"
+                app:layout_constraintBottom_toBottomOf="@id/login_toolbar_main"
+                />
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

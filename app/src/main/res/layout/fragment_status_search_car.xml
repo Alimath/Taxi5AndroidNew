@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/fragment_status_search_car_rotation_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="800dp"
+        android:layout_height="800dp"
         android:src="@drawable/status_search_car_rotatet_image"
 
         android:clickable="true"

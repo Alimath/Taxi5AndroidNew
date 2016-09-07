@@ -60,10 +60,12 @@ public class FragmentStatusPayment extends StatusesBaseFragment {
                 fromTextView.setText("");
             }
             if(order.to != null) {
+                toTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
                 toTextView.setText(order.to.getStringDescription());
             }
             else {
-                toTextView.setText("");
+                toTextView.setTextColor(AppData.getInstance().getColor(R.color.registrationColorHeader2));
+                toTextView.setText(getString(R.string.status_payment_wait_to_no_place));
             }
             if(order.status != null && order.status.status != null) {
                 if(order.status.status == OrderStatusType.OrderPendingPayment) {

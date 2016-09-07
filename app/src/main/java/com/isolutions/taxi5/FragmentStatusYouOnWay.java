@@ -92,7 +92,7 @@ public class FragmentStatusYouOnWay extends StatusesBaseFragment {
 
     public void startTimer() {
         if(this.refillOrderDataTimer == null) {
-            this.refillOrderDataTimer = new CountDownTimer(30000, 500) {
+            this.refillOrderDataTimer = new CountDownTimer(1000, 500) {
                 public void onTick(long millisUntilFinished) {
                     updateTimer();
                 }

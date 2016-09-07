@@ -15,4 +15,5 @@
     <color name="statusTimerBack">#F5F5F5</color>
     <color name="clearColor">#00000000</color>
     <color name="defaultRed">#F44336</color>
+    <color name="activeFeaturesButtonBackColor">#FF5722</color>
 </resources>

@@ -29,4 +29,10 @@ public class StatusesBaseFragment extends Fragment implements StatusesInterface 
     @Override
     public void fillWithOrder() {
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fillWithOrder();
+    }
 }

@@ -258,6 +258,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="12dp"
 
+        android:visibility="invisible"
+
         app:layout_constraintBottom_toTopOf="@id/fragment_status_order_payment_header_bottom"
         app:layout_constraintLeft_toLeftOf="@id/fragment_status_order_payment_main"
         app:layout_constraintRight_toRightOf="@id/fragment_status_order_payment_main"
