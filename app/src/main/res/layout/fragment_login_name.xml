@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textAlignment="center"
-        android:inputType="number"
+        android:inputType="textCapSentences"
         android:background="@drawable/round_shape_white_bordered_btn"
         android:textSize="16sp"
         android:gravity="center"
