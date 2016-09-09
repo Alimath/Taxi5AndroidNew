@@ -265,8 +265,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         if(FragmentMap.getMapFragment().isVisible()) {
-            Log.d("taxi5", "app now is visible");
-            FragmentMap.getMapFragment().RefreshView();
+//            FragmentMap.getMapFragment().RefreshView();
+            OpenClearMap();
         }
     }
     public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {

@@ -270,8 +270,18 @@ public class FragmentScreenProfile extends Fragment {
                     }
 
                     isUploading = false;
-                    HideProgressBar();
-                    refreshProfile();
+//                    if(isVisible() && isAdded()) {
+//                        AppData.getInstance().mainActivity.fragmentScreenProfile.HideProgressBar();
+//                        AppData.getInstance().mainActivity.fragmentScreenProfile.refreshProfile();
+//                    }
+//                    else {
+//                        if(AppData.getInstance().leftDrawer != null) {
+//                            AppData.getInstance().leftDrawer.RefreshProfileData();
+//                        }
+//                    }
+                    if(AppData.getInstance().leftDrawer != null) {
+                        AppData.getInstance().leftDrawer.RefreshProfileData();
+                    }
                     newAvatarImage = null;
                 }
 

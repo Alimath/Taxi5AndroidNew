@@ -22,9 +22,12 @@ public class FragmentStatusReviewCompleted extends StatusesBaseFragment {
         return view;
     }
 
-    @OnClick(R.id.fragment_status_order_review_completed_button)
+    @OnClick({R.id.fragment_status_order_review_completed_button, R.id.fragment_status_order_review_completed_fade})
     public void OnBackToMapClick() {
-        AppData.getInstance().setCurrentOrder(null, false);
-        FragmentMap.getMapFragment().RefreshView();
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenClearMap();
+        }
+//        AppData.getInstance().setCurrentOrder(null, false);
+//        FragmentMap.getMapFragment().RefreshView();
     }
 }
