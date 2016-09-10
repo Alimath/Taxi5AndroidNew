@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
 import com.isolutions.taxi5.API.ApiFactory;
@@ -221,6 +222,8 @@ public class FragmentLoginSMS extends Fragment {
                 @Override
                 public void onFailure(Call<ProfileResponseData> call, Throwable t) {
                     Log.d("taxi5", "error to become profile");
+                    StopGetSMSButtonLoadinganimation();
+                    Toast.makeText(getContext(), "Вероятно, Вы неверно ввели код из СМС, проверьте его и повторите попытку.", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -243,6 +246,8 @@ public class FragmentLoginSMS extends Fragment {
     }
 
     public void onFailureAuthorization(Call<TokenData> call, Throwable t) {
+        StopGetSMSButtonLoadinganimation();
+        Toast.makeText(getContext(), "Не удалось связаться с сервером, повторите попытку позже.", Toast.LENGTH_SHORT).show();
         Log.d("taxi5", "responseCode: error");
     }
 }

@@ -570,6 +570,17 @@
             app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view"
             />
 
+        <Button
+            android:id="@+id/fragment_status_create_order_from_to_view_search_to_address_full"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@color/clearColor"
+            app:layout_constraintRight_toLeftOf="@id/fragment_status_create_order_from_to_view_search_to_address"
+            app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view_separator_center"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view"
+            />
+
     </android.support.constraint.ConstraintLayout>
 
 

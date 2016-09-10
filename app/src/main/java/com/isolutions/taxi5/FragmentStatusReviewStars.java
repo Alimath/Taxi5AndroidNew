@@ -56,7 +56,10 @@ public class FragmentStatusReviewStars extends Fragment {
     @Optional
     @OnClick({R.id.fragment_status_review_stars_star_1_button, R.id.fragment_status_review_stars_star_2_button,
             R.id.fragment_status_review_stars_star_3_button, R.id.fragment_status_review_stars_star_4_button,
-            R.id.fragment_status_review_stars_star_5_button})
+            R.id.fragment_status_review_stars_star_5_button,
+            R.id.fragment_status_review_stars_star_1_button_help, R.id.fragment_status_review_stars_star_2_button_help,
+            R.id.fragment_status_review_stars_star_3_button_help, R.id.fragment_status_review_stars_star_4_button_help,
+            R.id.fragment_status_review_stars_star_5_button_help})
     public void OnStarClick(View view) {
         Log.d("taxi5", "tag: "+view.getTag().toString());
 

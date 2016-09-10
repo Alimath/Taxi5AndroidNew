@@ -86,6 +86,12 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
                 headerTextView.setText(getString(R.string.status_information_cancel_header));
                 messageTextView.setText(getString(R.string.status_information_cancel_message));
             }
+            if(order.status.status == OrderStatusType.ClientNotFound) {
+                button.setText(getString(R.string.back_to_map_btn_title));
+                titleTextView.setText(getString(R.string.status_information_title));
+                headerTextView.setText(getString(R.string.status_information_client_not_found_header));
+                messageTextView.setText(getString(R.string.status_information_client_not_found_message));
+            }
         }
     }
 
@@ -107,6 +113,13 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
     public void HideProgressBar() {
         buttonProgressBar.setVisibility(View.INVISIBLE);
         SetCreateOrderButtonAvailableState(true);
+    }
+
+    @OnClick(R.id.fragment_status_information_fade)
+    void OnFadeClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenClearMap();
+        }
     }
 
     @OnClick(R.id.fragment_status_information_button)

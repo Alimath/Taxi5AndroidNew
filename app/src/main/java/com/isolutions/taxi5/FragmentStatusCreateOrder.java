@@ -382,6 +382,11 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
         }
     }
 
+    @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address_full)
+    public void OnSearchToAddressClickFull() {
+        FragmentMap.getMapFragment().ShowSearchAddressView(false);
+    }
+
     @OnClick(R.id.fragment_status_create_order_my_location_button)
     public void OnMyLocationClick() {
         FragmentMap.getMapFragment().ScrollMaptoPos(AppData.getInstance().nullPoint, false);

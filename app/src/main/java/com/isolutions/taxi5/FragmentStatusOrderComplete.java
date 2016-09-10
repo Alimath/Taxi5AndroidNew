@@ -32,4 +32,11 @@ public class FragmentStatusOrderComplete extends StatusesBaseFragment {
         }
     }
 
+    @OnClick(R.id.fragment_status_order_complete_main_fade)
+    public void OnFadeClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenClearMap();
+        }
+    }
+
 }

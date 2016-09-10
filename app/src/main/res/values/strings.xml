@@ -13,7 +13,7 @@
 
 
     <string name="registration_sms_header1">ВВЕДИТЕ КОД\nИЗ SMS СООБЩЕНИЯ</string>
-    <string name="registration_sms_header2">Он должен придти на ваш телефон\nв течении пары минут.</string>
+    <string name="registration_sms_header2">Он должен прийти на ваш телефон\nв течении пары минут.</string>
     <string name="registration_sms_buttonText">ЗАПРОСИТЬ КОД ПОВТОРНО</string>
     <string name="registration_sms_buttonText_code_entered">ВОЙТИ</string>
 
@@ -39,7 +39,7 @@
     
     <string name="status_create_order_options_baby_title">Детское\nкресло</string>
     <string name="status_create_order_options_baggage_title">Сопровождение\nдо двери</string>
-    <string name="status_create_order_options_animal_title">Клетка для\nживотных</string>
+    <string name="status_create_order_options_animal_title">Сетка для\nживотных</string>
 
     <string name="status_search_car_button_text">ОТМЕНИТЬ ЗАКАЗ</string>
 
@@ -158,4 +158,7 @@
 
     <string name="status_information_cancel_header">ВАШ ЗАКАЗ БЫЛ ОТМЕНЕН</string>
     <string name="status_information_cancel_message">По какой-то причине Ваш заказ был отменен, вы можете заказать такси снова, вернувшись к карте.</string>
+
+    <string name="status_information_client_not_found_header">К СОЖАЛЕНИЮ,\nМАШИНА УЕХАЛА!</string>
+    <string name="status_information_client_not_found_message">Водитель Вас не дождался. Для уточнения ситуации свяжитесь с диспетчером по телефону 7500.</string>
 </resources>

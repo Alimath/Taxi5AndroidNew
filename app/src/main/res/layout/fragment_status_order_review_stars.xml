@@ -17,6 +17,17 @@
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
         />
     <Button
+        android:id="@+id/fragment_status_review_stars_star_5_button_help"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:tag="5"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_review_stars_star_5_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_star_5_button"
+        />
+    <Button
         android:id="@+id/fragment_status_review_stars_star_4_button"
         android:layout_width="20dp"
         android:layout_height="19dp"
@@ -28,6 +39,17 @@
 
         app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_5_button"
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_4_button_help"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:tag="4"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_review_stars_star_4_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_star_4_button"
         />
     <Button
         android:id="@+id/fragment_status_review_stars_star_3_button"
@@ -43,6 +65,17 @@
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
         />
     <Button
+        android:id="@+id/fragment_status_review_stars_star_3_button_help"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:tag="3"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_review_stars_star_3_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_star_3_button"
+        />
+    <Button
         android:id="@+id/fragment_status_review_stars_star_2_button"
         android:layout_width="20dp"
         android:layout_height="19dp"
@@ -56,6 +89,17 @@
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
         />
     <Button
+        android:id="@+id/fragment_status_review_stars_star_2_button_help"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:tag="2"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_review_stars_star_2_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_star_2_button"
+        />
+    <Button
         android:id="@+id/fragment_status_review_stars_star_1_button"
         android:layout_width="20dp"
         android:layout_height="19dp"
@@ -67,6 +111,17 @@
 
         app:layout_constraintRight_toLeftOf="@id/fragment_status_review_stars_star_2_button"
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_main"
+        />
+    <Button
+        android:id="@+id/fragment_status_review_stars_star_1_button_help"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:tag="1"
+
+        android:background="@color/clearColor"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_review_stars_star_1_button"
+        app:layout_constraintCenterY_toCenterY="@id/fragment_status_review_stars_star_1_button"
         />
 
 

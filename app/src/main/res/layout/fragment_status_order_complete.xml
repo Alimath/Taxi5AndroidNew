@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/fragment_status_order_complete_main_fade"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/statusesBackWithAlpha"
