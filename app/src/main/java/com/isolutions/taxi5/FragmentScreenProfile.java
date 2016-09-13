@@ -270,6 +270,9 @@ public class FragmentScreenProfile extends Fragment {
                     }
 
                     isUploading = false;
+                    if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
+                        AppData.getInstance().mainActivity.fragmentScreenProfile.RefreshView();
+                    }
 //                    if(isVisible() && isAdded()) {
 //                        AppData.getInstance().mainActivity.fragmentScreenProfile.HideProgressBar();
 //                        AppData.getInstance().mainActivity.fragmentScreenProfile.refreshProfile();
@@ -289,7 +292,9 @@ public class FragmentScreenProfile extends Fragment {
                 public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
                     isUploading = false;
                     newAvatarImage = null;
-                    HideProgressBar();
+                    if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
+                        AppData.getInstance().mainActivity.fragmentScreenProfile.RefreshView();
+                    }
                     Log.d("taxi5", "failure to load profile: " + t.getLocalizedMessage());
                 }
             });

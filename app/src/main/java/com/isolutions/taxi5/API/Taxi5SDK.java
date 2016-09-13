@@ -3,6 +3,7 @@ package com.isolutions.taxi5.API;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ActiveHistoryOrdersResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.EstimatedPriceAndRouteResponceData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.MyPlacesResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
@@ -160,5 +161,10 @@ public interface Taxi5SDK {
             @Query("start[longitude]") double startLongitude,
             @Query("finish[latitude]") double endLatitude,
             @Query("finish[longitude]") double endLongitude
+    );
+
+    @GET("http://api.taxi5.by/m/v2/customer/me/favorite-places?noname=true&limit=100")
+    Call<MyPlacesResponseData> GetMyPlaces (
+            @Header("X-Authorization") String token
     );
 }

@@ -265,6 +265,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             order.features.baby = this.isBaby;
             order.features.escort = this.isEscort;
         }
+        if(!TextUtils.isEmpty(this.commentEditText.getText())) {
+            order.comment = this.commentEditText.getText().toString();
+        }
 
         return order;
     }

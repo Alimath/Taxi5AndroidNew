@@ -107,7 +107,12 @@ public class FragmentStatusPayment extends StatusesBaseFragment {
                             priceNewTextView.setText(bynAmountString);
 
                             String byrAmountString = (byrAmount/1000) + " ";
-                            byrAmountString += (byrAmount - byrAmount/1000*1000) + " " + getString(R.string.old_currency);
+
+                            String oldValueCopsSctring =""+(byrAmount - byrAmount/1000*1000);
+                            while(oldValueCopsSctring.length() < 3) {
+                                oldValueCopsSctring+="0";
+                            }
+                            byrAmountString += oldValueCopsSctring + " " + getString(R.string.old_currency);
 
                             priceOldTextView.setText(byrAmountString);
                         }
