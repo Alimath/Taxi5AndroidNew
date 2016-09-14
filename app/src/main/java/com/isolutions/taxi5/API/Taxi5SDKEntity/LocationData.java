@@ -74,9 +74,16 @@ public class LocationData {
             }
 
             Context appCtx = AppData.getInstance().getAppContext();
-
-            int secondsLng = Integer.parseInt(separatedLng[2].split(",")[0]);
-            int secondsLat = Integer.parseInt(separatedLat[2].split(",")[0]);
+            int secondsLng;
+            int secondsLat;
+            if(separatedLng[2].contains(",")) {
+                secondsLng = Integer.parseInt(separatedLng[2].split(",")[0]);
+                secondsLat = Integer.parseInt(separatedLat[2].split(",")[0]);
+            }
+            else {
+                secondsLng = Integer.parseInt(separatedLng[2].split("\\.")[0]);
+                secondsLat = Integer.parseInt(separatedLat[2].split("\\.")[0]);
+            }
 
 //            double secondsLng = Double.parseDouble(separatedLng[2]);
 //            double secondsLat = Double.parseDouble(separatedLat[2]);
