@@ -176,18 +176,18 @@ public class FragmentStatusCreateOrderFindAddress extends Fragment {
                         }
                     }
                     else {
-                        if(response.body().getErrors() != null && response.body().getErrors().size() > 0) {
-                            Log.d("taxi5", "load myPlaces error: " + response.body().getErrors().get(0));
-                        }
-                        else {
-                            Log.d("taxi5", "load myPlaces error");
-                        }
+//                        if(response.body().getErrors() != null && response.body().getErrors().size() > 0) {
+//                            Log.d("taxi5", "load myPlaces error: " + response.body().getErrors().get(0));
+//                        }
+//                        else {
+//                            Log.d("taxi5", "load myPlaces error");
+//                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MyPlacesResponseData> call, Throwable t) {
-                    Log.d("taxi5", "load myPlaces failure");
+                    Log.d("taxi5", "load myPlaces failure: " + t.getLocalizedMessage());
                 }
             });
 

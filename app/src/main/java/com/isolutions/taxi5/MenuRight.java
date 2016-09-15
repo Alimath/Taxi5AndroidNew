@@ -82,16 +82,10 @@ public class MenuRight extends Fragment {
         listView.setAdapter(mergeAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 if(AppData.getInstance().mainActivity != null) {
-                    if(AppData.getInstance().leftDrawer != null) {
-                        AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
-                    }
-                    AppData.getInstance().mainActivity.OpenClearMap();
-                    FragmentMap.getMapFragment().statusCreateOrderFragment.ClearFields();
+
 
                     boolean isHistorySelected = false;
 
@@ -103,7 +97,15 @@ public class MenuRight extends Fragment {
                     }
                     if(activeOrders.size() == 0) {
                         realPos -= 1;
+                        if(realPos < 0) {
+                            return;
+                        }
                     }
+                    if(AppData.getInstance().leftDrawer != null) {
+                        AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
+                    }
+                    AppData.getInstance().mainActivity.OpenClearMap();
+                    FragmentMap.getMapFragment().statusCreateOrderFragment.ClearFields();
 
                     if (!isHistorySelected) {
                         AppData.getInstance().setCurrentOrder(activeOrders.get(realPos), false);

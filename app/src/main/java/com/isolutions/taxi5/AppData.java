@@ -138,12 +138,14 @@ public class AppData {
 
     public int pxToDp(int px) {
         DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
-        int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        float density = appContext.getResources().getDisplayMetrics().density;
+        int dp = Math.round(px / density);//(displayMetrics.ydpi / DisplayMetrics.density));
         return dp;
     }
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
-        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        float density = appContext.getResources().getDisplayMetrics().density;
+        int px = Math.round(dp * density);//(displayMetrics.ydpi / DisplayMetrics.DENSITY_420));
         return px;
     }
 }

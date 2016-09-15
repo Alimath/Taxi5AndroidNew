@@ -79,6 +79,17 @@ public class AdapterSearchAddress extends BaseAdapter {
 
         void fillData(LocationData locationData) {
             titleTextView.setText(locationData.getStringDescription());
+            if(locationData.favoriteID != null) {
+                if(!TextUtils.isEmpty(locationData.favoriteAlias)) {
+                    subTitleTextView.setText(locationData.favoriteAlias);
+                }
+                else {
+                    subTitleTextView.setText("Имя не указано");
+                }
+            }
+            else {
+                subTitleTextView.setText("");
+            }
         }
     }
 

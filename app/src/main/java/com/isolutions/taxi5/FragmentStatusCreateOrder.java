@@ -529,7 +529,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     public void HideAnimated() {
         if(!isBottomHidden) {
             isBottomHidden = true;
-            this.mainView.animate().translationY(AppData.getInstance().dpToPx(108)).setDuration(300).start();
+            this.mainView.animate().translationY(AppData.getInstance().dpToPx(125)).setDuration(300).start();
         }
     }
 

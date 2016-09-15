@@ -9,6 +9,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescription;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescriptionDeserializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataDeserializer;
@@ -60,6 +62,7 @@ public class ApiFactory {
                 registerTypeAdapter(LocationData.class, new LocationDataSerializer()).
                 registerTypeAdapter(OrderData.class, new OrderDataSerializer()).
                 registerTypeAdapter(ProfileData.class, new ProfileDataSerializer()).
+                registerTypeAdapter(LocationDescription.class, new LocationDescriptionDeserializer()).
                 create();
 
 

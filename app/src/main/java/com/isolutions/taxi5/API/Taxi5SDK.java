@@ -117,7 +117,7 @@ public interface Taxi5SDK {
             @Path("id") Integer orderID
     );
 
-    @GET("http://api.taxi5.by/m/v2/customer/me/active-orders")
+    @GET("http://api.taxi5.by/m/v2/customer/me/active-orders?delay=5")
     Call<ActiveHistoryOrdersResponseData> ActiveOrders (
             @Header("X-Authorization") String token
     );

@@ -42,23 +42,31 @@ public class LocationData {
     @SerializedName("details")
     public LocationDescription details;
 
+    public Integer favoriteID;
+    public String favoriteAlias;
+    public Integer favoriteCounter;
+    public Boolean favoriteIsFavorite;
+
 
     public String getStringDescription() {
         if(locationDescription != null) {
             if(!TextUtils.isEmpty(locationDescription.getStringDescription())) {
+//                Log.d("taxi5", "1: " + locationDescription.getStringDescription());
                 return locationDescription.getStringDescription();
             }
         }
         else if(details != null) {
             if(!TextUtils.isEmpty(details.getStringDescription())) {
+//                Log.d("taxi5", "2: " + details.getStringDescription());
                 return details.getStringDescription();
             }
         }
         else if(!TextUtils.isEmpty(locationStringDescription)) {
+//            Log.d("taxi5", "3: " + locationStringDescription);
             return locationStringDescription;
         }
         else {
-                String longitudeString = Location.convert(longitude, Location.FORMAT_SECONDS);
+            String longitudeString = Location.convert(longitude, Location.FORMAT_SECONDS);
             String latitudeString = Location.convert(latitude, Location.FORMAT_SECONDS);
 
             String[] separatedLng = longitudeString .split(":");

@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class LocationDescription {
     @SerializedName("address")
-    @Expose
     public LocationAddress address;
 
     @SerializedName("object")
