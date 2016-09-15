@@ -36,7 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener {
+public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener,
+        GoogleMap.OnCameraMoveStartedListener {
     GoogleMap mMap;
 
     private CountDownTimer readOrderStatusTimer;
@@ -240,6 +241,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.getUiSettings().setRotateGesturesEnabled(false);
 
         mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveStartedListener(this);
         RefreshView();
 
 //        ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -270,6 +272,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         }
     }
 
+    @Override
+    public void onCameraMoveStarted(int var1) {
+        if(statusCreateOrderFragment.isVisible() && var1 == REASON_GESTURE) {
+            statusCreateOrderFragment.HideAnimated();
+        }
+//        if(AppData.getInstance().toolbar != null) {
+//            AppData.getInstance().toolbar.HideAnimated();
+//        }
+    }
+
     Call<LocationsListResponseData> geocodeCall;
     @Override
     public void onCameraIdle() {
@@ -292,7 +304,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
         if(statusCreateOrderFragment.isVisible()) {
             statusCreateOrderFragment.setFromLocation(null);
+            statusCreateOrderFragment.ShowAnimated();
         }
+
+//        if(AppData.getInstance().toolbar != null) {
+//            AppData.getInstance().toolbar.ShowAnimated();
+//        }
 
         geocodeCall.enqueue(new Callback<LocationsListResponseData>() {
             @Override

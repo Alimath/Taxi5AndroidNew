@@ -180,8 +180,16 @@ public class AdapterPlans extends BaseAdapter {
 
                     }
                     else {
-                        String byrAmountString = (byrAmount / 1000) + " ";
-                        byrAmountString += (byrAmount - byrAmount / 1000 * 1000);
+//                        String byrAmountString = (byrAmount / 1000) + " ";
+//                        byrAmountString += (byrAmount - byrAmount / 1000 * 1000);
+
+                        String byrAmountString = (byrAmount/1000) + " ";
+
+                        String oldValueCopsSctring =""+(byrAmount - byrAmount/1000*1000);
+                        while(oldValueCopsSctring.length() < 3) {
+                            oldValueCopsSctring+="0";
+                        }
+                        byrAmountString += oldValueCopsSctring;
 
                         amountTextView.setText(byrAmountString);
 

@@ -142,9 +142,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="0dp"
-                android:visibility="invisible"
-
+                android:layout_marginTop="54dp"
 
                 app:layout_constraintTop_toTopOf="@+id/left_drawer_order_taxi_separator"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -154,8 +152,6 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="19dp"
-
-                android:visibility="invisible"
 
                 android:src="@drawable/leftmenuiconmyplaces"
 
@@ -170,7 +166,6 @@
                 android:id="@+id/left_drawer_my_places_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
 
                 android:layout_marginLeft="72dp"
                 android:layout_marginStart="72dp"
@@ -263,7 +258,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
 
-                android:src="@drawable/leftmenuiconplans"
+                android:src="@drawable/leftmenuiconabout"
 
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
@@ -318,6 +313,19 @@
                 app:layout_constraintLeft_toLeftOf="@+id/left_drawer_header_back_image"
                 app:layout_constraintTop_toTopOf="@+id/left_drawer_header_back_image"
                 app:layout_constraintBottom_toBottomOf="@+id/left_drawer_header_back_image"
+                />
+
+            <Button
+                android:id="@+id/left_drawer_my_places_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="@color/clearColor"
+
+                app:layout_constraintRight_toRightOf="@+id/left_drawer_header_back_image"
+                app:layout_constraintLeft_toLeftOf="@+id/left_drawer_header_back_image"
+                app:layout_constraintTop_toTopOf="@+id/left_drawer_order_taxi_separator"
+                app:layout_constraintBottom_toBottomOf="@+id/left_drawer_my_places_separator"
                 />
 
             <Button

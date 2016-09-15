@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity
     public final FragmentScreenProfile fragmentScreenProfile = new FragmentScreenProfile();
     public FragmentAboutUs fragmentAboutUs = new FragmentAboutUs();
     public FragmentPlans fragmentPlans = new FragmentPlans();
+    public FragmentMyPlaces fragmentMyPlaces = new FragmentMyPlaces();
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
@@ -238,6 +239,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        isStarted = true;
         AppData.getInstance().setAppForeground(true);
         if(locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -295,6 +297,7 @@ public class MainActivity extends AppCompatActivity
         if(locationManager != null) {
             locationManager.removeUpdates(locationListener);
         }
+        isStarted = false;
         AppData.getInstance().setAppForeground(false);
     }
 
@@ -332,6 +335,11 @@ public class MainActivity extends AppCompatActivity
         CloseRightMenu();
     }
 
+    public void OpenMyPlaces() {
+        ChangeFragment(fragmentMyPlaces);
+        CloseMenus();
+    }
+
     public void ChangeFragment(Fragment fragment) {
         if(AppData.getInstance().getAppForeground()) {
             CloseLeftMenu();
@@ -349,6 +357,17 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.main_activity_fragment_map_layout)
     FrameLayout mapLayout;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+    }
+
+
+
+    private boolean isStarted = false;
+
 
 //    public void HideToolbar() {
 //        FrameLayout.LayoutParams toolbarParams = (FrameLayout.LayoutParams)toolbarLayout.getLayoutParams();
