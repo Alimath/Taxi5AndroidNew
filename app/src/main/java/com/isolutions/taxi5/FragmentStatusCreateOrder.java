@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,9 +111,15 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     TextView isAnimalTextView;
 
 
+    @BindView(R.id.fragment_status_create_order_main)
+    ConstraintLayout mainView;
+
+
     private boolean isBaby = false;
     private boolean isEscort = false;
     private boolean isAnimal = false;
+
+    private boolean isBottomHidden = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -515,5 +523,20 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     public void OnFeatureAnimalClick() {
         this.isAnimal = !this.isAnimal;
         RefillFeatures();
+    }
+
+
+    public void HideAnimated() {
+        if(!isBottomHidden) {
+            isBottomHidden = true;
+            this.mainView.animate().translationY(AppData.getInstance().dpToPx(108)).setDuration(300).start();
+        }
+    }
+
+    public void ShowAnimated() {
+        if(isBottomHidden) {
+            isBottomHidden = false;
+            this.mainView.animate().translationY(0).setDuration(300).start();
+        }
     }
 }

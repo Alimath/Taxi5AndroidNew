@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -133,5 +134,16 @@ public class AppData {
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
         return encoded;
+    }
+
+    public int pxToDp(int px) {
+        DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
+        int dp = Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return dp;
+    }
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = appContext.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 }

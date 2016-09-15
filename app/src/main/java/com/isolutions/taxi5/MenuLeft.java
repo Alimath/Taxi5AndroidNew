@@ -148,6 +148,14 @@ public class MenuLeft extends Fragment {
         }
     }
 
+    @OnClick(R.id.left_drawer_my_places_button)
+    public void onMyPlacesClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenMyPlaces();
+            HighlightMenuItem(OpenFragmentTypes.MyPlaces);
+        }
+    }
+
     public void ClearSelecting() {
         mapTextView.setTextColor(colorBlack);
         myPlacesTextView.setTextColor(colorBlack);

@@ -140,6 +140,21 @@ public class FragmentCustomToolbar extends Fragment {
         }
     }
 
+    public void HideAnimated() {
+        if(this.isAdded() && !isHidden) {
+            isHidden = true;
+            this.toolbarMain.animate().translationY(AppData.getInstance().dpToPx(-56)).setDuration(300).start();
+        }
+    }
+
+    private boolean isHidden = false;
+    public void ShowAnimated() {
+        if(this.isAdded() && isHidden) {
+            isHidden = false;
+            this.toolbarMain.animate().translationY(0).setDuration(300).start();
+        }
+    }
+
 //    public void ConvertToHiddenToolbar() {
 //        toolbarMain.setVisibility(View.INVISIBLE);
 //        ViewGroup.LayoutParams params = toolbarMain.getLayoutParams();
