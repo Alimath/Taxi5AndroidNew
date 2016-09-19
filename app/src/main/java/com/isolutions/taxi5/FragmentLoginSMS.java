@@ -172,14 +172,14 @@ public class FragmentLoginSMS extends Fragment {
     }
 
     private void StopGetSMSButtonLoadinganimation() {
-        if(sendCodeButton.getCurrentTextColor() == Color.parseColor("#FFFFFF")) {
-            sendCodeButton.setClickable(false);
-            smsText.setClickable(false);
-        }
-        else {
+//        if(sendCodeButton.getCurrentTextColor() == Color.parseColor("#FFFFFF")) {
+//            sendCodeButton.setClickable(false);
+//            smsText.setClickable(false);
+//        }
+//        else {
             sendCodeButton.setClickable(true);
             smsText.setClickable(true);
-        }
+//        }
         avLoadingIndicatorView.hide();
     }
 
@@ -213,6 +213,7 @@ public class FragmentLoginSMS extends Fragment {
 
                         loginActivity.OpenMainActivity();
                     }
+                    Log.d("taxi5", "status code: "+ response.body().getStatusCode());
 //                    else {
 //                        LoginActivity loginActivity = (LoginActivity) getActivity();
 //                        loginActivity.OpenNameFragment();
@@ -237,11 +238,15 @@ public class FragmentLoginSMS extends Fragment {
 //            }
         }
         else {
-            try {
-                Log.d("taxi5", "responseCode: " + response.errorBody().string());
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(response.raw().code() == 400) {
+                StopGetSMSButtonLoadinganimation();
+                Toast.makeText(getContext(), "Вероятно, Вы неверно ввели код из СМС, проверьте его и повторите попытку.", Toast.LENGTH_SHORT).show();
             }
+//            try {
+                Log.d("taxi5", "responseCode: " + response.raw().code());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
