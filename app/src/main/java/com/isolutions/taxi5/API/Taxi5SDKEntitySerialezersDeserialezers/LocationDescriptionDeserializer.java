@@ -1,4 +1,4 @@
-package com.isolutions.taxi5.API.Taxi5SDKEntity;
+package com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers;
 
 import android.util.Log;
 
@@ -10,6 +10,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationAddress;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescription;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationObject;
 
 import java.lang.reflect.Type;
 
@@ -37,6 +40,19 @@ public class LocationDescriptionDeserializer implements JsonDeserializer<Locatio
         }
         else {
             locationDescription.address = null;
+        }
+        if(jsonObject.has("object")) {
+            JsonElement jsonElement = jsonObject.get("object");
+            if(jsonElement.isJsonArray() || jsonElement.isJsonNull()) {
+                locationDescription.locationObject = null;
+            }
+            else {
+                LocationObject locationObject = gson.fromJson(jsonElement, new TypeToken<LocationObject>(){}.getType());
+                locationDescription.locationObject = locationObject;
+            }
+        }
+        else {
+            locationDescription.locationObject = null;
         }
 
         return locationDescription;

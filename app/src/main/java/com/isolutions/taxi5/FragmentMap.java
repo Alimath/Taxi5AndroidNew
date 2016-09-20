@@ -146,11 +146,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
                 public void onFinish() {
                     ReadOrderState();
-                    Log.d("taxi5", "timer finish");
-
-                    if (AppData.getInstance().getCurrentOrder() != null) {
-//                    startTimer();
-                    }
+//                    if (AppData.getInstance().getCurrentOrder() != null) {
+////                    startTimer();
+//                    }
                 }
             }.start();
         }
@@ -374,7 +372,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
             @Override
             public void onFailure(Call<LocationsListResponseData> call, Throwable t) {
-                Log.d("taxi5", "fail to reverse geocode" + t.getLocalizedMessage());
+                Log.d("taxi5", "fail to reverse geocode: " + t.getLocalizedMessage());
+                if(t.getLocalizedMessage() == null || !t.getLocalizedMessage().equalsIgnoreCase("Canceled")) {
+                    Log.d("taxi5", "fail to reverse geocode: " + t.getLocalizedMessage());
+                    LatLng pos = mMap.getCameraPosition().target;
+
+                    LocationData locationData = new LocationData();
+                    locationData.latitude = pos.latitude;
+                    locationData.longitude = pos.longitude;
+                    statusCreateOrderFragment.setFromLocation(locationData);
+                }
             }
         });
 

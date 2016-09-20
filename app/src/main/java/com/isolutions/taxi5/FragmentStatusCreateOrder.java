@@ -158,7 +158,23 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     }
 
     public void setFromLocation(LocationData fromLoc) {
+
+
+
         if(fromLoc != null) {
+            if(!TextUtils.isEmpty(fromLoc.locationStringDescription)) {
+                Log.d("taxi5", "location string description: " + fromLoc.locationStringDescription);
+            }
+//            if(fromLoc.locationDescription != null) {
+//                Log.d("taxi5", "location description not null");
+//                if(fromLoc.locationDescription.address != null) {
+//                    Log.d("taxi5", "location description.address not null");
+//                }
+//                if(fromLoc.locationDescription.locationObject != null) {
+//                    Log.d("taxi5", "location description.locationObject not null");
+//                }
+//            }
+
             fromLocation = fromLoc;
             setFromText(fromLoc.getStringDescription());
         }

@@ -4,21 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescription;
-import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescriptionDeserializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDescriptionDeserializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataDeserializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDataSerializer;
+import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.LocationDescriptionSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.OrderDataSerializer;
 import com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers.ProfileDataSerializer;
 import com.isolutions.taxi5.AppData;
-import com.isolutions.taxi5.LoginActivity;
 import com.isolutions.taxi5.NoInternetActivity;
 
 import java.util.List;
@@ -63,6 +62,7 @@ public class ApiFactory {
                 registerTypeAdapter(OrderData.class, new OrderDataSerializer()).
                 registerTypeAdapter(ProfileData.class, new ProfileDataSerializer()).
                 registerTypeAdapter(LocationDescription.class, new LocationDescriptionDeserializer()).
+                registerTypeAdapter(LocationDescription.class, new LocationDescriptionSerializer()).
                 create();
 
 

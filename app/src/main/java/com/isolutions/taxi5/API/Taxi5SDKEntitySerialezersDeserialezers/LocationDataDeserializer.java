@@ -1,7 +1,5 @@
 package com.isolutions.taxi5.API.Taxi5SDKEntitySerialezersDeserialezers;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -12,7 +10,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescription;
-import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationDescriptionDeserializer;
 
 import java.lang.reflect.Type;
 
@@ -48,7 +45,7 @@ public class LocationDataDeserializer implements JsonDeserializer<LocationData> 
             JsonElement jsonElement = jsonObject.get("details");
             if(!jsonElement.isJsonPrimitive()) {
                 LocationDescription locationDescription = gson.fromJson(jsonElement, new TypeToken<LocationDescription>(){}.getType());
-                locationData.locationDescription = locationDescription;
+                locationData.details = locationDescription;
             }
         }
 
