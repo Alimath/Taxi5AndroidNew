@@ -237,7 +237,7 @@ public class FragmentScreenProfile extends Fragment {
             isUploading = true;
             ShowProgressBar();
 
-            ProfileData profileData = ProfileData.getInstance();
+            final ProfileData profileData = ProfileData.getInstance();
 
             profileData.setName(this.nameEditText.getText().toString());
             profileData.setEmail(this.emailEditText.getText().toString());
@@ -249,9 +249,9 @@ public class FragmentScreenProfile extends Fragment {
             if (taxi5SDK == null) {
                 return;
             }
+            this.profileData = profileData;
             call = taxi5SDK.SendProfile(TokenData.getInstance().getToken(), profileData);
 
-            this.profileData = profileData;
 
             call.enqueue(new Callback<OrderResponseActionData>() {
                 @Override
@@ -268,6 +268,9 @@ public class FragmentScreenProfile extends Fragment {
                             Log.d("taxi5", response.raw().code() + ": ");
                         }
                     }
+
+//                    Log.d("taxi5", call.request().body().toString());
+
 
                     isUploading = false;
                     if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
@@ -301,14 +304,14 @@ public class FragmentScreenProfile extends Fragment {
         }
     }
 
-    private void refreshProfile() {
-        profileData.setAvatarImage(newAvatarImage);
-        profileData.saveProfileData();
-        if(profileData != null && isVisible()) {
-            RefreshView();
-        }
-        AppData.getInstance().leftDrawer.RefreshProfileData();
-    }
+//    private void refreshProfile() {
+//        profileData.setAvatarImage(newAvatarImage);
+//        profileData.saveProfileData();
+//        if(profileData != null && isVisible()) {
+//            RefreshView();
+//        }
+//        AppData.getInstance().leftDrawer.RefreshProfileData();
+//    }
 
     private void ShowProgressBar() {
         uploadButton.setClickable(false);

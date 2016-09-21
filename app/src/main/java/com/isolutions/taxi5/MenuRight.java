@@ -235,7 +235,7 @@ public class MenuRight extends Fragment {
             }
         }
         else {
-            Log.d("taxi5", "some errors in active orders parse");
+            Log.d("taxi5", "some errors in active orders parse, status: " + response.raw().code());
         }
         startUpdateActiveOrdersTimer();
     }
