@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.view.Display;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -147,5 +148,17 @@ public class AppData {
         float density = appContext.getResources().getDisplayMetrics().density;
         int px = Math.round(dp * density);//(displayMetrics.ydpi / DisplayMetrics.DENSITY_420));
         return px;
+    }
+
+    public float getScreenWidthInDP() {
+        Display display = currentActivity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics ();
+        display.getMetrics(outMetrics);
+
+        float density  = appContext.getResources().getDisplayMetrics().density;
+//        float dpHeight = outMetrics.heightPixels / density;
+        float dpWidth  = outMetrics.widthPixels / density;
+
+        return dpWidth;
     }
 }

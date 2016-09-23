@@ -34,7 +34,7 @@ import retrofit2.Response;
 public class FragmentMyPlaces extends Fragment {
     LayoutInflater inflater;
     private ArrayList<LocationData> mData = new ArrayList<>();
-    AdapterSearchAddress adapter;
+    AdapterMyPlaces adapter;
 
     @BindView(R.id.fragment_my_places_list_view)
     ListView listView;
@@ -61,7 +61,7 @@ public class FragmentMyPlaces extends Fragment {
             AppData.getInstance().toolbar.ConvertToDefaultWithTitle(getString(R.string.left_drawer_menu_item_my_places));
         }
 
-        adapter = new AdapterSearchAddress(AppData.getInstance().getAppContext(), mData);
+        adapter = new AdapterMyPlaces(AppData.getInstance().getAppContext(), mData);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
