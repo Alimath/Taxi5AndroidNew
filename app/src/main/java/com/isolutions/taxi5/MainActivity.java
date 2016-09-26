@@ -107,6 +107,11 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onLocationChanged(Location location) {
+            Log.d("taxi5", "location cahnged: " + location.getLatitude() + " : " + location.getLongitude());
+            if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.mapFragment.isVisible()) {
+                AppData.getInstance().mainActivity.OpenClearMap();
+            }
+
             AppData.getInstance().nullPoint = new LatLng(location.getLatitude(), location.getLongitude());
         }
 

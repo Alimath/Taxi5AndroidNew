@@ -2,12 +2,14 @@ package com.isolutions.taxi5;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.isolutions.taxi5.API.ApiFactory;
@@ -46,6 +48,9 @@ public class FragmentPlans extends Fragment {
     @BindView(R.id.fragment_plans_button_byr)
     Button BYRButton;
 
+    @BindView(R.id.fragment_plans_buttons_divider)
+    View buttonsDividerView;
+
     private ArrayList<Map.Entry> plansData = new ArrayList<>();
 
     AdapterPlans adapterPlans;
@@ -73,7 +78,9 @@ public class FragmentPlans extends Fragment {
         adapterPlans = new AdapterPlans(AppData.getInstance().getAppContext(), plansData);
         listView.setAdapter(adapterPlans);
 
+//        this.buttonsDividerView.setLayoutParams(new ConstraintLayout.LayoutParams(200, 2));
         OnBYNButtonClick();
+
 
         return view;
     }
@@ -150,6 +157,8 @@ public class FragmentPlans extends Fragment {
         BYRButton.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
         BYNButton.setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
         adapterPlans.updateResource(plansData);
+
+        this.buttonsDividerView.animate().translationX(0);
     }
 
     @OnClick(R.id.fragment_plans_button_byr)
@@ -158,6 +167,7 @@ public class FragmentPlans extends Fragment {
         BYRButton.setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
         BYNButton.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
         adapterPlans.updateResource(plansData);
+        this.buttonsDividerView.animate().translationX(this.BYNButton.getWidth());
     }
 
 }

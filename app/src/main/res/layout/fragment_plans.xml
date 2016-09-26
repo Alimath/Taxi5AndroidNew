@@ -64,6 +64,18 @@
             app:layout_constraintRight_toRightOf="@id/fragment_plans_main"
 
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:id="@+id/fragment_plans_buttons_divider"
+
+            android:background="@color/defaultBlue"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/fragment_plans_button_byr"
+            />
     </android.support.constraint.ConstraintLayout>
 
 
@@ -72,6 +84,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:listSelector="@android:color/transparent"
+        android:dividerHeight="1dp"
+        android:divider="@drawable/default_divider"
         >
     </ListView>
 </LinearLayout>
