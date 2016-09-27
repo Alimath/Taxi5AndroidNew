@@ -23,6 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:dividerHeight="1dp"
+        android:divider="@drawable/default_divider"
+
         app:layout_constraintTop_toBottomOf="@id/fragment_my_places_top_separator"
         app:layout_constraintLeft_toLeftOf="@id/fragment_my_places_main"
         app:layout_constraintRight_toRightOf="@id/fragment_my_places_main"

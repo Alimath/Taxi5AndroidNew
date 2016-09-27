@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     public FragmentAboutUs fragmentAboutUs = new FragmentAboutUs();
     public FragmentPlans fragmentPlans = new FragmentPlans();
     public FragmentMyPlaces fragmentMyPlaces = new FragmentMyPlaces();
+    public FragmentPayments fragmentPayments = new FragmentPayments();
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
@@ -336,6 +337,7 @@ public class MainActivity extends AppCompatActivity
 
     public void OpenClearMap() {
         AppData.getInstance().setCurrentOrder(null, false);
+        AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
         ChangeFragment(mapFragment);
         mapFragment.RefreshView();
         mapFragment.ScrollMaptoPos(AppData.getInstance().nullPoint, false);
@@ -348,6 +350,11 @@ public class MainActivity extends AppCompatActivity
 
     public void OpenMyPlaces() {
         ChangeFragment(fragmentMyPlaces);
+        CloseMenus();
+    }
+
+    public void OpenPayments() {
+        ChangeFragment(fragmentPayments);
         CloseMenus();
     }
 

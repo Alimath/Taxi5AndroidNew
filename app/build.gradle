@@ -35,6 +35,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     testCompile 'junit:junit:4.12'
+    //XML parser
+//    compile 'com.squareup.retrofit2:converter-simplexml:2.1.0'
 
     //Phone codes
     compile 'com.hbb20:ccp:1.5.1'
@@ -77,4 +79,5 @@ dependencies {
 
     //Permissions
     compile 'gun0912.ted:tedpermission:1.0.0'
+
 }

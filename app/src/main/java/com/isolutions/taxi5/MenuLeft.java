@@ -9,9 +9,11 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
@@ -37,16 +39,32 @@ public class MenuLeft extends Fragment {
     TextView mapTextView;
     @BindView(R.id.left_drawer_my_places_text_view)
     TextView myPlacesTextView;
-//    @BindView(R.id.left_drawer_payments_text_view)
-//    TextView paymentsTextView;
+    @BindView(R.id.left_drawer_payments_text_view)
+    TextView paymentsTextView;
     @BindView(R.id.left_drawer_plans_text_view)
     TextView plansTextView;
     @BindView(R.id.left_drawer_about_text_view)
     TextView aboutUsTextView;
 
+    @BindView(R.id.left_drawer_order_taxi_icon)
+    ImageView mapIcon;
+
+    @BindView(R.id.left_drawer_my_places_icon)
+    ImageView myPlacesIcon;
+
+    @BindView(R.id.left_drawer_payments_icon)
+    ImageView paymentsIcon;
+
+    @BindView(R.id.left_drawer_plans_icon)
+    ImageView plansIcon;
+
+    @BindView(R.id.left_drawer_about_icon)
+    ImageView aboutIcon;
+
 
     int colorBlack = AppData.getInstance().getColor(R.color.defaultBlack);
     int colorBlue = AppData.getInstance().getColor(R.color.defaultBlue);
+    int clearColor = AppData.getInstance().getColor(R.color.clearColor);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +113,18 @@ public class MenuLeft extends Fragment {
             builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
         }
 
-        builder.setMessage("+375 (29) 133-75-00");
+        TextView msgTextView = new TextView(AppData.getInstance().getAppContext());
+        msgTextView.setTextSize(20);
+        msgTextView.setPadding(0,16,0,16);
+        msgTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
+        msgTextView.setText("+375 (29) 133-75-00");
+
+
+        msgTextView.setGravity(Gravity.CENTER);
+
+        builder.setView(msgTextView);
+//        builder.setMessage("+375 (29) 133-75-00");
+//        builder.
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -156,12 +185,26 @@ public class MenuLeft extends Fragment {
         }
     }
 
+    @OnClick(R.id.left_drawer_payments_button)
+    public void onPaymentsClick() {
+        if(AppData.getInstance().mainActivity != null) {
+            AppData.getInstance().mainActivity.OpenPayments();
+            HighlightMenuItem(OpenFragmentTypes.Payments);
+        }
+    }
+
     public void ClearSelecting() {
         mapTextView.setTextColor(colorBlack);
         myPlacesTextView.setTextColor(colorBlack);
-//        paymentsTextView.setTextColor(colorBlack);
+        paymentsTextView.setTextColor(colorBlack);
         plansTextView.setTextColor(colorBlack);
         aboutUsTextView.setTextColor(colorBlack);
+
+        mapIcon.setColorFilter(clearColor);
+        myPlacesIcon.setColorFilter(clearColor);
+        paymentsIcon.setColorFilter(clearColor);
+        plansIcon.setColorFilter(clearColor);
+        aboutIcon.setColorFilter(clearColor);
     }
 
     public void HighlightMenuItem(OpenFragmentTypes type) {
@@ -170,18 +213,23 @@ public class MenuLeft extends Fragment {
         switch (type) {
             case Map:
                 mapTextView.setTextColor(colorBlue);
+                mapIcon.setColorFilter(colorBlue);
                 break;
             case MyPlaces:
                 myPlacesTextView.setTextColor(colorBlue);
+                myPlacesIcon.setColorFilter(colorBlue);
                 break;
             case Payments:
-//                paymentsTextView.setTextColor(colorBlue);
+                paymentsTextView.setTextColor(colorBlue);
+                paymentsIcon.setColorFilter(colorBlue);
                 break;
             case Plans:
                 plansTextView.setTextColor(colorBlue);
+                plansIcon.setColorFilter(colorBlue);
                 break;
             case AboutUs:
                 aboutUsTextView.setTextColor(colorBlue);
+                aboutIcon.setColorFilter(colorBlue);
                 break;
             case Nothing:
                 break;

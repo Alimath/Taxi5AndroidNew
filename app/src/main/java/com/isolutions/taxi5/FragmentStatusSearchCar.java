@@ -105,7 +105,8 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
             toLoc.setText(order.to.getStringDescription());
         }
         else {
-            toLoc.setText("");
+            toLoc.setText(getString(R.string.no_address_string));
+            toLoc.setTextColor(AppData.getInstance().getColor(R.color.hintsColor));
         }
     }
 

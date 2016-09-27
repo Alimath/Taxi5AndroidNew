@@ -23,6 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:dividerHeight="1dp"
+        android:divider="@drawable/default_divider"
+
         app:layout_constraintTop_toBottomOf="@id/fragment_status_create_order_find_address_top_separator"
         app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_find_address_main"
         app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_find_address_main"

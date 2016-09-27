@@ -220,7 +220,14 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     public void setToText(String toDescription) {
         if(isVisible()) {
-            this.toText.setText(toDescription);
+            if(!TextUtils.isEmpty(toDescription)) {
+                this.toText.setText(toDescription);
+                this.toText.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
+            }
+            else {
+                this.toText.setText(getString(R.string.no_address_string));
+                this.toText.setTextColor(AppData.getInstance().getColor(R.color.hintsColor));
+            }
         }
     }
 
