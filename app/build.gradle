@@ -11,6 +11,7 @@ android {
         versionCode 200180
         versionName "2.0.180"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        useLibrary 'org.apache.http.legacy'
     }
     buildTypes {
         release {

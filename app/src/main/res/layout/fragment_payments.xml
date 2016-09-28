@@ -104,7 +104,7 @@
         android:background="@drawable/round_shape_blue_btn"
         android:textColor="@color/whiteColor"
 
-        android:text="ДОБАВИТЬ КАРТУ"
+        android:text="@string/payments_screen_add_card_button_title"
         android:textSize="16sp"
         android:fontFamily="sans-serif-medium"
 

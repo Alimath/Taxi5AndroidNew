@@ -166,7 +166,7 @@
 
     <string name="payments_screen_title">Оплата</string>
     <string name="payments_screen_header_text">ПОДКЛЮЧИТЕ БАНКОВСКУЮ\nКАРТУ ДЛЯ БЫСТРОЙ ОПЛАТЫ</string>
-    <string name="payments_screen_hint_text">Ваш заказ снят с обработки.\nДля получения дополнительной информации свяжитесь с диспетчером по номер 7500 </string>
+    <string name="payments_screen_hint_text">Добавьте карточку для возможности оплаты поездки прямо из приложения.</string>
     <string name="payments_screen_add_card_button_title">ДОБАВИТЬ КАРТУ</string>
 
     <string name="payments_agreement">Оплата кредитной картой
@@ -226,4 +226,9 @@
 Организация зарегистрирована по адресу: г. Минск, ул. Стрелковая, д. 14, оф. 30; режим работы - круглосуточно, лицензия Министерства транспорта и коммуникаций РБ №02190/1--71186 выдано на основании решения от 28.04.2014.
 \n\n
 Оплата производится как наличным, так и безналичным путем, с применением пластиковых карт любого банка</string>
+
+    <string name="payments_agreement_ok_button">Согласиться</string>
+    <string name="payments_agreement_cancel_button">Отказаться</string>
+    <string name="payments_web_view_add_card_title">Добавление банковской карты</string>
+    <string name="payments_agreement_title">Соглашение</string>
 </resources>
