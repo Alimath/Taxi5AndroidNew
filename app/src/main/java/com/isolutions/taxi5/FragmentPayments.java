@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.Map;
 import org.apache.http.util.EncodingUtils;
 
@@ -90,18 +92,22 @@ public class FragmentPayments extends Fragment {
                 String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
                 ProfileData profileData = ProfileData.getInstance();
 
-                String postData = "Merchant_ID=460330&OrderNumber=taxi5_test_auth_"+currentDateString+"&OrderAmount=1&OrderComment=КОММЕНТАРИЙ&OrderCurrency=BYN&Lastname=Трухан Федор";
+                String postData = "Merchant_ID=460330&OrderNumber=taxi5_test_auth_"+currentDateString+"_"+profileData.getMsid()+"&OrderAmount=1&OrderComment=КОММЕНТАРИЙ&OrderCurrency=BYN";
                 if(!TextUtils.isEmpty(profileData.getMsid())) {
                     postData += "&CustomerNumber="+profileData.getMsid();
+                }
+                if(!TextUtils.isEmpty(profileData.getEmail())) {
+                    postData += "&Email="+profileData.getEmail();
                 }
                 if(!TextUtils.isEmpty(profileData.getName())) {
                     postData += "&Firstname="+profileData.getName();
                 }
-//                if(!TextUtils.isEmpty(profileData.getEmail())) {
-//                    postData += "&Email="+profileData.getEmail();
-//                }
 
-                wv.postUrl("https://pay140.paysec.by/pay/order.cfm", EncodingUtils.getBytes(postData, "BASE64"));
+//                Log.d("taxi5", postData);
+                ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
+
+
+                wv.postUrl("https://pay140.paysec.by/pay/order.cfm", bb.array());
                 wv.setWebViewClient(new WebViewClient() {
 //                    @Override
 //                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -113,6 +119,19 @@ public class FragmentPayments extends Fragment {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                         return super.shouldOverrideUrlLoading(view, request);
+                    }
+
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        if(url.contains("testreturn2.taxi")) {
+                            Log.d("taxi5", "paymentOK");
+
+                        }
+                        else if (url.contains("testreturn.taxi")) {
+                            Log.d("taxi5", "payment error");
+                        }
+
+                        super.onPageFinished(view, url);
                     }
                 });
 
@@ -141,5 +160,12 @@ public class FragmentPayments extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void LoadOrderStatus(String orderNumber, String merchID) {
+        String postData = "Login=taxi5by_assist_sale&Password=gluihdeo9cuy&Merchant_ID="+merchID+"&OrderNumber="+orderNumber+"&Format=3";
+        ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
+
+        
     }
 }
