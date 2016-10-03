@@ -28,6 +28,12 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatus;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderStatusType;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.APIAssist.ApiAssistFactory;
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
+import com.isolutions.taxi5.APIAssist.AssistSDK;
+import com.isolutions.taxi5.APIAssist.Entities.AssistOrder;
+import com.isolutions.taxi5.APIAssist.Entities.AssistOrderStatusResponseData;
+import com.isolutions.taxi5.APIAssist.Entities.AssistStoredCardData;
 
 import java.lang.reflect.Field;
 

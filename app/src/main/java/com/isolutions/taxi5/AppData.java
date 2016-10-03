@@ -161,4 +161,16 @@ public class AppData {
 
         return dpWidth;
     }
+
+
+    public String getStringResourceByName(String aString) {
+        String packageName = AppData.getInstance().appContext.getPackageName();
+        int resId = AppData.getInstance().appContext.getResources()
+                .getIdentifier(aString, "string", packageName);
+        if (resId == 0) {
+            return aString;
+        } else {
+            return AppData.getInstance().appContext.getString(resId);
+        }
+    }
 }

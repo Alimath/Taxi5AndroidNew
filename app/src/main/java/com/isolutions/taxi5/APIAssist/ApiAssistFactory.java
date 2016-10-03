@@ -28,6 +28,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Created by fedar.trukhan on 29.09.16.
@@ -61,12 +62,13 @@ public class ApiAssistFactory {
 
     @NonNull
     private static Retrofit getRetrofit() {
-        Gson gson = new GsonBuilder().create();
+//        Gson gson = new GsonBuilder().create();
 
 
         return new Retrofit.Builder()
                 .baseUrl("https://pay140.paysec.by")
-                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(SimpleXmlConverterFactory.create())
                 .client(CLIENT)
                 .build();
     }

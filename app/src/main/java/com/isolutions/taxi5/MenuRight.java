@@ -242,7 +242,7 @@ public class MenuRight extends Fragment {
 
     public void onCheckActiveOrdersFailure(Call<ActiveHistoryOrdersResponseData> call, Throwable t) {
         startUpdateActiveOrdersTimer();
-        Log.d("taxi5", t.getLocalizedMessage());
+//        Log.d("taxi5", t.getLocalizedMessage());
     }
 
 

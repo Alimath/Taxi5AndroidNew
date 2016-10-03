@@ -37,6 +37,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
 import com.isolutions.taxi5.FragmentPlans;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity
     public FragmentPlans fragmentPlans = new FragmentPlans();
     public FragmentMyPlaces fragmentMyPlaces = new FragmentMyPlaces();
     public FragmentPayments fragmentPayments = new FragmentPayments();
+    public FragmentPaymentHasStoredCards fragmentPaymentHasStoredCards = new FragmentPaymentHasStoredCards();
+    public FragmentPaymentsCustomerInfo fragmentPaymentsCustomerInfo = new FragmentPaymentsCustomerInfo();
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
@@ -174,6 +177,9 @@ public class MainActivity extends AppCompatActivity
         }
         if(mapFragment!= null && mapFragment.isVisible() && mapFragment.statusCreateOrderFindAddressFragment != null && mapFragment.statusCreateOrderFindAddressFragment.isVisible()) {
             mapFragment.HideSearhAddressView();
+        }
+        else if(fragmentPaymentsCustomerInfo != null && fragmentPaymentsCustomerInfo.isVisible()) {
+            OpenPayments();
         }
         else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -354,8 +360,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void OpenPayments() {
-        ChangeFragment(fragmentPayments);
+        if(AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
+            ChangeFragment(fragmentPaymentHasStoredCards);
+        }
+        else {
+            ChangeFragment(fragmentPayments);
+        }
         CloseMenus();
+    }
+
+    public void OpenPaymentsCustomerInfo() {
+        ChangeFragment(fragmentPaymentsCustomerInfo);
     }
 
     public void ChangeFragment(Fragment fragment) {

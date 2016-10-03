@@ -35,9 +35,12 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile ('com.squareup.retrofit2:converter-simplexml:2.1.0'){
+        exclude module: 'stax-api'
+        exclude module: 'stax'
+        exclude module: 'xpp3'
+    }
     testCompile 'junit:junit:4.12'
-    //XML parser
-//    compile 'com.squareup.retrofit2:converter-simplexml:2.1.0'
 
     //Phone codes
     compile 'com.hbb20:ccp:1.5.1'

@@ -122,6 +122,7 @@
     <string name="profile_screen_title">Профиль</string>
     <string name="profile_screen_header">ЛИЧНАЯ ИНФОРМАЦИЯ</string>
     <string name="profile_screen_name_title">Имя</string>
+    <string name="profile_screen_family_name_title">Фамилия</string>
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
     <string name="profile_screen_upload_data">Сохранить</string>
@@ -231,4 +232,28 @@
     <string name="payments_agreement_cancel_button">Отказаться</string>
     <string name="payments_web_view_add_card_title">Добавление банковской карты</string>
     <string name="payments_agreement_title">Соглашение</string>
+
+
+    <string name="payments_card_row_error_message_AS100">Отказ в авторизации. Убедитесь, что ваша карта поддерживает онлайн платежи и попробуйте добавить карту снова.</string>
+    <string name="payments_card_row_error_message_AS101">Вероятно Вы неверно ввели данные карты</string>
+    <string name="payments_card_row_error_message_AS102">Вероятно на вашей карте было недостаточно средств для авторизации.</string>
+    <string name="payments_card_row_error_message_AS104">Неверный срок действия карты</string>
+    <string name="payments_card_row_error_message_AS105">Превышен лимит операций по карте</string>
+    <string name="payments_card_row_error_message_AS107">Отказ в авторизации, ошибка приема данных</string>
+    <string name="payments_card_row_error_message_AS108">Отказ в авторизации Подозрение на мошшеничество</string>
+    <string name="payments_card_row_error_message_AS109">Превышен лимит операций</string>
+    <string name="payments_card_row_error_message_AS110">Необходимо повторить авторизацию</string>
+    <string name="payments_card_row_error_message_AS200">Отказ в авторизации по неизвестной причине, попробуйте добавить карточку снова.</string>
+    <string name="payments_card_remove_card_alert_title">Удалить карточку!</string>
+    <string name="payments_card_remove_card_alert_message">Это действие невозможно отменить. Вы уверены, что хотите удалить свою карточку?</string>
+    <string name="remove_text">Удалить</string>
+
+    <string name="assist_profile_info_header">Данная информация необходима для обязательной идентификации пользователя в системе ASSIST, а также для получения отчетов о платежах.</string>
+    <string name="assist_profile_clear_button_title">ОЧИСТИТЬ ПОЛЯ</string>
+    <string name="assist_profile_save_button_title">СОХРАНИТЬ ДАННЫЕ</string>
+    <string name="assist_profile_customer_info_fragment_title">Информация для оплаты</string>
+
+    <string name="assist_profile_please_input_name">Пожалуйста укажите ваше имя</string>
+    <string name="assist_profile_please_input_family_name">Пожалуйста укажите вашу фамилию</string>
+    <string name="assist_profile_please_input_email">Пожалуйста укажите ваш email</string>
 </resources>
