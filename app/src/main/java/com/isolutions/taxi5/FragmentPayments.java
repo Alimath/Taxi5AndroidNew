@@ -25,6 +25,7 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.APIAssist.ApiAssistFactory;
@@ -98,94 +99,37 @@ public class FragmentPayments extends Fragment {
         builder.setPositiveButton(R.string.payments_agreement_ok_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+//                builder.setTitle("Title");
+//                builder.setItems(new CharSequence[]
+//                                {getString(R.string.assist_3d_sec_yes), getString(R.string.assist_3d_sec_no), getString(R.string.cancel)},
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // The 'which' argument contains the index position
+//                                // of the selected item
+//                                switch (which) {
+//                                    case 0:
+//                                        Toast.makeText(AppData.getInstance().mainActivity, "clicked 1", Toast.LENGTH_SHORT).show();
+//                                        break;
+//                                    case 1:
+//                                        Toast.makeText(AppData.getInstance().mainActivity, "clicked 2", Toast.LENGTH_SHORT).show();
+//                                        break;
+//                                    case 2:
+//                                        Toast.makeText(AppData.getInstance().mainActivity, "clicked 3", Toast.LENGTH_SHORT).show();
+//                                        break;
+//                                    case 3:
+//                                        Toast.makeText(AppData.getInstance().mainActivity, "clicked 4", Toast.LENGTH_SHORT).show();
+//                                        break;
+//                                }
+//                            }
+//                        });
+//                builder.create().show();
                 AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
-//                AlertDialog.Builder alert = new AlertDialog.Builder(AppData.getInstance().mainActivity);
-//                alert.setTitle(getString(R.string.payments_web_view_add_card_title));
-//
-//                LinearLayout wrapper = new LinearLayout(AppData.getInstance().mainActivity);
-//                EditText keyboardHack = new EditText(AppData.getInstance().mainActivity);
-//
-//                keyboardHack.setVisibility(View.GONE);
-//
-//
-//                WebView wv = new WebView(AppData.getInstance().mainActivity);
-//
-//                String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
-//                ProfileData profileData = ProfileData.getInstance();
-//
-//                final String orderNumber = "taxi5_test_auth_"+currentDateString+"_"+profileData.getMsid();
-//                final String merchantID = "460330";
-//
-//                String postData = "Merchant_ID="+merchantID+"&OrderNumber="+orderNumber+"&OrderAmount=1&OrderComment=КОММЕНТАРИЙ&OrderCurrency=BYN";
-//                if(!TextUtils.isEmpty(profileData.getMsid())) {
-//                    postData += "&CustomerNumber="+profileData.getMsid();
-//                }
-//                if(!TextUtils.isEmpty(profileData.getEmail())) {
-//                    postData += "&Email="+profileData.getEmail();
-//                }
-//                if(!TextUtils.isEmpty(profileData.getName())) {
-//                    postData += "&Firstname="+profileData.getName();
-//                }
-//
-////                Log.d("taxi5", postData);
-//                ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
-//
-//
-//                wv.postUrl("https://pay140.paysec.by/pay/order.cfm", bb.array());
-//                wv.setWebViewClient(new WebViewClient() {
-//                    private boolean isRedirected;
-//
-//                    @Override
-//                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                        if(url.contains("testreturn2.taxi")) {
-//                            Log.d("taxi5", "paymentOK");
-//                            LoadOrderStatus(orderNumber, merchantID);
-//                            view.stopLoading();
-//                            return;
-//
-//                        }
-//                        else if (url.contains("testreturn.taxi")) {
-//                            LoadOrderStatus(orderNumber, merchantID);
-//                            Log.d("taxi5", "payment error");
-//                            view.stopLoading();
-//                            return;
-//                        }
-//                        else {
-//                            super.onPageStarted(view, url, favicon);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                        isRedirected = true;
-//                        return super.shouldOverrideUrlLoading(view, request);
-//                    }
-//                });
-//
-//                alert.setView(wv);
-//                alert.setNegativeButton(getString(R.string.status_car_on_way_call_driver_dialog_cancel), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.dismiss();
-//                        Log.d("taxi5", "RELOAD");
-//
-//                    }
-//                });
-//
-//                wrapper.setOrientation(LinearLayout.VERTICAL);
-//                wrapper.addView(wv, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//                wrapper.addView(keyboardHack, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//
-//
-//                alert.setView(wrapper);
-//                dialog = alert.create();
-//                dialog.show();
             }
         });
         builder.setNegativeButton(R.string.payments_agreement_cancel_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
         });
 

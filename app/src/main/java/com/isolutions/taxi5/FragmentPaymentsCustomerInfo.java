@@ -1,5 +1,6 @@
 package com.isolutions.taxi5;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,6 +71,40 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
         if(AppData.getInstance().toolbar != null) {
             AppData.getInstance().toolbar.ConvertToDefaultWithTitle(getString(R.string.assist_profile_customer_info_fragment_title));
         }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(emailEditText != null && !TextUtils.isEmpty(AssistCustomerInfo.getInstance().getCustomerEmail())) {
+            emailEditText.setText(AssistCustomerInfo.getInstance().getCustomerEmail());
+        }
+        else {
+            if(emailEditText != null) {
+                emailEditText.setText("");
+            }
+        }
+
+        if(nameEditText != null && !TextUtils.isEmpty(AssistCustomerInfo.getInstance().getCustomerName())) {
+            nameEditText.setText(AssistCustomerInfo.getInstance().getCustomerName());
+        }
+        else {
+            if(nameEditText != null) {
+                nameEditText.setText("");
+            }
+        }
+
+        if(familyNameEditText != null && !TextUtils.isEmpty(AssistCustomerInfo.getInstance().getCustomerFamilyName())) {
+            familyNameEditText.setText(AssistCustomerInfo.getInstance().getCustomerFamilyName());
+        }
+        else {
+            if(familyNameEditText != null) {
+                familyNameEditText.setText("");
+            }
+        }
     }
 
     @Override
@@ -92,6 +127,11 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
             customerInfo.setCustomerFamilyName(familyNameEditText.getText().toString());
             customerInfo.setCustomerEmail(emailEditText.getText().toString());
 
+            customerInfo.saveCustomerData();
+
+            if(AppData.getInstance().mainActivity != null) {
+                AppData.getInstance().mainActivity.OpenPayments();
+            }
             InitReccurentPayment();
         }
         else if(TextUtils.isEmpty(nameEditText.getText())) {
@@ -108,7 +148,9 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
     @OnClick(R.id.fragment_payments_customer_info_clear_button)
     public void OnClearButtonClick() {
-
+        this.nameEditText.setText("");
+        this.familyNameEditText.setText("");
+        this.emailEditText.setText("");
     }
 
     private boolean isValidEmail(CharSequence target) {
