@@ -167,4 +167,23 @@ public interface Taxi5SDK {
     Call<MyPlacesResponseData> GetMyPlaces (
             @Header("X-Authorization") String token
     );
+
+    @FormUrlEncoded
+    @POST("http://api.taxi5.by/m/v2/order/{id}/payments")
+    Call<Void> CheckPaymentRequest(
+            @Header("X-Authorization") String token,
+            @Path("id") Integer orderID,
+            @Field("provider") String provider,
+            @Field("payment_identity") String paymentIdentity,
+            @Field("amount") Integer amount,
+            @Field("merchant") String merchantID
+    );
+
+    @FormUrlEncoded
+    @POST("http://api.taxi5.by/m/v2/payments/state/canceled")
+    Call<Void> CancelCheckPaymentRequest(
+            @Header("X-Authorization") String token,
+            @Field("provider") String provider,
+            @Field("payment_identity") String paymentIdentity
+    );
 }

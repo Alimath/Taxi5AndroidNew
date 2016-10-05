@@ -1,10 +1,16 @@
 package com.isolutions.taxi5;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +28,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.isolutions.taxi5.API.Taxi5SDKEntity.AmountData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.APIAssist.ApiAssistFactory;
 import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
@@ -34,6 +42,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +56,7 @@ import retrofit2.Response;
  * Created by fedar.trukhan on 03.10.16.
  */
 
+@SuppressLint("SetJavaScriptEnabled")
 public class FragmentPaymentsCustomerInfo extends Fragment {
     @BindView(R.id.fragment_payments_customer_info_email_edit_text)
     EditText emailEditText;
@@ -57,12 +67,15 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
     @BindView(R.id.fragment_payments_customer_info_f_name_edit_text)
     EditText familyNameEditText;
 
-    private Boolean needAuthPayment = false;
-    private Boolean authOneClickPayment = false;
+    public Boolean needAuthPayment = false;
+    public Boolean authOneClickPayment = false;
 
 
     AlertDialog dialog;
     AdapterPaymentCards adapterCards;
+
+    private final Integer initAmount = 1;
+    private final String initCurrency = "BYN";
 
     @Override
     public void onAttach(Context context) {
@@ -128,11 +141,12 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
             customerInfo.setCustomerEmail(emailEditText.getText().toString());
 
             customerInfo.saveCustomerData();
-
-            if(AppData.getInstance().mainActivity != null) {
-                AppData.getInstance().mainActivity.OpenPayments();
+            if(authOneClickPayment) {
+                InitOneClickPayment();
             }
-            InitReccurentPayment();
+            else {
+                InitReccurentPayment();
+            }
         }
         else if(TextUtils.isEmpty(nameEditText.getText())) {
             Toast.makeText(AppData.getInstance().getAppContext(), getString(R.string.assist_profile_please_input_name), Toast.LENGTH_SHORT).show();
@@ -159,116 +173,206 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
 
     //region Payments
-    private void InitReccurentPayment() {
-//        AlertDialog.Builder builder;
-//        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//            builder = new AlertDialog.Builder(getActivity());
-//        }
-//        else {
-//            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
-//        }
+    private void InitOneClickPayment() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+        alert.setTitle(getString(R.string.payments_web_view_add_card_title));
 
-//        builder.setTitle(getString(R.string.payments_agreement_title));
-//        builder.setMessage(getString(R.string.payments_agreement));
-//        builder.setPositiveButton(R.string.payments_agreement_ok_button, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(AppData.getInstance().mainActivity);
-                alert.setTitle(getString(R.string.payments_web_view_add_card_title));
+        LinearLayout wrapper = new LinearLayout(AppData.getInstance().mainActivity);
+        EditText keyboardHack = new EditText(AppData.getInstance().mainActivity);
 
-                LinearLayout wrapper = new LinearLayout(AppData.getInstance().mainActivity);
-                EditText keyboardHack = new EditText(AppData.getInstance().mainActivity);
-
-                keyboardHack.setVisibility(View.GONE);
+        keyboardHack.setVisibility(View.GONE);
 
 
-                WebView wv = new WebView(AppData.getInstance().mainActivity);
+        WebView wv = new WebView(AppData.getInstance().mainActivity);
 
         AssistCustomerInfo info = AssistCustomerInfo.getInstance();
 
-                String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
-                ProfileData profileData = ProfileData.getInstance();
+        String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
+        ProfileData profileData = ProfileData.getInstance();
 
-                final String orderNumber = "taxi5_test_auth_"+currentDateString+"_"+profileData.getMsid();
-                final String merchantID = "460330";
+        final String orderNumber = "taxi5_"+currentDateString+"_"+profileData.getMsid()+"__authOneClick_Android";
 
-                String postData = "Merchant_ID="+merchantID+"&OrderNumber="+orderNumber+"&OrderAmount=1&OrderComment=КОММЕНТАРИЙ&OrderCurrency=BYN";
-                if(!TextUtils.isEmpty(profileData.getMsid())) {
-                    postData += "&CustomerNumber="+profileData.getMsid();
+        String postData = "Merchant_ID="+AppData.oneClickMerchantID+"&OrderNumber="+orderNumber+"&OrderAmount="+initAmount
+                +"&CustomerNumber="+ProfileData.getInstance().getMsid()
+                +"&OrderComment="+getString(R.string.auth_payment_comment)+"&OrderCurrency="+initCurrency;
+
+        if(!TextUtils.isEmpty(info.getCustomerEmail())) {
+            postData += "&Email="+info.getCustomerEmail();
+        }
+        if(!TextUtils.isEmpty(info.getCustomerName())) {
+            postData += "&Firstname="+info.getCustomerName();
+        }
+        if(!TextUtils.isEmpty(info.getCustomerFamilyName())) {
+            postData += "&Lastname="+info.getCustomerFamilyName();
+        }
+
+        ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
+
+
+        wv.setWebViewClient(new WebViewClient() {
+            private boolean isRedirected;
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                if(url.contains("testreturn2.taxi")) {
+                    Log.d("taxi5", "paymentOK");
+                    LoadOrderStatus(orderNumber, AppData.oneClickMerchantID);
+                    view.stopLoading();
+                    return;
+
                 }
-                if(!TextUtils.isEmpty(info.getCustomerEmail())) {
-                    postData += "&Email="+info.getCustomerEmail();
+                else if (url.contains("testreturn.taxi")) {
+                    LoadOrderStatus(orderNumber, AppData.oneClickMerchantID);
+                    Log.d("taxi5", "payment error");
+                    view.stopLoading();
+                    return;
                 }
-                if(!TextUtils.isEmpty(info.getCustomerName())) {
-                    postData += "&Firstname="+info.getCustomerName();
+                else {
+                    super.onPageStarted(view, url, favicon);
                 }
-                if(!TextUtils.isEmpty(info.getCustomerFamilyName())) {
-                    postData += "&Lastname="+info.getCustomerFamilyName();
-                }
+            }
 
-//                Log.d("taxi5", postData);
-                ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                isRedirected = true;
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+        wv.setWebChromeClient(new WebChromeClient());
+        wv.getSettings().setDomStorageEnabled(true);
+        wv.getSettings().setJavaScriptEnabled(true);
 
+        alert.setView(wv);
+        alert.setNegativeButton(getString(R.string.status_car_on_way_call_driver_dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
 
-                wv.postUrl("https://pay140.paysec.by/pay/order.cfm", bb.array());
-                wv.setWebViewClient(new WebViewClient() {
-                    private boolean isRedirected;
+        wrapper.setOrientation(LinearLayout.VERTICAL);
+        wrapper.addView(wv, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        wrapper.addView(keyboardHack, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                    @Override
-                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                        if(url.contains("testreturn2.taxi")) {
-                            Log.d("taxi5", "paymentOK");
-                            LoadOrderStatus(orderNumber, merchantID);
-                            view.stopLoading();
-                            return;
-
-                        }
-                        else if (url.contains("testreturn.taxi")) {
-                            LoadOrderStatus(orderNumber, merchantID);
-                            Log.d("taxi5", "payment error");
-                            view.stopLoading();
-                            return;
-                        }
-                        else {
-                            super.onPageStarted(view, url, favicon);
-                        }
-                    }
-
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                        isRedirected = true;
-                        return super.shouldOverrideUrlLoading(view, request);
-                    }
-                });
-
-                alert.setView(wv);
-                alert.setNegativeButton(getString(R.string.status_car_on_way_call_driver_dialog_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-                wrapper.setOrientation(LinearLayout.VERTICAL);
-                wrapper.addView(wv, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                wrapper.addView(keyboardHack, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                alert.setView(wrapper);
-                dialog = alert.create();
-                dialog.show();
-//            }
-//        });
-//        builder.setNegativeButton(R.string.payments_agreement_cancel_button, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-//
-//        builder.create().show();
+        alert.setView(wrapper);
+        dialog = alert.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
+//                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setBackgroundColor(AppData.getInstance().getColor(R.color.whiteColor));
+//                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
+            }
+        });
+        dialog.show();
+        wv.postUrl("https://pay140.paysec.by/pay/order.cfm", bb.array());
     }
 
-    private void LoadOrderStatus(String orderNumber, String merchID) {
+
+    private void InitReccurentPayment() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+        alert.setTitle(getString(R.string.payments_web_view_add_card_title));
+
+        LinearLayout wrapper = new LinearLayout(AppData.getInstance().mainActivity);
+        EditText keyboardHack = new EditText(AppData.getInstance().mainActivity);
+
+        keyboardHack.setVisibility(View.GONE);
+
+
+        WebView wv = new WebView(AppData.getInstance().mainActivity);
+
+        AssistCustomerInfo info = AssistCustomerInfo.getInstance();
+
+        String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
+        ProfileData profileData = ProfileData.getInstance();
+
+        final String orderNumber = "taxi5_test_auth_"+currentDateString+"_"+profileData.getMsid();
+//        final String merchantID = "460330";
+
+        String postData = "Merchant_ID="+AppData.reccurentMerchantID+"&OrderNumber="+orderNumber+
+                "&OrderAmount="+ initAmount+"&OrderComment=КОММЕНТАРИЙ&OrderCurrency="+initCurrency+
+                "&RecurringIndicator=1" +
+                "&RecurringMinAmount="+initAmount+
+                "&RecurringMaxAmount=99999999"+
+                "&RecurringPeriod=1"+
+                "&RecurringMaxDate=30.12.2020";
+//        if(!TextUtils.isEmpty(profileData.getMsid())) {
+//            postData += "&CustomerNumber="+profileData.getMsid();
+//        }
+        if(!TextUtils.isEmpty(info.getCustomerEmail())) {
+            postData += "&Email="+info.getCustomerEmail();
+        }
+        if(!TextUtils.isEmpty(info.getCustomerName())) {
+            postData += "&Firstname="+info.getCustomerName();
+        }
+        if(!TextUtils.isEmpty(info.getCustomerFamilyName())) {
+            postData += "&Lastname="+info.getCustomerFamilyName();
+        }
+
+    //                Log.d("taxi5", postData);
+        ByteBuffer bb = Charset.forName("UTF-16").encode(postData);
+
+
+        wv.setWebViewClient(new WebViewClient() {
+            private boolean isRedirected;
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                if(url.contains("testreturn2.taxi")) {
+                    Log.d("taxi5", "paymentOK");
+                    LoadOrderStatus(orderNumber, AppData.reccurentMerchantID);
+                    view.stopLoading();
+                    return;
+
+                }
+                else if (url.contains("testreturn.taxi")) {
+                    LoadOrderStatus(orderNumber, AppData.reccurentMerchantID);
+                    Log.d("taxi5", "payment error");
+                    view.stopLoading();
+                    return;
+                }
+                else {
+                    super.onPageStarted(view, url, favicon);
+                }
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                isRedirected = true;
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+        wv.setWebChromeClient(new WebChromeClient());
+        wv.getSettings().setDomStorageEnabled(true);
+        wv.getSettings().setJavaScriptEnabled(true);
+
+        alert.setView(wv);
+        alert.setNegativeButton(getString(R.string.status_car_on_way_call_driver_dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        wrapper.setOrientation(LinearLayout.VERTICAL);
+        wrapper.addView(wv, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        wrapper.addView(keyboardHack, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        alert.setView(wrapper);
+        dialog = alert.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(AppData.getInstance().getColor(R.color.defaultBlue));
+//                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setBackgroundColor(AppData.getInstance().getColor(R.color.whiteColor));
+//                dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
+            }
+        });
+        dialog.show();
+        wv.postUrl("https://pay140.paysec.by/pay/order.cfm", bb.array());
+    }
+
+    private void LoadOrderStatus(String orderNumber, final String merchID) {
         final AssistSDK assistSDK = ApiAssistFactory.getAssistSDK();
         if(assistSDK != null) {
             Calendar c = Calendar.getInstance();
@@ -280,7 +384,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                 month = 12;
             }
 
-            Call<AssistOrderStatusResponseData> call = assistSDK.GetOrderStatus("isolutions_1_test", "qweasdzxc123", merchID, orderNumber, 3, "1", ""+month, ""+year);
+            Call<AssistOrderStatusResponseData> call = assistSDK.GetOrderStatus(AppData.assist_login, AppData.assist_pass, merchID, orderNumber, 3, "1", ""+month, ""+year);
             call.enqueue(new Callback<AssistOrderStatusResponseData>() {
                 @Override
                 public void onResponse(Call<AssistOrderStatusResponseData> call, Response<AssistOrderStatusResponseData> response) {
@@ -293,6 +397,9 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                         AssistOrder order = response.body().getOrdersList().get(0);
 
                         AssistStoredCardData card1 = new AssistStoredCardData(order);
+                        if(authOneClickPayment) {
+                            card1.isOneClickCard = true;
+                        }
 
                         AssistCardsHolder.AddCard(card1);
 
@@ -302,7 +409,13 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
                         String billNumber = order.getBillnumber();
 
-                        Call<AssistOrderStatusResponseData> callCancel = assistSDK.CancelPayment("isolutions_1_test", "qweasdzxc123", "460330", billNumber, 3);
+                        if(AppData.getInstance().mainActivity != null) {
+                            AppData.getInstance().mainActivity.OpenPayments();
+                        }
+
+
+
+                        Call<AssistOrderStatusResponseData> callCancel = assistSDK.CancelPayment(AppData.assist_login, AppData.assist_pass, merchID, billNumber, 3);
                         callCancel.enqueue(new Callback<AssistOrderStatusResponseData>() {
                             @Override
                             public void onResponse(Call<AssistOrderStatusResponseData> call, Response<AssistOrderStatusResponseData> response) {
@@ -326,10 +439,17 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                     if(adapterCards != null) {
                         adapterCards.updateResource(AssistCardsHolder.GetCards());
                     }
+
+                    if(AppData.getInstance().mainActivity != null) {
+                        AppData.getInstance().mainActivity.OpenPayments();
+                    }
                 }
             });
         }
     }
+
+
+
 
     //endregion
 

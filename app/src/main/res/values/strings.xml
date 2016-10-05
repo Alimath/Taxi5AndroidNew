@@ -231,6 +231,7 @@
     <string name="payments_agreement_ok_button">Согласиться</string>
     <string name="payments_agreement_cancel_button">Отказаться</string>
     <string name="payments_web_view_add_card_title">Добавление банковской карты</string>
+    <string name="payments_web_view_pay_one_click_title">One-Click</string>
     <string name="payments_agreement_title">Соглашение</string>
 
 
@@ -260,6 +261,16 @@
     <string name="assist_3d_sec_yes">Да, поддерживает</string>
     <string name="assist_3d_sec_no">Нет, не поддерживает</string>
 
+    <string name="assist_payment_with_card_question">Вы уверены что хотите оплатить картой?</string>
+
+    <string name="auth_payment_comment">Авторизационный платеж.</string>
+
 
     <string name="cancel">Отменить</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="assist_payment_comment">За услуги такси.</string>
+
+
 </resources>

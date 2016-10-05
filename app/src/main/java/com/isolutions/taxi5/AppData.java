@@ -1,6 +1,8 @@
 package com.isolutions.taxi5;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -19,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.security.Timestamp;
 import java.util.TimeZone;
 
+import io.paperdb.Paper;
+
 /**
  * Created by fedar.trukhan on 24.08.16.
  */
@@ -28,6 +32,15 @@ public class AppData {
     public static final String client_secret = "jasjh8afskjb3nbmansufi82jk2bdask";
 
     private static volatile AppData instance;
+
+    public static final String paymentsAgreementKey = "paymentsAgreementKey";
+
+    public static final String oneClickMerchantID = "485823";
+    public static final String reccurentMerchantID = "465746";
+
+    public static final String assist_login = "taxi5by_assist_sale";
+    public static final String assist_pass = "gluihdeo9cuy";
+    public static final String payments_provider = "assist";
 
     private volatile OrderData currentOrder;
     private volatile Context appContext;
@@ -172,5 +185,74 @@ public class AppData {
         } else {
             return AppData.getInstance().appContext.getString(resId);
         }
+    }
+
+
+
+
+
+    public void ShowAgreement() {
+        AlertDialog.Builder builder;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(mainActivity);
+        }
+        else {
+            builder = new AlertDialog.Builder(mainActivity, android.R.style.Theme_Material_Dialog_Alert);
+        }
+
+        builder.setTitle(appContext.getString(R.string.payments_agreement_title));
+        builder.setMessage(appContext.getString(R.string.payments_agreement));
+        builder.setPositiveButton(R.string.payments_agreement_ok_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Paper.book().write(AppData.paymentsAgreementKey, true);
+                AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
+            }
+        });
+        builder.setNegativeButton(R.string.payments_agreement_cancel_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        builder.create().show();
+    }
+
+    public void ShowChoosingCardTypeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+        builder.setTitle("Поддерживает ли ваша карточка 3D Secure?");
+        builder.setItems(new CharSequence[]
+        {appContext.getString(R.string.assist_3d_sec_yes),
+            appContext.getString(R.string.assist_3d_sec_no),
+            appContext.getString(R.string.cancel)},
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            AppData.getInstance().mainActivity.fragmentPaymentsCustomerInfo.authOneClickPayment = false;
+                            if(Paper.book().read(AppData.paymentsAgreementKey, false)) {
+                                AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
+                            }
+                            else {
+                                ShowAgreement();
+                            }
+                            break;
+                        case 1:
+                            AppData.getInstance().mainActivity.fragmentPaymentsCustomerInfo.authOneClickPayment = true;
+                            AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
+                            if(Paper.book().read(AppData.paymentsAgreementKey, false)) {
+                                AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
+                            }
+                            else {
+                                ShowAgreement();
+                            }
+                            break;
+                        case 2:
+                            break;
+                    }
+                }
+        });
+        builder.create().show();
     }
 }

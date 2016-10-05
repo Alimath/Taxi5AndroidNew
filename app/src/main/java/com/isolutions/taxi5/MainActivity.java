@@ -111,10 +111,11 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onLocationChanged(Location location) {
-            Log.d("taxi5", "location cahnged: " + location.getLatitude() + " : " + location.getLongitude());
-            if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.mapFragment.isVisible()) {
-                AppData.getInstance().mainActivity.OpenClearMap();
-            }
+//            Log.d("taxi5", "location cahnged: " + location.getLatitude() + " : " + location.getLongitude());
+            //TODO Добавить переход на локацию, после определения геопозиции (первого)
+//            if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.mapFragment.isVisible()) {
+//                AppData.getInstance().mainActivity.OpenClearMap();
+//            }
 
             AppData.getInstance().nullPoint = new LatLng(location.getLatitude(), location.getLongitude());
         }
@@ -150,11 +151,11 @@ public class MainActivity extends AppCompatActivity
 //            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
 //                    PERMISSION_ACCESS_COARSE_LOCATION);
 //        }
-        new TedPermission(this).setPermissionListener(this.locatioPermissionListener).setRationaleMessage(R.string.permission_location_rationale_message)
-                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION).setDeniedMessage(R.string.permission_location_denied_message).check();
 
         setContentView(R.layout.activity_main);
 
+        new TedPermission(this).setPermissionListener(this.locatioPermissionListener).setRationaleMessage(R.string.permission_location_rationale_message)
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION).setDeniedMessage(R.string.permission_location_denied_message).check();
         AppData.getInstance().mainActivity = this;
         AppData.getInstance().currentActivity = this;
         OpenClearMap();
@@ -177,6 +178,10 @@ public class MainActivity extends AppCompatActivity
         }
         if(mapFragment!= null && mapFragment.isVisible() && mapFragment.statusCreateOrderFindAddressFragment != null && mapFragment.statusCreateOrderFindAddressFragment.isVisible()) {
             mapFragment.HideSearhAddressView();
+        }
+        else if(mapFragment != null && mapFragment.isVisible() && mapFragment.statusPaymentFragment != null &&
+                mapFragment.statusPaymentFragment.isVisible() && mapFragment.statusPaymentFragment.isCardsShowing) {
+            mapFragment.statusPaymentFragment.HideCardsList();
         }
         else if(fragmentPaymentsCustomerInfo != null && fragmentPaymentsCustomerInfo.isVisible()) {
             OpenPayments();

@@ -41,4 +41,17 @@ public interface AssistSDK {
             @Field("Format") Integer Format
     );
 
+    @FormUrlEncoded
+    @POST("https://pay140.paysec.by/recurrent/rp.cfm")
+    Call<AssistOrderStatusResponseData> PayReccurent(
+            @Field("Billnumber") String BillNumber,
+            @Field("OrderNumber") String OrderNumber,
+            @Field("Merchant_ID") String Merchant_ID,
+            @Field("Login") String Login,
+            @Field("Password") String Password,
+            @Field("Amount") Double Amount,
+            @Field("Currency") String Currency,
+            @Field("Format") String Format
+    );
+
 }

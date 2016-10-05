@@ -31,6 +31,8 @@ public class AdapterPaymentCards extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<AssistStoredCardData> mDataSource;
 
+    public boolean isChoosingPaymentCard = false;
+
     public AdapterPaymentCards(Context context, ArrayList<AssistStoredCardData> items) {
         mContext = context;
         mDataSource = items;
@@ -40,7 +42,12 @@ public class AdapterPaymentCards extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDataSource.size();
+        if(mDataSource != null) {
+            return mDataSource.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
@@ -77,44 +84,51 @@ public class AdapterPaymentCards extends BaseAdapter {
             holder.errorBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_error_image);
             holder.errorText = (TextView) convertView.findViewById(R.id.row_payment_cards_card_back_error_text_view);
 
+
             Button removeCardButton = (Button) convertView.findViewById(R.id.row_payment_cards_remove_card_button);
-            removeCardButton.setOnClickListener(new Button.OnClickListener(){
-                public void onClick(View v) {
-                    Log.d("taxi5", "remove card: " + getItem(position).initBillNumber) ;
-                    AlertDialog.Builder builder;
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
-                    }
-                    else {
-                        builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Dialog_Alert);
-                    }
-                    builder.setPositiveButton(R.string.remove_text, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            AssistCardsHolder.RemoveCard(position);
-                            if(AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
-                                if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
-                                    AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
+            ImageView removeCardButtonIcon = (ImageView) convertView.findViewById(R.id.row_payment_cards_remove_card_icon);
+            if(!isChoosingPaymentCard) {
+                removeCardButton.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        Log.d("taxi5", "remove card: " + getItem(position).initBillNumber);
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+                        } else {
+                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Dialog_Alert);
+                        }
+                        builder.setPositiveButton(R.string.remove_text, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                AssistCardsHolder.RemoveCard(position);
+                                if (AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
+                                    if (AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
+                                        AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
+                                    }
+                                } else {
+                                    AppData.getInstance().mainActivity.OpenPayments();
                                 }
                             }
-                            else {
-                                AppData.getInstance().mainActivity.OpenPayments();
+                        });
+                        builder.setNegativeButton(R.string.status_car_on_way_call_driver_dialog_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
                             }
-                        }
-                    });
-                    builder.setNegativeButton(R.string.status_car_on_way_call_driver_dialog_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
+                        });
 
-                    builder.setTitle(AppData.getInstance().mainActivity.getString(R.string.payments_card_remove_card_alert_title));
-                    builder.setMessage(AppData.getInstance().mainActivity.getString(R.string.payments_card_remove_card_alert_message));
+                        builder.setTitle(AppData.getInstance().mainActivity.getString(R.string.payments_card_remove_card_alert_title));
+                        builder.setMessage(AppData.getInstance().mainActivity.getString(R.string.payments_card_remove_card_alert_message));
 
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
+            }
+            else {
+                removeCardButton.setFocusable(false);
+                removeCardButton.setVisibility(View.INVISIBLE);
+                removeCardButtonIcon.setVisibility(View.INVISIBLE);
+            }
 
             convertView.setTag(holder);
         }

@@ -17,6 +17,7 @@ public class AssistStoredCardData {
     public String cardExpDate;
     public String cardComment;
     public String initBillResponseCode;
+    public Boolean isOneClickCard = false;
 
 
     public AssistStoredCardData(AssistOrder order) {

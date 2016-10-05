@@ -45,11 +45,12 @@ public class ApiFactory {
             return getRetrofit().create(Taxi5SDK.class);
         }
         else {
-            Intent intent = new Intent(AppData.getInstance().currentActivity, NoInternetActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            AppData.getInstance().currentActivity.startActivity(intent);
-            AppData.getInstance().currentActivity.finish();
-
+            if(AppData.getInstance().getAppForeground()) {
+                Intent intent = new Intent(AppData.getInstance().currentActivity, NoInternetActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                AppData.getInstance().currentActivity.startActivity(intent);
+                AppData.getInstance().currentActivity.finish();
+            }
             return null;
         }
     }

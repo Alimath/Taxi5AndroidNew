@@ -82,4 +82,8 @@ public class OrderData {
     @SerializedName("events")
     @Expose
     public Map<String, Long> events;
+
+    @SerializedName("payments")
+    @Expose
+    public List<OrderPayments> payments;
 }
