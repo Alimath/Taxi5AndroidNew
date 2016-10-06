@@ -36,10 +36,10 @@ public class AppData {
     public static final String paymentsAgreementKey = "paymentsAgreementKey";
 
     public static final String oneClickMerchantID = "485823";
-    public static final String reccurentMerchantID = "465746";
+    public static final String reccurentMerchantID = "465746";//"460330";
 
-    public static final String assist_login = "taxi5by_assist_sale";
-    public static final String assist_pass = "gluihdeo9cuy";
+    public static final String assist_login = "taxi5by_assist_sale";//"isolutions_1_test";
+    public static final String assist_pass = "gluihdeo9cuy";//"qweasdzxc123";
     public static final String payments_provider = "assist";
 
     private volatile OrderData currentOrder;

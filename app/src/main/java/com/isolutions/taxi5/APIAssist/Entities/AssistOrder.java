@@ -226,7 +226,7 @@ public class AssistOrder {
     @Element(name = "ordercurrency", required=false)
     private String ordercurrency;
 
-    @ElementList(name = "operation", entry = "operation", inline = false, type = AssistOperation.class, required = false)
+    @ElementList(name = "operation", entry = "operation", inline = true, type = AssistOperation.class, required = false)
     private List<AssistOperation> operationList;
 
 }

@@ -286,8 +286,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
         String currentDateString = ((Long)(System.currentTimeMillis()/1000)).toString();
         ProfileData profileData = ProfileData.getInstance();
 
-        final String orderNumber = "taxi5_test_auth_"+currentDateString+"_"+profileData.getMsid();
-//        final String merchantID = "460330";
+        final String orderNumber = "taxi5_auth_"+currentDateString+"_"+profileData.getMsid();
 
         String postData = "Merchant_ID="+AppData.reccurentMerchantID+"&OrderNumber="+orderNumber+
                 "&OrderAmount="+ initAmount+"&OrderComment=КОММЕНТАРИЙ&OrderCurrency="+initCurrency+
@@ -393,7 +392,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                     }
 
                     if(response.body() != null && response.body().getOrdersList() != null) {
-//                        Log.d("taxi5", "order list empty: " + response.body().getOrdersList().isEmpty());
+                        Log.d("taxi5", "order list empty: " + response.body().getOrdersList().isEmpty());
                         AssistOrder order = response.body().getOrdersList().get(0);
 
                         AssistStoredCardData card1 = new AssistStoredCardData(order);
@@ -432,7 +431,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
                 @Override
                 public void onFailure(Call<AssistOrderStatusResponseData> call, Throwable t) {
-                    Log.d("taxi5", "Order Status Check Error:  " + t.getLocalizedMessage());
+                    Log.d("taxi5", "Order Status Check Error:  " + t.getMessage());
                     if(dialog != null) {
                         dialog.dismiss();
                     }

@@ -39,6 +39,6 @@ public class AssistOrderStatusResponseData {
         return ordersList;
     }
 
-    @ElementList(name = "orders", entry = "order", inline = false, type = AssistOrder.class, required = true)
+    @ElementList(name = "orders", entry = "order", inline = true, type = AssistOrder.class, required = false)
     private List<AssistOrder> ordersList;
 }
