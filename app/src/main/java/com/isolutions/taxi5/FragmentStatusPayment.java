@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -44,6 +45,7 @@ import com.isolutions.taxi5.APIAssist.Entities.AssistStoredCardData;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,12 +101,16 @@ implements AdapterView.OnItemClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-//        super.onCreateView(inflater, container, savedInstanceState);
 
         View paymentWaiting = inflater.inflate(R.layout.fragment_status_payment, container, false);
         ButterKnife.bind(this, paymentWaiting);
 
-        adapterCards = new AdapterPaymentCards(AppData.getInstance().getAppContext(), AssistCardsHolder.GetCards());
+        adapterCards = new AdapterPaymentCards(AppData.getInstance().getAppContext(), AssistCardsHolder.GetSuccessCards());
+
+        adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
+        adapterCards.updateResource(AssistCardsHolder.GetSuccessCards());
+
+
         adapterCards.isChoosingPaymentCard = true;
         cardsListView.setAdapter(adapterCards);
         cardsListView.setFocusable(true);
@@ -187,7 +193,7 @@ implements AdapterView.OnItemClickListener{
 
                 final Double bynAmount = payAmount;
                 final AssistStoredCardData card =(AssistStoredCardData)parent.getItemAtPosition(position);
-                if(card != null && card.isOneClickCard) {
+                if(card == null) {
                     HideCardsList();
                     final Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
                     if(taxi5SDK == null) {
@@ -213,8 +219,6 @@ implements AdapterView.OnItemClickListener{
 
                                     LinearLayout wrapper = new LinearLayout(AppData.getInstance().mainActivity);
                                     EditText keyboardHack = new EditText(AppData.getInstance().mainActivity);
-
-                                    keyboardHack.setVisibility(View.GONE);
 
 
                                     WebView wv = new WebView(AppData.getInstance().mainActivity);
@@ -301,6 +305,9 @@ implements AdapterView.OnItemClickListener{
                                     wrapper.addView(wv, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                                     wrapper.addView(keyboardHack, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
+                                    keyboardHack.setVisibility(View.GONE);
+
+
                                     alert.setView(wrapper);
                                     dialog = alert.create();
                                     dialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -315,7 +322,6 @@ implements AdapterView.OnItemClickListener{
                                         @Override
                                         public boolean onKey(DialogInterface arg0, int keyCode,
                                                              KeyEvent event) {
-                                            // TODO Auto-generated method stub
                                             if (keyCode == KeyEvent.KEYCODE_BACK) {
                                                 dialog.dismiss();
                                                 Call<Void> cancelCheckCall = taxi5SDK.CancelCheckPaymentRequest(TokenData.getInstance().getToken(), AppData.payments_provider,
@@ -331,6 +337,9 @@ implements AdapterView.OnItemClickListener{
                                                         Log.d("taxi5", "Cancel FAIL");
                                                     }
                                                 });
+                                            }
+                                            else {
+                                                return false;
                                             }
                                             return true;
                                         }
@@ -456,7 +465,8 @@ implements AdapterView.OnItemClickListener{
         super.onStart();
         isCardsShowing = false;
         if(adapterCards != null) {
-            adapterCards.updateResource(AssistCardsHolder.GetCards());
+            adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
+            adapterCards.updateResource(AssistCardsHolder.GetSuccessCards());
         }
     }
 
@@ -472,7 +482,7 @@ implements AdapterView.OnItemClickListener{
 
     @Override
     public void fillWithOrder() {
-        if(AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
+        if((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
             payWithCardButton.setVisibility(View.VISIBLE);
             payWithCardText.setVisibility(View.VISIBLE);
         }

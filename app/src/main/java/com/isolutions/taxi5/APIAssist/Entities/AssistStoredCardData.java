@@ -19,6 +19,9 @@ public class AssistStoredCardData {
     public String initBillResponseCode;
     public Boolean isOneClickCard = false;
 
+    public AssistStoredCardData() {
+        
+    }
 
     public AssistStoredCardData(AssistOrder order) {
         if(order != null) {

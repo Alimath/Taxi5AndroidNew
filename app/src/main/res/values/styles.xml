@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="StyleWindowSoftInputModeAdjustResize">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

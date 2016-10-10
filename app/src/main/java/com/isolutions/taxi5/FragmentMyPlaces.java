@@ -18,6 +18,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.MyPlacesData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.MyPlacesResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
 
 import java.util.ArrayList;
 

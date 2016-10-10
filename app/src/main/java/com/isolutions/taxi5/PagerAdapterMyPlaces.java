@@ -26,7 +26,7 @@ public class PagerAdapterMyPlaces extends PagerAdapter {
                 break;
             case 1:
                 resID = R.id.row_my_places_second;
-                Button b1 = (Button)collection.findViewById(resID).findViewById(R.id.row_my_places_edit_button);
+                Button b1 = (Button) collection.findViewById(resID).findViewById(R.id.row_my_places_edit_button);
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -34,7 +34,7 @@ public class PagerAdapterMyPlaces extends PagerAdapter {
                     }
                 });
 
-                Button b2 = (Button)collection.findViewById(resID).findViewById(R.id.row_my_places_remove_from_favorite_button);
+                Button b2 = (Button) collection.findViewById(resID).findViewById(R.id.row_my_places_remove_from_favorite_button);
                 b2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -48,7 +48,8 @@ public class PagerAdapterMyPlaces extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        //TODO Сделать редактирования моих мест.
+        return 1;
     }
 
     @Override
@@ -66,14 +67,6 @@ public class PagerAdapterMyPlaces extends PagerAdapter {
             float windowWidth = AppData.getInstance().getScreenWidthInDP();
 
             return neededWidth/windowWidth;
-
-//            if(parentWidth == null) {
-//                return 0.3f;
-//            }
-//            else {
-//                Log.d("taxi5", "parent width = " + parentWidth);
-//                return 0.5f;
-//            }
         }
     }
 }

@@ -249,6 +249,9 @@
     <string name="payments_card_remove_card_alert_message">Это действие невозможно отменить. Вы уверены, что хотите удалить свою карточку?</string>
     <string name="remove_text">Удалить</string>
 
+    <string name="payments_card_remove_card_one_click_title">Данная карта участвует в\nпрограмме One Click</string>
+    <string name="payments_card_remove_card_one_click_message">Потребуется ввод CVC2/CVV2\nкода, для произведения оплаты</string>
+
     <string name="assist_profile_info_header">Данная информация необходима для обязательной идентификации пользователя в системе ASSIST, а также для получения отчетов о платежах.</string>
     <string name="assist_profile_clear_button_title">ОЧИСТИТЬ ПОЛЯ</string>
     <string name="assist_profile_save_button_title">СОХРАНИТЬ И ПРОДОЛЖИТЬ</string>

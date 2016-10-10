@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void OpenPayments() {
-        if(AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
+        if((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
             ChangeFragment(fragmentPaymentHasStoredCards);
         }
         else {

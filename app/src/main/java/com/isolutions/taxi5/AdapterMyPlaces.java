@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -84,6 +85,7 @@ public class AdapterMyPlaces extends BaseAdapter {
             holder.titleTextView = (TextView) convertView.findViewById(R.id.row_my_places_title_text_view);
             holder.subTitleTextView= (TextView) convertView.findViewById(R.id.row_my_places_subtitle_text_view);
             holder.viewPager = viewPager;
+            holder.selectPlaceButton = (Button) convertView.findViewById(R.id.row_my_places_select_place_button);
 
             holder.viewPager.setCurrentItem(0);
             convertView.setTag(holder);
@@ -103,10 +105,13 @@ public class AdapterMyPlaces extends BaseAdapter {
         TextView titleTextView;
         TextView subTitleTextView;
         ViewPager viewPager;
+        Button selectPlaceButton;
+        private LocationData currentLocationData = null;
 
 //        private OrderData orderData;
 
         void fillData(LocationData locationData) {
+            currentLocationData = locationData;
             titleTextView.setText(locationData.getStringDescription());
             if(locationData.favoriteID != null) {
                 if(!TextUtils.isEmpty(locationData.favoriteAlias)) {
@@ -119,6 +124,23 @@ public class AdapterMyPlaces extends BaseAdapter {
             else {
                 subTitleTextView.setText("");
             }
+
+            selectPlaceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(AppData.getInstance().leftDrawer != null) {
+                        AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
+                    }
+                    AppData.getInstance().mainActivity.OpenClearMap();
+                    FragmentMap.getMapFragment().statusCreateOrderFragment.ClearFields();
+
+                    OrderData order = new OrderData();
+                    order.from = currentLocationData;
+
+                    AppData.getInstance().setCurrentOrder(order, true);
+                    FragmentMap.getMapFragment().RefreshView();
+                }
+            });
         }
     }
 

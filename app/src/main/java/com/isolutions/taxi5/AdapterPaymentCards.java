@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class AdapterPaymentCards extends BaseAdapter {
     private ArrayList<AssistStoredCardData> mDataSource;
 
     public boolean isChoosingPaymentCard = false;
+    public boolean hasOneClick = false;
 
     public AdapterPaymentCards(Context context, ArrayList<AssistStoredCardData> items) {
         mContext = context;
@@ -42,17 +44,28 @@ public class AdapterPaymentCards extends BaseAdapter {
 
     @Override
     public int getCount() {
+        int addCount = 0;
+        if(hasOneClick) {
+            addCount = 1;
+        }
+
         if(mDataSource != null) {
-            return mDataSource.size();
+            return mDataSource.size()+addCount;
         }
         else {
-            return 0;
+            return addCount;
         }
     }
 
     @Override
+    @Nullable
     public AssistStoredCardData getItem(int position) {
-        return mDataSource.get(position);
+        if(mDataSource != null && position == mDataSource.size()) {
+            return null;
+        }
+        else {
+            return mDataSource.get(position);
+        }
     }
 
     @Override
@@ -67,14 +80,6 @@ public class AdapterPaymentCards extends BaseAdapter {
         if(convertView == null) {
             convertView = mInflater.inflate(R.layout.row_payment_cards, parent, false);
 
-//            TextView cardNumber_1;
-//            TextView cardNumber_4;
-//            TextView cardHolderName;
-//            TextView cardExpDate;
-//
-//            TextView errorTextView;
-//            ImageView errorImageView;
-
             holder = new AdapterPaymentCards.ViewHolder();
 
             holder.cardNumber_1 = (TextView) convertView.findViewById(R.id.row_payment_cards_card_number_1);
@@ -84,13 +89,17 @@ public class AdapterPaymentCards extends BaseAdapter {
             holder.errorBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_error_image);
             holder.errorText = (TextView) convertView.findViewById(R.id.row_payment_cards_card_back_error_text_view);
 
+            holder.oneClickBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_one_click_image);
+            holder.oneClickTitle = (TextView) convertView.findViewById(R.id.row_payment_cards_one_click_title);
+            holder.oneClickMessage = (TextView) convertView.findViewById(R.id.row_payment_cards_one_click_message);
+
 
             Button removeCardButton = (Button) convertView.findViewById(R.id.row_payment_cards_remove_card_button);
             ImageView removeCardButtonIcon = (ImageView) convertView.findViewById(R.id.row_payment_cards_remove_card_icon);
             if(!isChoosingPaymentCard) {
                 removeCardButton.setOnClickListener(new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Log.d("taxi5", "remove card: " + getItem(position).initBillNumber);
+//                        Log.d("taxi5", "remove card: " + getItem(position).initBillNumber);
                         AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                             builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
@@ -100,13 +109,31 @@ public class AdapterPaymentCards extends BaseAdapter {
                         builder.setPositiveButton(R.string.remove_text, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                AssistCardsHolder.RemoveCard(position);
-                                if (AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) {
-                                    if (AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
-                                        AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
+                                if(getItem(position) == null) {
+                                    AssistCardsHolder.RemoveOneClick();
+                                    if ((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
+                                        if (AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
+                                            AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
+                                        }
+                                        else {
+                                            AppData.getInstance().mainActivity.OpenPayments();
+                                        }
+                                    } else {
+                                        AppData.getInstance().mainActivity.OpenPayments();
                                     }
-                                } else {
-                                    AppData.getInstance().mainActivity.OpenPayments();
+                                }
+                                else {
+                                    AssistCardsHolder.RemoveCard(position);
+                                    if ((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
+                                        if (AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
+                                            AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
+                                        }
+                                        else {
+                                            AppData.getInstance().mainActivity.OpenPayments();
+                                        }
+                                    } else {
+                                        AppData.getInstance().mainActivity.OpenPayments();
+                                    }
                                 }
                             }
                         });
@@ -136,13 +163,21 @@ public class AdapterPaymentCards extends BaseAdapter {
             holder = (AdapterPaymentCards.ViewHolder) convertView.getTag();
         }
 
-        holder.fillData(mDataSource.get(position));
+        if(mDataSource != null && position < mDataSource.size()) {
+            holder.fillData(mDataSource.get(position));
+        }
+        else {
+            AssistStoredCardData oneClickData = new AssistStoredCardData();
+            oneClickData.isOneClickCard = true;
+            oneClickData.initBillResponseCode = "AS000";
+            holder.fillData(oneClickData);
+        }
 
         return convertView;
     }
 
 
-    public static class ViewHolder  {
+    public static class ViewHolder {
         TextView cardNumber_1;
         TextView cardNumber_4;
         TextView cardHolderName;
@@ -151,28 +186,43 @@ public class AdapterPaymentCards extends BaseAdapter {
         ImageView errorBack;
         TextView errorText;
 
-//        private OrderData orderData;
+        ImageView oneClickBack;
+        TextView oneClickTitle;
+        TextView oneClickMessage;
 
         void fillData(AssistStoredCardData storedCardData) {
-            String cardNumber = storedCardData.meanNumber;
-            cardNumber_1.setText(cardNumber.substring(0,4));
-            cardNumber_4.setText(cardNumber.substring(cardNumber.length()-4, cardNumber.length()));
-            cardHolderName.setText(storedCardData.cardHolder);
-            cardExpDate.setText(storedCardData.cardExpDate);
-
             if(storedCardData.initBillResponseCode.equalsIgnoreCase("AS000")) {
                 errorBack.setVisibility(View.INVISIBLE);
                 errorText.setVisibility(View.INVISIBLE);
+
+                if(!storedCardData.isOneClickCard) {
+                    oneClickBack.setVisibility(View.INVISIBLE);
+                    oneClickTitle.setVisibility(View.INVISIBLE);
+                    oneClickMessage.setVisibility(View.INVISIBLE);
+
+                    String cardNumber = storedCardData.meanNumber;
+                    cardNumber_1.setText(cardNumber.substring(0,4));
+                    cardNumber_4.setText(cardNumber.substring(cardNumber.length()-4, cardNumber.length()));
+                    cardHolderName.setText(storedCardData.cardHolder);
+                    cardExpDate.setText(storedCardData.cardExpDate);
+                }
+                else {
+                    oneClickBack.setVisibility(View.VISIBLE);
+                    oneClickTitle.setVisibility(View.VISIBLE);
+                    oneClickMessage.setVisibility(View.VISIBLE);
+                }
             }
             else {
+                oneClickBack.setVisibility(View.INVISIBLE);
+                oneClickTitle.setVisibility(View.INVISIBLE);
+                oneClickMessage.setVisibility(View.INVISIBLE);
+
                 errorBack.setVisibility(View.VISIBLE);
                 errorText.setVisibility(View.VISIBLE);
 
                 errorText.setText(AppData.getInstance().getStringResourceByName("payments_card_row_error_message_"+storedCardData.initBillResponseCode));
             }
         }
-
-
     }
 
     public void updateResource(ArrayList<AssistStoredCardData> storedCardData) {

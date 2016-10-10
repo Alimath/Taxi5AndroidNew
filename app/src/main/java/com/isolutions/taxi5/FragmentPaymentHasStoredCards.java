@@ -30,6 +30,7 @@ import com.isolutions.taxi5.APIAssist.Entities.AssistStoredCardData;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -64,6 +65,9 @@ public class FragmentPaymentHasStoredCards extends Fragment {
             dialog.dismiss();
         }
         if(adapterCards != null) {
+            ArrayList<AssistStoredCardData> storedCardDatas = new ArrayList<AssistStoredCardData>();
+
+            adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
             adapterCards.updateResource(AssistCardsHolder.GetCards());
         }
     }
@@ -78,6 +82,9 @@ public class FragmentPaymentHasStoredCards extends Fragment {
         }
 
         adapterCards = new AdapterPaymentCards(AppData.getInstance().getAppContext(), AssistCardsHolder.GetCards());
+
+        adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
+        adapterCards.updateResource(AssistCardsHolder.GetCards());
         listView.setAdapter(adapterCards);
 
         return view;

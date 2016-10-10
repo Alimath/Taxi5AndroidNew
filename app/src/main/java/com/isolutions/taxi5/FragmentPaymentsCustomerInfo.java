@@ -400,7 +400,12 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                             card1.isOneClickCard = true;
                         }
 
-                        AssistCardsHolder.AddCard(card1);
+                        if(!card1.isOneClickCard || !card1.initBillResponseCode.equalsIgnoreCase("AS000")) {
+                            AssistCardsHolder.AddCard(card1);
+                        }
+                        else {
+                            AssistCardsHolder.AddOneClick();
+                        }
 
                         if(adapterCards!= null) {
                             adapterCards.updateResource(AssistCardsHolder.GetCards());
@@ -431,7 +436,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
                 @Override
                 public void onFailure(Call<AssistOrderStatusResponseData> call, Throwable t) {
-                    Log.d("taxi5", "Order Status Check Error:  " + t.getMessage());
+                    Log.d("taxi5", "Order Status Check Error: " + t.getMessage());
                     if(dialog != null) {
                         dialog.dismiss();
                     }

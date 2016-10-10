@@ -170,7 +170,59 @@
         app:layout_constraintRight_toRightOf="@id/row_payment_cards_card_back_error_image"
         app:layout_constraintCenterY_toCenterY="@id/row_payment_cards_card_back_error_image"
         />
-    
+
+
+    <ImageView
+        android:id="@+id/row_payment_cards_card_back_one_click_image"
+
+        android:layout_width="348dp"
+        android:layout_height="300dp"
+        android:src="@drawable/card_back_one_click"
+
+        android:layout_marginTop="16dp"
+        android:scaleType="fitStart"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintCenterX_toCenterX="parent"
+        />
+    <TextView
+        android:id="@+id/row_payment_cards_one_click_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+
+        android:text="@string/payments_card_remove_card_one_click_title"
+        android:textColor="@color/defaultWhite"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
+
+        android:layout_marginTop="81dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/row_payment_cards_card_back_one_click_image"
+        app:layout_constraintTop_toTopOf="@id/row_payment_cards_card_back_one_click_image"
+        />
+    <TextView
+        android:id="@+id/row_payment_cards_one_click_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+
+        android:text="@string/payments_card_remove_card_one_click_title"
+        android:textColor="@color/defaultWhite"
+        android:fontFamily="sans-serif"
+        android:textSize="12sp"
+
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="18dp"
+
+        app:layout_constraintLeft_toLeftOf="@id/row_payment_cards_card_back_one_click_image"
+        app:layout_constraintTop_toBottomOf="@id/row_payment_cards_one_click_title"
+        />
+
+
     <ImageView
         android:id="@+id/row_payment_cards_remove_card_icon"
 
@@ -185,7 +237,6 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         />
-
     <Button
         android:id="@+id/row_payment_cards_remove_card_button"
 

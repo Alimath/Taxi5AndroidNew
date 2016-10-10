@@ -74,6 +74,13 @@
                 app:layout_constraintRight_toRightOf="@id/row_my_places_main"
                 app:layout_constraintCenterY_toCenterY="@id/row_my_places_main"
                 />
+
+            <Button
+                android:id="@+id/row_my_places_select_place_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/clearColor"
+                />
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
