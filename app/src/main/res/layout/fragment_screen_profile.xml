@@ -268,8 +268,50 @@
 
         android:textColor="@color/defaultWhite"
 
-        android:background="@drawable/round_shape_blue_btn"
+        android:background="@drawable/round_shape_green_btn"
         android:text="@string/profile_screen_upload_data"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="74dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_screen_profile_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_screen_profile_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_screen_profile_main"
+        />
+
+    <TextView
+        android:id="@+id/fragment_screen_profile_logout_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:textColor="@color/registrationColorHeader2"
+        android:text="@string/profile_screen_logout_title"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:gravity="center"
+
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/fragment_screen_profile_main"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_screen_profile_main"
+        app:layout_constraintRight_toRightOf="@id/fragment_screen_profile_main"
+        />
+
+    <Button
+        android:id="@+id/fragment_screen_profile_logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:background="@color/clearColor"
 
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"

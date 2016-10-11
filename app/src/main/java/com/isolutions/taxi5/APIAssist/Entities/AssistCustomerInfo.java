@@ -52,9 +52,9 @@ public class AssistCustomerInfo {
         this.customerEmail = customerEmail;
     }
 
-    String customerName;
-    String customerFamilyName;
-    String customerEmail;
+    private String customerName;
+    private String customerFamilyName;
+    private String customerEmail;
 
     private void loadProfileData() {
         AssistCustomerInfo tData = (AssistCustomerInfo) Paper.book().read("taxi5AssistCustomerData");
@@ -64,9 +64,18 @@ public class AssistCustomerInfo {
             this.customerName = tData.customerName;
             this.customerFamilyName = tData.customerFamilyName;
         }
+        else {
+            this.customerEmail = null;
+            this.customerName = null;
+            this.customerFamilyName = null;
+        }
     }
 
     public void saveCustomerData() {
         Paper.book().write("taxi5AssistCustomerData", this);
+    }
+
+    public static void ClearCustomerData() {
+        Paper.book().delete("taxi5AssistCustomerData");
     }
 }

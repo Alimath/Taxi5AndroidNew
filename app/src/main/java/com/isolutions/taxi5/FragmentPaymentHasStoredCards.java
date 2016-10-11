@@ -87,6 +87,10 @@ public class FragmentPaymentHasStoredCards extends Fragment {
         adapterCards.updateResource(AssistCardsHolder.GetCards());
         listView.setAdapter(adapterCards);
 
+//        LayoutInflater inflater = mainActivity.getLayoutInflater();
+        View titleView = inflater.inflate(R.layout.payments_table_footer, null);
+        listView.addFooterView(titleView);
+
         return view;
     }
 

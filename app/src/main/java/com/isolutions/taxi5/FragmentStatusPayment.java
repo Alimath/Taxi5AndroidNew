@@ -229,7 +229,7 @@ implements AdapterView.OnItemClickListener{
                                     ProfileData profileData = ProfileData.getInstance();
 
                                     String postData = "Merchant_ID="+AppData.oneClickMerchantID+"&OrderNumber="+paymentIdentity+"&OrderAmount="+bynAmount
-                                            +"&CustomerNumber="+ProfileData.getInstance().getMsid()
+                                            +"&CustomerNumber="+ProfileData.getInstance().getAssistCustomerNumber()
                                             +"&OrderComment="+getString(R.string.assist_payment_comment)+"&OrderCurrency="+"BYN";
 
                                     if(!TextUtils.isEmpty(info.getCustomerEmail())) {

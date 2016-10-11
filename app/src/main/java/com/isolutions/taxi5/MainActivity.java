@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity
 //            Log.d("taxi5", "location check granted");
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if(FragmentMap.getMapFragment() != null && FragmentMap.getMapFragment().mMap != null) {
-                FragmentMap.getMapFragment().mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
+                FragmentMap.getMapFragment().mMap.setMyLocationEnabled(true);
+                FragmentMap.getMapFragment().mMap.getUiSettings().setMyLocationButtonEnabled(false);
             }
             else {
             }
@@ -117,7 +118,16 @@ public class MainActivity extends AppCompatActivity
 //                AppData.getInstance().mainActivity.OpenClearMap();
 //            }
 
-            AppData.getInstance().nullPoint = new LatLng(location.getLatitude(), location.getLongitude());
+            // Creating a criteria object to retrieve provider
+            Criteria criteria = new Criteria();
+
+            // Getting the name of the best provider
+            String provider = locationManager.getBestProvider(criteria, true);
+
+            // Getting Current Location
+            Location locationBest = locationManager.getLastKnownLocation(provider);
+
+            AppData.getInstance().nullPoint = new LatLng(locationBest.getLatitude(), locationBest.getLongitude());
         }
 
         @Override
@@ -385,8 +395,13 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_activity_fragment_map_layout, fragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commit();
-            getSupportFragmentManager().executePendingTransactions();
+            try {
+                ft.commit();
+                getSupportFragmentManager().executePendingTransactions();
+            }
+            catch (Exception error) {
+                Log.d("taxi5", "change fragment error");
+            }
         }
     }
 

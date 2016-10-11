@@ -125,7 +125,8 @@
     <string name="profile_screen_family_name_title">Фамилия</string>
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
-    <string name="profile_screen_upload_data">Сохранить</string>
+    <string name="profile_screen_upload_data">СОХРАНИТЬ ДАННЫЕ</string>
+    <string name="profile_screen_logout_title"><u>ВЫЙТИ ИЗ СВОЕГО ПРОФИЛЯ</u></string>
     <string name="profile_screen_upload_pick_image_title">Выбрать</string>
 
     <string name="status_order_review_send_review_button_title">ОТПРАВИТЬ ОТЗЫВ</string>
@@ -274,6 +275,10 @@
     <string name="no">Нет</string>
 
     <string name="assist_payment_comment">За услуги такси.</string>
+    <string name="payments_3d_secure_dialog_title">Ваша карта поддерживает технологию 3D-Secure?</string>
+    <string name="payments_3d_secure_dialog_message">3D-Secure - авторизация, при которой от пользователя требуется ввод дополнительного пароля от банка для совершении онлайн операции (чаще всего пароль высылается посредством SMS)</string>
 
+    <string name="logout_dialog_title">Вы действительно хотите выйти?</string>
+    <string name="logout_dialog_message">Данное действие вернет вас к окну авторизации в приложение.\nТакже в целях безопасности все привязанные вами карточки оплаты будут удалены.</string>
 
 </resources>

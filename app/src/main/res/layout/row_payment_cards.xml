@@ -133,6 +133,22 @@
         />
 
     <ImageView
+        android:id="@+id/row_payment_cards_card_type_image"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+
+
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
+
+        android:scaleType="fitCenter"
+
+        app:layout_constraintRight_toRightOf="@id/row_payment_cards_card_back_image"
+        app:layout_constraintBottom_toBottomOf="@id/row_payment_cards_card_holder_name"
+        />
+
+    <ImageView
         android:id="@+id/row_payment_cards_card_back_error_image"
 
         android:layout_width="328dp"
@@ -181,6 +197,7 @@
 
         android:layout_marginTop="16dp"
         android:scaleType="fitStart"
+        android:visibility="invisible"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintCenterX_toCenterX="parent"
@@ -190,6 +207,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="2"
+        android:visibility="invisible"
 
         android:text="@string/payments_card_remove_card_one_click_title"
         android:textColor="@color/defaultWhite"
@@ -208,8 +226,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="2"
+        android:visibility="invisible"
 
-        android:text="@string/payments_card_remove_card_one_click_title"
+        android:text="@string/payments_card_remove_card_one_click_message"
         android:textColor="@color/defaultWhite"
         android:fontFamily="sans-serif"
         android:textSize="12sp"

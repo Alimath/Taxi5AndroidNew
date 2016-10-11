@@ -8,8 +8,8 @@ android {
         applicationId "com.isolutions.taxi5"
         minSdkVersion 16
         targetSdkVersion 16
-        versionCode 200182
-        versionName "2.0.182"
+        versionCode 210001
+        versionName "2.1.001"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         useLibrary 'org.apache.http.legacy'
     }
@@ -35,7 +35,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile ('com.squareup.retrofit2:converter-simplexml:2.1.0'){
+    compile ('com.squareup.retrofit2:converter-simplexml:2.1.0') {
         exclude module: 'stax-api'
         exclude module: 'stax'
         exclude module: 'xpp3'

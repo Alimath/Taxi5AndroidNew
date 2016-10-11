@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -221,7 +223,12 @@ public class AppData {
 
     public void ShowChoosingCardTypeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
-        builder.setTitle("Поддерживает ли ваша карточка 3D Secure?");
+
+        LayoutInflater inflater = mainActivity.getLayoutInflater();
+        View titleView = inflater.inflate(R.layout.payments_custom_3dsec_question_title, null);
+
+//        builder.setTitle("Поддерживает ли ваша карточка 3D Secure?");
+        builder.setCustomTitle(titleView);
         builder.setItems(new CharSequence[]
         {appContext.getString(R.string.assist_3d_sec_yes),
             appContext.getString(R.string.assist_3d_sec_no),
@@ -239,8 +246,6 @@ public class AppData {
                             }
                             break;
                         case 1:
-                            AppData.getInstance().mainActivity.fragmentPaymentsCustomerInfo.authOneClickPayment = true;
-                            AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
                             if(Paper.book().read(AppData.paymentsAgreementKey, false)) {
                                 AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
                             }

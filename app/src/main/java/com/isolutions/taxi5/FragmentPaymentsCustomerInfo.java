@@ -193,7 +193,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
         final String orderNumber = "taxi5_"+currentDateString+"_"+profileData.getMsid()+"__authOneClick_Android";
 
         String postData = "Merchant_ID="+AppData.oneClickMerchantID+"&OrderNumber="+orderNumber+"&OrderAmount="+initAmount
-                +"&CustomerNumber="+ProfileData.getInstance().getMsid()
+                +"&CustomerNumber="+ProfileData.getInstance().getAssistCustomerNumber()
                 +"&OrderComment="+getString(R.string.auth_payment_comment)+"&OrderCurrency="+initCurrency;
 
         if(!TextUtils.isEmpty(info.getCustomerEmail())) {

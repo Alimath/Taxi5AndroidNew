@@ -60,12 +60,22 @@ public class AdapterPaymentCards extends BaseAdapter {
     @Override
     @Nullable
     public AssistStoredCardData getItem(int position) {
-        if(mDataSource != null && position == mDataSource.size()) {
+        AssistStoredCardData card = null;
+        try{
+            card = mDataSource.get(position);
+            return card;
+        }
+        catch (Exception ex) {
             return null;
         }
-        else {
-            return mDataSource.get(position);
-        }
+
+//        Log.d("taxi5", "POS: " + position + ", SIZE: " + mDataSource.size());
+//        if(mDataSource != null && position > mDataSource.size()) {
+//            return null;
+//        }
+//        else {
+//            return mDataSource.get(position);
+//        }
     }
 
     @Override
@@ -86,12 +96,15 @@ public class AdapterPaymentCards extends BaseAdapter {
             holder.cardNumber_4 = (TextView) convertView.findViewById(R.id.row_payment_cards_card_number_4);
             holder.cardHolderName = (TextView) convertView.findViewById(R.id.row_payment_cards_card_holder_name);
             holder.cardExpDate = (TextView) convertView.findViewById(R.id.row_payment_cards_card_exp_date);
+            holder.reccurentCardBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_image);
+
             holder.errorBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_error_image);
             holder.errorText = (TextView) convertView.findViewById(R.id.row_payment_cards_card_back_error_text_view);
 
             holder.oneClickBack = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_back_one_click_image);
             holder.oneClickTitle = (TextView) convertView.findViewById(R.id.row_payment_cards_one_click_title);
             holder.oneClickMessage = (TextView) convertView.findViewById(R.id.row_payment_cards_one_click_message);
+            holder.cardTypeImage = (ImageView) convertView.findViewById(R.id.row_payment_cards_card_type_image);
 
 
             Button removeCardButton = (Button) convertView.findViewById(R.id.row_payment_cards_remove_card_button);
@@ -182,6 +195,8 @@ public class AdapterPaymentCards extends BaseAdapter {
         TextView cardNumber_4;
         TextView cardHolderName;
         TextView cardExpDate;
+        ImageView cardTypeImage;
+        ImageView reccurentCardBack;
 
         ImageView errorBack;
         TextView errorText;
@@ -200,19 +215,66 @@ public class AdapterPaymentCards extends BaseAdapter {
                     oneClickTitle.setVisibility(View.INVISIBLE);
                     oneClickMessage.setVisibility(View.INVISIBLE);
 
+                    cardNumber_1.setVisibility(View.VISIBLE);
+                    cardNumber_4.setVisibility(View.VISIBLE);
+                    cardHolderName.setVisibility(View.VISIBLE);
+                    cardExpDate.setVisibility(View.VISIBLE);
+                    cardTypeImage.setVisibility(View.VISIBLE);
+                    reccurentCardBack.setVisibility(View.VISIBLE);
+
+
                     String cardNumber = storedCardData.meanNumber;
                     cardNumber_1.setText(cardNumber.substring(0,4));
                     cardNumber_4.setText(cardNumber.substring(cardNumber.length()-4, cardNumber.length()));
                     cardHolderName.setText(storedCardData.cardHolder);
                     cardExpDate.setText(storedCardData.cardExpDate);
+
+                    if(!TextUtils.isEmpty(storedCardData.meanType)) {
+                        switch (storedCardData.meanType) {
+                            case "VISA":
+                                cardTypeImage.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.visa_icon));
+                                break;
+                            case "MasterCard":
+                                cardTypeImage.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.mastercard_icon));
+                                break;
+                            case "MC":
+                                cardTypeImage.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.mastercard_icon));
+                                break;
+                            case "AMEX":
+                                cardTypeImage.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.mastercard_icon));
+                                break;
+                            case "BelCard":
+                                cardTypeImage.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.belcard_icon));
+                                break;
+                            default:
+                                cardTypeImage.setImageDrawable(null);
+                        }
+                    }
+                    else {
+                        cardTypeImage.setImageDrawable(null);
+                    }
                 }
                 else {
+                    cardNumber_1.setVisibility(View.INVISIBLE);
+                    cardNumber_4.setVisibility(View.INVISIBLE);
+                    cardHolderName.setVisibility(View.INVISIBLE);
+                    cardExpDate.setVisibility(View.INVISIBLE);
+                    cardTypeImage.setVisibility(View.INVISIBLE);
+                    reccurentCardBack.setVisibility(View.INVISIBLE);
+
                     oneClickBack.setVisibility(View.VISIBLE);
                     oneClickTitle.setVisibility(View.VISIBLE);
                     oneClickMessage.setVisibility(View.VISIBLE);
                 }
             }
             else {
+                cardNumber_1.setVisibility(View.INVISIBLE);
+                cardNumber_4.setVisibility(View.INVISIBLE);
+                cardHolderName.setVisibility(View.INVISIBLE);
+                cardExpDate.setVisibility(View.INVISIBLE);
+                cardTypeImage.setVisibility(View.INVISIBLE);
+                reccurentCardBack.setVisibility(View.INVISIBLE);
+
                 oneClickBack.setVisibility(View.INVISIBLE);
                 oneClickTitle.setVisibility(View.INVISIBLE);
                 oneClickMessage.setVisibility(View.INVISIBLE);

@@ -105,5 +105,16 @@ public class TokenData {
             this.refreshToken = tData.refreshToken;
             this.isAuthorized = tData.isAuthorized;
         }
+        else {
+            this.accessToken = null;
+            this.type = null;
+            this.expiresIn = null;
+            this.refreshToken = null;
+            this.isAuthorized = null;
+        }
+    }
+
+    public static void ClearTokenData() {
+        Paper.book().delete("taxi5AndroidTokenData");
     }
 }

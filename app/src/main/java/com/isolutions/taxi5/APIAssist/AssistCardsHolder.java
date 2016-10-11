@@ -115,4 +115,10 @@ public class AssistCardsHolder {
             }
         }
     }
+
+    public static void RemoveAllCards() {
+        Paper.book().delete("paymentsAgreementKey");
+        Paper.book().delete("taxi5AndroidCardsDataOneClick");
+        Paper.book().delete("taxi5AndroidCardsData");
+    }
 }

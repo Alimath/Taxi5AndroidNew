@@ -1,12 +1,17 @@
 package com.isolutions.taxi5;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -16,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.system.ErrnoException;
 import android.telephony.PhoneNumberUtils;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,6 +40,9 @@ import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
+import com.isolutions.taxi5.APIAssist.Entities.AssistCustomerInfo;
+import com.isolutions.taxi5.APIAssist.Entities.AssistStoredCardData;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -87,6 +96,12 @@ public class FragmentScreenProfile extends Fragment {
     @BindView(R.id.fragment_screen_profile_image_croper_button)
     Button croperButton;
 
+    @BindView(R.id.fragment_screen_profile_logout_btn)
+    Button logoutButton;
+
+    @BindView(R.id.fragment_screen_profile_logout_text)
+    TextView logoutText;
+
     ProfileData profileData;
 
     Bitmap newAvatarImage;
@@ -118,11 +133,9 @@ public class FragmentScreenProfile extends Fragment {
         }
     };
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if(AppData.getInstance().toolbar != null) {
             AppData.getInstance().toolbar.ConvertToDefaultWithTitle(getString(R.string.profile_screen_title));
         }
@@ -146,6 +159,7 @@ public class FragmentScreenProfile extends Fragment {
         else {
             HideProgressBar();
         }
+
 
         emailEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -242,6 +256,7 @@ public class FragmentScreenProfile extends Fragment {
                 @Override
                 public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
                     if (response.isSuccessful()) {
+                        profileData.saveProfileData();
                         Log.d("taxi5", "ok to load profile");
                     } else {
                         Log.d("taxi5", "error to load profile");
@@ -490,5 +505,41 @@ public class FragmentScreenProfile extends Fragment {
 
     private boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    @OnClick(R.id.fragment_screen_profile_logout_btn)
+    public void OnLogoutClick() {
+        AlertDialog.Builder builder;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity());
+        }
+        else {
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        }
+
+        builder.setMessage(R.string.logout_dialog_message).setTitle(R.string.logout_dialog_title);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                TokenData.ClearTokenData();
+                AssistCardsHolder.RemoveAllCards();
+                AssistCustomerInfo.ClearCustomerData();
+
+                Intent intent = new Intent(getActivity(), SplashActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                getActivity().startActivity(intent);
+                getActivity().finish();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("taxi5", "not logout");
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

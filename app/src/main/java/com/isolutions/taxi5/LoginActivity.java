@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
@@ -33,7 +34,12 @@ public class LoginActivity extends AppCompatActivity {
         ft.replace(R.id.login_activity_fragment_layout, phoneFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         AppData.getInstance().currentActivity = this;
-        ft.commit();
+        try {
+            ft.commit();
+        }
+        catch (Exception error) {
+            Log.d("taxi5", "change map status fragment error");
+        }
     }
 
     public void OpenSMSFragment() {
@@ -49,7 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         ft.replace(R.id.login_activity_fragment_layout, smsFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
-        ft.commit();
+        try {
+            ft.commit();
+        }
+        catch (Exception error) {
+            Log.d("taxi5", "change map status fragment error");
+        }
     }
 
     public void OpenNameFragment() {
@@ -65,7 +76,12 @@ public class LoginActivity extends AppCompatActivity {
         ft.replace(R.id.login_activity_fragment_layout, nameFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
-        ft.commit();
+        try {
+            ft.commit();
+        }
+        catch (Exception error) {
+            Log.d("taxi5", "change map status fragment error");
+        }
     }
 
 
@@ -89,6 +105,11 @@ public class LoginActivity extends AppCompatActivity {
         ft.replace(R.id.login_activity_fragment_layout, phoneFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
-        ft.commit();
+        try {
+            ft.commit();
+        }
+        catch (Exception error) {
+            Log.d("taxi5", "change map status fragment error");
+        }
     }
 }

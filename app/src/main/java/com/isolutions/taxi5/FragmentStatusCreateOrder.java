@@ -317,6 +317,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
                 this.isAnimal = order.features.animal;
             }
         }
+        else {
+            this.isBaby = false;
+            this.isEscort = false;
+            this.isAnimal = false;
+            this.commentEditText.setText("");
+        }
 
         if(isVisible()) {
             if (order != null && order.from != null) {

@@ -1,6 +1,9 @@
 package com.isolutions.taxi5;
 
 import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.CountDownTimer;
@@ -42,6 +45,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraIdleListener,
         GoogleMap.OnCameraMoveStartedListener {
     GoogleMap mMap;
@@ -79,6 +84,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(mMap != null) {
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
 
         if(AppData.getInstance().toolbar != null) {
             AppData.getInstance().toolbar.ConvertToDefaultToolbar();
@@ -86,6 +94,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     public void RefreshView() {
+        if(mMap != null) {
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
         if(AppData.getInstance().isOrderHistory) {
             if(readOrderCall != null) {
                 readOrderCall.cancel();
@@ -241,11 +252,29 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(AppData.getInstance().nullPoint, 17));
         mMap.getUiSettings().setRotateGesturesEnabled(false);
-
         mMap.setOnCameraIdleListener(this);
         mMap.setOnCameraMoveStartedListener(this);
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+        // Creating a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+
+        // Getting the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        // Getting Current Location
+        Location location = locationManager.getLastKnownLocation(provider);
+        if(location != null && AppData.getInstance().getCurrentOrder() == null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+        }
+        else {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(AppData.getInstance().nullPoint, 17));
+        }
+
         RefreshView();
 
 //        ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -481,9 +510,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
             ft.replace(R.id.fragment_status, statusFragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commit();
 
-            getChildFragmentManager().executePendingTransactions();
+            try {
+                ft.commit();
+                getChildFragmentManager().executePendingTransactions();
+            }
+            catch (Exception error) {
+                Log.d("taxi5", "change map status fragment error");
+            }
+
+
 
             if (statusFragment.isVisible()) {
                 statusFragment.fillWithOrder();
@@ -497,7 +533,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
             ft.replace(R.id.fragment_search_addresses, statusCreateOrderFindAddressFragment);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commit();
+            try {
+                ft.commit();
+            }
+            catch (Exception error) {
+                Log.d("taxi5", "change map status fragment error");
+            }
 
             statusCreateOrderFindAddressFragment.isFromLocationSelect = isFromAddress;
 
@@ -516,9 +557,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             ft.remove(this.statusCreateOrderFindAddressFragment);
 //            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //            ft.addToBackStack("find_addresses");
-            ft.commit();
+            try {
+                ft.commit();
 //
-            getChildFragmentManager().executePendingTransactions();
+                getChildFragmentManager().executePendingTransactions();
+            }
+            catch (Exception error) {
+                Log.d("taxi5", "change map status fragment error");
+            }
 
             AppData.getInstance().toolbar.ConvertToDefaultToolbar();
         }

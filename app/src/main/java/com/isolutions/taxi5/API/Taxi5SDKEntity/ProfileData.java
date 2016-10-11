@@ -61,6 +61,10 @@ public class ProfileData {
         return msid;
     }
 
+    public String getAssistCustomerNumber() {
+        return msid;
+    }
+
     public void setMsid(String msid) {
         this.msid = msid;
     }
