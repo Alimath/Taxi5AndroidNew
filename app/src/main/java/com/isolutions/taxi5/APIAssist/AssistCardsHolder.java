@@ -55,9 +55,23 @@ public class AssistCardsHolder {
         if(storedCardData == null) {
             storedCardData = new ArrayList<AssistStoredCardData>();
         }
-        storedCardData.add(cardData);
-        Paper.book().delete("taxi5AndroidCardsData");
-        Paper.book().write("taxi5AndroidCardsData", storedCardData);
+        boolean isHasCardData = false;
+        if(storedCardData.size() > 0) {
+            for (AssistStoredCardData item:storedCardData) {
+                if(item.initBillResponseCode.equalsIgnoreCase(cardData.initBillNumber)) {
+                    isHasCardData = true;
+                }
+            }
+        }
+
+        if(isHasCardData == false) {
+            storedCardData.add(cardData);
+            Paper.book().delete("taxi5AndroidCardsData");
+            Paper.book().write("taxi5AndroidCardsData", storedCardData);
+        }
+        else {
+            return false;
+        }
         return true;
     }
 

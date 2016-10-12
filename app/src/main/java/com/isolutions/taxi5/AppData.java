@@ -103,6 +103,10 @@ public class AppData {
 
     public volatile boolean isOrderHistory = false;
     public void setCurrentOrder(OrderData orderData, boolean isHistory) {
+//        if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.splashView != null
+//                && AppData.getInstance().mainActivity.splashView.getVisibility() == View.VISIBLE) {
+//            AppData.getInstance().mainActivity.HideSplash();
+//        }
         this.currentOrder= orderData;
         isOrderHistory = isHistory;
     }
@@ -246,6 +250,7 @@ public class AppData {
                             }
                             break;
                         case 1:
+                            AppData.getInstance().mainActivity.fragmentPaymentsCustomerInfo.authOneClickPayment = true;
                             if(Paper.book().read(AppData.paymentsAgreementKey, false)) {
                                 AppData.getInstance().mainActivity.OpenPaymentsCustomerInfo();
                             }

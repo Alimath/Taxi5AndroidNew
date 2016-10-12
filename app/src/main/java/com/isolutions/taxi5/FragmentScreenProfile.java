@@ -525,7 +525,7 @@ public class FragmentScreenProfile extends Fragment {
                 AssistCardsHolder.RemoveAllCards();
                 AssistCustomerInfo.ClearCustomerData();
 
-                Intent intent = new Intent(getActivity(), SplashActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 getActivity().startActivity(intent);

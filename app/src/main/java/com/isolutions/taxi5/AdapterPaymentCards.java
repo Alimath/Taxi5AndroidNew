@@ -88,7 +88,9 @@ public class AdapterPaymentCards extends BaseAdapter {
         AdapterPaymentCards.ViewHolder holder;
 
         if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.row_payment_cards, parent, false);
+            LayoutInflater converterInflater = (LayoutInflater) AppData.getInstance().getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            convertView = converterInflater.inflate(R.layout.row_payment_cards, parent, false);
 
             holder = new AdapterPaymentCards.ViewHolder();
 
@@ -123,15 +125,19 @@ public class AdapterPaymentCards extends BaseAdapter {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(getItem(position) == null) {
+                                    Log.d("taxi5", "remove OneClick");
                                     AssistCardsHolder.RemoveOneClick();
                                     if ((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
                                         if (AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.isAdded()) {
+                                            Log.d("taxi5", "remove update");
                                             AppData.getInstance().mainActivity.fragmentPaymentHasStoredCards.UpdateListView();
                                         }
                                         else {
+                                            Log.d("taxi5", "remove reopen");
                                             AppData.getInstance().mainActivity.OpenPayments();
                                         }
                                     } else {
+                                        Log.d("taxi5", "remove reopen2");
                                         AppData.getInstance().mainActivity.OpenPayments();
                                     }
                                 }
@@ -287,7 +293,8 @@ public class AdapterPaymentCards extends BaseAdapter {
         }
     }
 
-    public void updateResource(ArrayList<AssistStoredCardData> storedCardData) {
+    public void updateResource(ArrayList<AssistStoredCardData> storedCardData, boolean isHasOneClick) {
+        this.hasOneClick = isHasOneClick;
         this.mDataSource = storedCardData;
         notifyDataSetChanged();
     }

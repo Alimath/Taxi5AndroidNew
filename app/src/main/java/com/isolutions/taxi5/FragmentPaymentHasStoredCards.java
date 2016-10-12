@@ -68,7 +68,7 @@ public class FragmentPaymentHasStoredCards extends Fragment {
             ArrayList<AssistStoredCardData> storedCardDatas = new ArrayList<AssistStoredCardData>();
 
             adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
-            adapterCards.updateResource(AssistCardsHolder.GetCards());
+            adapterCards.updateResource(AssistCardsHolder.GetCards(), AssistCardsHolder.GetOneClickState());
         }
     }
 
@@ -84,7 +84,7 @@ public class FragmentPaymentHasStoredCards extends Fragment {
         adapterCards = new AdapterPaymentCards(AppData.getInstance().getAppContext(), AssistCardsHolder.GetCards());
 
         adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
-        adapterCards.updateResource(AssistCardsHolder.GetCards());
+        adapterCards.updateResource(AssistCardsHolder.GetCards(), AssistCardsHolder.GetOneClickState());
         listView.setAdapter(adapterCards);
 
 //        LayoutInflater inflater = mainActivity.getLayoutInflater();
@@ -100,6 +100,6 @@ public class FragmentPaymentHasStoredCards extends Fragment {
     }
 
     public void UpdateListView() {
-        adapterCards.updateResource(AssistCardsHolder.GetCards());
+        adapterCards.updateResource(AssistCardsHolder.GetCards(), AssistCardsHolder.GetOneClickState());
     }
 }

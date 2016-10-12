@@ -25,8 +25,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.gson.Gson;
 import com.isolutions.taxi5.API.ApiFactory;
@@ -113,6 +115,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @BindView(R.id.fragment_status_create_order_main)
     ConstraintLayout mainView;
+
 
 
     private boolean isBaby = false;

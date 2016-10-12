@@ -62,4 +62,64 @@
 
     </android.support.design.widget.NavigationView>
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor"
+        android:id="@+id/main_activity_splash"
+        android:elevation="25dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+
+            android:paddingBottom="150dp"
+
+            app:srcCompat="@drawable/splashlogo"
+            android:scaleType="fitEnd"
+            android:id="@+id/mainview_splashImage"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:elevation="30dp"
+            app:indicatorName="BallClipRotateIndicator"
+
+            style="@style/AVLoadingIndicatorView"
+            app:indicatorColor="@color/defaultBlack"
+            android:visibility="visible"
+
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+
+            android:layout_alignBottom="@id/mainview_splashImage"
+
+            />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/splashcubics"
+            android:baselineAlignBottom="true"
+            android:id="@+id/mainview_splashCubicsImage"
+            android:scaleType="fitStart"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
 </android.support.v4.widget.DrawerLayout>

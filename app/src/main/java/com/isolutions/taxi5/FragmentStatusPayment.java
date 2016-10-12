@@ -42,6 +42,7 @@ import com.isolutions.taxi5.APIAssist.AssistSDK;
 import com.isolutions.taxi5.APIAssist.Entities.AssistCustomerInfo;
 import com.isolutions.taxi5.APIAssist.Entities.AssistOrderStatusResponseData;
 import com.isolutions.taxi5.APIAssist.Entities.AssistStoredCardData;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -63,7 +64,10 @@ public class FragmentStatusPayment extends StatusesBaseFragment
 implements AdapterView.OnItemClickListener{
 
     @BindView(R.id.fragment_status_order_payment_price_progress_bar)
-    ProgressBar pendingPriceProgressBar;
+    AVLoadingIndicatorView pendingPriceProgressBar;
+
+    @BindView(R.id.fragment_status_order_payment_price_progress_bar_text)
+    TextView pendingPriceProgressBarText;
 
     @BindView(R.id.fragment_status_order_payment_price_new)
     TextView priceNewTextView;
@@ -108,7 +112,7 @@ implements AdapterView.OnItemClickListener{
         adapterCards = new AdapterPaymentCards(AppData.getInstance().getAppContext(), AssistCardsHolder.GetSuccessCards());
 
         adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
-        adapterCards.updateResource(AssistCardsHolder.GetSuccessCards());
+        adapterCards.updateResource(AssistCardsHolder.GetSuccessCards(), AssistCardsHolder.GetOneClickState());
 
 
         adapterCards.isChoosingPaymentCard = true;
@@ -466,7 +470,7 @@ implements AdapterView.OnItemClickListener{
         isCardsShowing = false;
         if(adapterCards != null) {
             adapterCards.hasOneClick = AssistCardsHolder.GetOneClickState();
-            adapterCards.updateResource(AssistCardsHolder.GetSuccessCards());
+            adapterCards.updateResource(AssistCardsHolder.GetSuccessCards(), AssistCardsHolder.GetOneClickState());
         }
     }
 
@@ -480,15 +484,31 @@ implements AdapterView.OnItemClickListener{
         cardsListViewMain.setVisibility(View.VISIBLE);
     }
 
+    public void DisablePaymentButton() {
+        payWithCardButton.setClickable(false);
+        payWithCardButton.setBackground(AppData.getInstance().getMyDrawable(R.drawable.round_shape_white_bordered_btn));
+        payWithCardButton.setTextColor(AppData.getInstance().getColor(R.color.registrationColorHeader2));
+        payWithCardButton.setVisibility(View.VISIBLE);
+        payWithCardText.setVisibility(View.VISIBLE);
+//        payWithCardButton.setVisibility(View.INVISIBLE);
+//        payWithCardText.setVisibility(View.INVISIBLE);
+    }
+
+    public void EnablePaymentButton() {
+        payWithCardButton.setClickable(true);
+        payWithCardButton.setBackground(AppData.getInstance().getMyDrawable(R.drawable.round_shape_blue_btn));
+        payWithCardButton.setTextColor(AppData.getInstance().getColor(R.color.defaultWhite));
+        payWithCardButton.setVisibility(View.VISIBLE);
+        payWithCardText.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void fillWithOrder() {
         if((AssistCardsHolder.GetCards() != null && !AssistCardsHolder.GetCards().isEmpty()) || AssistCardsHolder.GetOneClickState()) {
-            payWithCardButton.setVisibility(View.VISIBLE);
-            payWithCardText.setVisibility(View.VISIBLE);
+            EnablePaymentButton();
         }
         else {
-            payWithCardButton.setVisibility(View.INVISIBLE);
-            payWithCardText.setVisibility(View.INVISIBLE);
+            DisablePaymentButton();
         }
 
         if(AppData.getInstance().getCurrentOrder() != null) {
@@ -509,8 +529,7 @@ implements AdapterView.OnItemClickListener{
             }
 
             if(order.status.status != OrderStatusType.OrderPendingPayment) {
-                payWithCardButton.setVisibility(View.INVISIBLE);
-                payWithCardText.setVisibility(View.INVISIBLE);
+                DisablePaymentButton();
             }
 
             if(order.from != null) {
@@ -571,6 +590,7 @@ implements AdapterView.OnItemClickListener{
                             }
                         }
                         pendingPriceProgressBar.setVisibility(View.INVISIBLE);
+                        pendingPriceProgressBarText.setVisibility(View.INVISIBLE);
 
                         if(bynAmount != null || byrAmount != null) {
                             if(bynAmount == null) {
@@ -608,6 +628,7 @@ implements AdapterView.OnItemClickListener{
                         }
                         else {
                             pendingPriceProgressBar.setVisibility(View.VISIBLE);
+                            pendingPriceProgressBarText.setVisibility(View.VISIBLE);
                             priceNewTextView.setText("");
                             priceOldTextView.setText("");
                         }
@@ -616,11 +637,13 @@ implements AdapterView.OnItemClickListener{
                 }
                 else {
                     pendingPriceProgressBar.setVisibility(View.VISIBLE);
+                    pendingPriceProgressBarText.setVisibility(View.VISIBLE);
 
                 }
             }
             else {
                 pendingPriceProgressBar.setVisibility(View.VISIBLE);
+                pendingPriceProgressBarText.setVisibility(View.VISIBLE);
             }
         }
         else {

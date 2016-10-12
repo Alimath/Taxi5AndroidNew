@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -37,6 +38,7 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
 import com.isolutions.taxi5.FragmentPlans;
@@ -47,7 +49,9 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,6 +77,10 @@ public class MainActivity extends AppCompatActivity
 //    public FragmentCustomToolbar customToolbar = new FragmentCustomToolbar();
 
     @BindView(R.id.left_drawer_avatar_image) ImageView avatarImageView;
+
+
+    @BindView(R.id.main_activity_splash)
+    RelativeLayout splashView;
 
     LocationManager locationManager;
     private static final int PERMISSION_REQUEST_CODE_LOCATION = 1;
@@ -163,6 +171,7 @@ public class MainActivity extends AppCompatActivity
 //        }
 
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         new TedPermission(this).setPermissionListener(this.locatioPermissionListener).setRationaleMessage(R.string.permission_location_rationale_message)
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION).setDeniedMessage(R.string.permission_location_denied_message).check();
@@ -270,6 +279,30 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(locationManager != null) {
+            locationManager.removeUpdates(locationListener);
+        }
+        isStarted = false;
+        AppData.getInstance().setAppForeground(false);
+        if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.mapFragment != null
+                && AppData.getInstance().mainActivity.mapFragment.isAdded() && AppData.getInstance().getCurrentOrder() != null) {
+            Paper.book().write("CURRENTSTATESAVEDORDER", AppData.getInstance().getCurrentOrder());
+        }
+        else {
+            Paper.book().delete("CURRENTSTATESAVEDORDER");
+        }
+    }
+
+    public void ShowSplash() {
+        splashView.setVisibility(View.VISIBLE);
+    }
+    public void HideSplash() {
+        splashView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         isStarted = true;
@@ -299,10 +332,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        if(FragmentMap.getMapFragment().isVisible()) {
-//            FragmentMap.getMapFragment().RefreshView();
-            OpenClearMap();
-        }
+//        if(FragmentMap.getMapFragment().isVisible()) {
+//            OrderData order = AppData.getInstance().getCurrentOrder();
+//            if(order != null && order.status != null && order.status.status != null) {
+//                ShowSplash();
+//                AppData.getInstance().mainActivity.mapFragment.ReadOrderState();
+//            }
+//            else {
+//                AppData.getInstance().mainActivity.OpenClearMap();
+//                AppData.getInstance().leftDrawer.HighlightMenuItem(MenuLeft.OpenFragmentTypes.Map);
+//            }
+//
+////            FragmentMap.getMapFragment().RefreshView();
+////            OpenClearMap();
+//
+//        }
     }
     public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {
         if(response.isSuccessful()) {
@@ -322,16 +366,6 @@ public class MainActivity extends AppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(locationManager != null) {
-            locationManager.removeUpdates(locationListener);
-        }
-        isStarted = false;
-        AppData.getInstance().setAppForeground(false);
     }
 
     public void OpenPlansMenu() {

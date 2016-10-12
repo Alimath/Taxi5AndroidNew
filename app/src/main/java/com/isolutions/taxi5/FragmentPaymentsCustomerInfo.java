@@ -133,6 +133,10 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
 
     @OnClick(R.id.fragment_payments_customer_info_save_button)
     public void OnSaveButtonClick() {
+        if(!TextUtils.isEmpty(emailEditText.getText())) {
+            emailEditText.setText(emailEditText.getText().toString().replaceAll("\\s+$", ""));
+        }
+
         if(!TextUtils.isEmpty(nameEditText.getText()) && !TextUtils.isEmpty(familyNameEditText.getText())
                 && isValidEmail(emailEditText.getText())) {
             AssistCustomerInfo customerInfo = AssistCustomerInfo.getInstance();
@@ -408,7 +412,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                         }
 
                         if(adapterCards!= null) {
-                            adapterCards.updateResource(AssistCardsHolder.GetCards());
+                            adapterCards.updateResource(AssistCardsHolder.GetCards(), AssistCardsHolder.GetOneClickState());
                         }
 
                         String billNumber = order.getBillnumber();
@@ -441,7 +445,7 @@ public class FragmentPaymentsCustomerInfo extends Fragment {
                         dialog.dismiss();
                     }
                     if(adapterCards != null) {
-                        adapterCards.updateResource(AssistCardsHolder.GetCards());
+                        adapterCards.updateResource(AssistCardsHolder.GetCards(), AssistCardsHolder.GetOneClickState());
                     }
 
                     if(AppData.getInstance().mainActivity != null) {

@@ -276,6 +276,7 @@
         android:textColor="@color/defaultWhite"
 
         android:background="@drawable/round_shape_blue_btn"
+        style="?android:attr/borderlessButtonStyle"
 
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -291,14 +292,37 @@
         app:layout_constraintRight_toRightOf="@id/fragment_status_order_payment_main"
         />
 
-    <ProgressBar
+    <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/fragment_status_order_payment_price_progress_bar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+        android:elevation="20dp"
+
+        app:indicatorName="BallClipRotateIndicator"
+
+        style="@style/AVLoadingIndicatorView"
+        app:indicatorColor="@color/defaultBlack"
+        android:layout_marginBottom="50dp"
 
 
         app:layout_constraintCenterX_toCenterX="@id/fragment_status_order_payment_price_back"
         app:layout_constraintCenterY_toCenterY="@id/fragment_status_order_payment_price_separator"
+        />
+
+    <TextView
+        android:id="@+id/fragment_status_order_payment_price_progress_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+
+        android:text="@string/payments_wait_for_amount"
+        android:textColor="@color/registrationColorHeader2"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+
+        app:layout_constraintCenterX_toCenterX="@id/fragment_status_order_payment_price_progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/fragment_status_order_payment_price_progress_bar"
         />
 
     <android.support.constraint.ConstraintLayout

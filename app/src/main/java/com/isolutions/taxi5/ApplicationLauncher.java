@@ -2,6 +2,8 @@ package com.isolutions.taxi5;
 
 import android.app.Application;
 
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
+
 import io.paperdb.Paper;
 
 public class ApplicationLauncher extends Application {
@@ -12,9 +14,6 @@ public class ApplicationLauncher extends Application {
     public void onCreate() {
         super.onCreate();
         Paper.init(getApplicationContext());
-
         AppData.getInstance().setAppContext(this);
     }
-
-
 }

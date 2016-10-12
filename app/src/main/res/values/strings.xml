@@ -248,6 +248,7 @@
     <string name="payments_card_row_error_message_AS200">Отказ в авторизации по неизвестной причине, попробуйте добавить карточку снова.</string>
     <string name="payments_card_remove_card_alert_title">Удалить карточку!</string>
     <string name="payments_card_remove_card_alert_message">Это действие невозможно отменить. Вы уверены, что хотите удалить свою карточку?</string>
+    <string name="payments_wait_for_amount">Ожидание ввода суммы</string>
     <string name="remove_text">Удалить</string>
 
     <string name="payments_card_remove_card_one_click_title">Данная карта участвует в\nпрограмме One Click</string>
