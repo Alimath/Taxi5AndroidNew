@@ -9,6 +9,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -127,15 +129,16 @@ public class MainActivity extends AppCompatActivity
 //            }
 
             // Creating a criteria object to retrieve provider
-            Criteria criteria = new Criteria();
+//            Criteria criteria = new Criteria();
+//
+//            // Getting the name of the best provider
+//            String provider = locationManager.getBestProvider(criteria, true);
+//
+//            // Getting Current Location
+//            Location locationBest = locationManager.getLastKnownLocation(provider);
 
-            // Getting the name of the best provider
-            String provider = locationManager.getBestProvider(criteria, true);
-
-            // Getting Current Location
-            Location locationBest = locationManager.getLastKnownLocation(provider);
-
-            AppData.getInstance().nullPoint = new LatLng(locationBest.getLatitude(), locationBest.getLongitude());
+//            try
+            AppData.getInstance().nullPoint = new LatLng(location.getLatitude(), location.getLongitude());
         }
 
         @Override
@@ -179,6 +182,8 @@ public class MainActivity extends AppCompatActivity
         AppData.getInstance().currentActivity = this;
         OpenClearMap();
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.setScrimColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override

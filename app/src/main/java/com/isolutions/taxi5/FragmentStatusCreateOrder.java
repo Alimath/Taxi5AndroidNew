@@ -382,10 +382,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     void StartCreateButtonProgress() {
         SetCreateOrderButtonAvailableState(false);
+        createOrderButton.setText("");
         buttonProgressBar.setVisibility(View.VISIBLE);
     }
 
     void EndCreateButtonProgress() {
+        createOrderButton.setText(getString(R.string.status_create_order_button_text));
         SetCreateOrderButtonAvailableState(true);
         buttonProgressBar.setVisibility(View.INVISIBLE);
     }

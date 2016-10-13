@@ -173,22 +173,27 @@ public class FragmentStatusCarFind extends StatusesBaseFragment {
 
     public void ShowCancelProgressBar() {
         buttonCancelProgressBar.setVisibility(View.VISIBLE);
+        buttonCancelProgressBar.setIndicatorColor(AppData.getInstance().getColor(R.color.hintsColor));
+        cancelBtn.setText("");
         SetCancelBtnAvailableState(false);
-
     }
 
     public void HideCancelProgressBar() {
+        cancelBtn.setText(getString(R.string.status_car_find_cancel_btn_text));
         buttonCancelProgressBar.setVisibility(View.INVISIBLE);
         SetCancelBtnAvailableState(true);
     }
 
     public void ShowApproveProgressBar() {
+        approveBtn.setText("");
+        buttonApproveProgressBar.setIndicatorColor(AppData.getInstance().getColor(R.color.whiteColor));
         buttonApproveProgressBar.setVisibility(View.VISIBLE);
         SetApproveBtnAvailableState(false);
 
     }
 
     public void HideApproveProgressBar() {
+        approveBtn.setText(getString(R.string.status_car_find_aprove_btn_text));
         buttonApproveProgressBar.setVisibility(View.INVISIBLE);
         SetApproveBtnAvailableState(true);
     }

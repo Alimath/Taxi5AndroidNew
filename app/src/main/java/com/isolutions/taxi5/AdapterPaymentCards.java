@@ -119,7 +119,7 @@ public class AdapterPaymentCards extends BaseAdapter {
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                             builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
                         } else {
-                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Dialog_Alert);
+                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Light_Dialog_Alert);
                         }
                         builder.setPositiveButton(R.string.remove_text, new DialogInterface.OnClickListener() {
                             @Override

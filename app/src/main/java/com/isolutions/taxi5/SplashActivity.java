@@ -1,9 +1,12 @@
 package com.isolutions.taxi5;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
@@ -45,8 +48,6 @@ public class SplashActivity extends AppCompatActivity {
                 onFailureRefreshToken(call, t);
             }
         });
-
-
     }
 
     public void onResponseRefreshToken(Call<TokenData> call, Response<TokenData> response) {

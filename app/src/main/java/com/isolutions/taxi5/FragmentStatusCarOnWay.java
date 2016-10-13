@@ -179,7 +179,7 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
             builder = new AlertDialog.Builder(getActivity());
         }
         else {
-            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Light_Dialog_Alert);
         }
         builder.setMessage(R.string.status_car_on_way_call_driver_dialog_message).setTitle(R.string.status_car_on_way_call_driver_dialog_title);
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
@@ -234,6 +234,12 @@ public class FragmentStatusCarOnWay extends StatusesBaseFragment {
 
     void SetCancelBtnAvailableState(boolean state) {
         cancelBtn.setClickable(state);
+        if(state) {
+            cancelBtn.setText(getString(R.string.status_car_on_way_cancel_order));
+        }
+        else {
+            cancelBtn.setText("");
+        }
     }
 
     public void ShowCancelProgressBar() {

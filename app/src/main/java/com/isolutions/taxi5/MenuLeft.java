@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -91,7 +92,7 @@ public class MenuLeft extends Fragment {
             }
         }
         else {
-            this.avatarImage.setImageBitmap(null);
+            this.avatarImage.setImageBitmap(((BitmapDrawable)AppData.getInstance().getMyDrawable(R.drawable.default_user_icon)).getBitmap());
         }
         if(ProfileData.getInstance().getName() != null) {
             if(!ProfileData.getInstance().getName().isEmpty()) {
@@ -110,20 +111,20 @@ public class MenuLeft extends Fragment {
             builder = new AlertDialog.Builder(getActivity());
         }
         else {
-            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Light_Dialog_Alert);
         }
 
-        TextView msgTextView = new TextView(AppData.getInstance().getAppContext());
-        msgTextView.setTextSize(20);
-        msgTextView.setPadding(0,16,0,16);
-        msgTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
-        msgTextView.setText("+375 (29) 133-75-00");
+//        TextView msgTextView = new TextView(AppData.getInstance().getAppContext());
+//        msgTextView.setTextSize(14);
+//        msgTextView.setPadding(0,0,0,0);
+//        msgTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
+//        msgTextView.setText("+375 (29) 133-75-00");
 
+//        msgTextView.setGravity(Gravity.CENTER);
 
-        msgTextView.setGravity(Gravity.CENTER);
-
-        builder.setView(msgTextView);
-//        builder.setMessage("+375 (29) 133-75-00");
+//        builder.setView(msgTextView);
+        builder.setTitle("Позвоните в Такси \"Пятница\"");
+        builder.setMessage("+375 (29) 133-75-00");
 //        builder.
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
             @Override

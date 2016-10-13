@@ -514,7 +514,7 @@ public class FragmentScreenProfile extends Fragment {
             builder = new AlertDialog.Builder(getActivity());
         }
         else {
-            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Light_Dialog_Alert);
         }
 
         builder.setMessage(R.string.logout_dialog_message).setTitle(R.string.logout_dialog_title);

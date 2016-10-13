@@ -45,8 +45,8 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
     @BindView(R.id.fragment_status_search_car_to_text)
     EditText toLoc;
 
-    @BindView(R.id.fragment_status_search_car_rotation_image)
-    ImageView rotatedImage;
+//    @BindView(R.id.fragment_status_search_car_rotation_image)
+//    ImageView rotatedImage;
 
 
     @BindView(R.id.fragment_status_search_car_cancel_button)
@@ -77,7 +77,7 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
     @Override
     public void onDetach() {
-        stopRotateSearchCircleAnimation();
+//        stopRotateSearchCircleAnimation();
         super.onDetach();
     }
 
@@ -120,14 +120,14 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
 // Start animating the image
         //final ImageView splash = (ImageView) findViewById(R.id.fragment_status_search_car_rotation_image);
-        if(rotatedImage != null) {
-            rotatedImage.startAnimation(anim);
-        }
+//        if(rotatedImage != null) {
+//            rotatedImage.startAnimation(anim);
+//        }
     }
 
-    private void stopRotateSearchCircleAnimation() {
-        rotatedImage.setAnimation(null);
-    }
+//    private void stopRotateSearchCircleAnimation() {
+//        rotatedImage.setAnimation(null);
+//    }
 
     @OnClick(R.id.fragment_status_search_car_cancel_button)
     void OnCancelOrderBtnClick() {
@@ -163,11 +163,13 @@ public class FragmentStatusSearchCar extends StatusesBaseFragment {
 
     public void ShowCancelProgressBar() {
         buttonCancelProgressBar.setVisibility(View.VISIBLE);
+        cancelBtn.setText("");
         SetCancelBtnAvailableState(false);
 
     }
 
     public void HideCancelProgressBar() {
+        cancelBtn.setText(getString(R.string.status_search_car_button_text));
         buttonCancelProgressBar.setVisibility(View.INVISIBLE);
         SetCancelBtnAvailableState(true);
     }

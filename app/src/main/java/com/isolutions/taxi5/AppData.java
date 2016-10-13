@@ -203,7 +203,7 @@ public class AppData {
             builder = new AlertDialog.Builder(mainActivity);
         }
         else {
-            builder = new AlertDialog.Builder(mainActivity, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(mainActivity, android.R.style.Theme_Material_Light_Dialog_Alert);
         }
 
         builder.setTitle(appContext.getString(R.string.payments_agreement_title));

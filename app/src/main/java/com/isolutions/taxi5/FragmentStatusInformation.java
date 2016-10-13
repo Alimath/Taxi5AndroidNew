@@ -104,13 +104,17 @@ public class FragmentStatusInformation extends StatusesBaseFragment  {
         }
     }
 
+    String oldText = "";
     public void ShowProgressBar() {
+        oldText = button.getText().toString();
+        button.setText("");
         buttonProgressBar.setVisibility(View.VISIBLE);
         SetCreateOrderButtonAvailableState(false);
 
     }
 
     public void HideProgressBar() {
+        button.setText(oldText);
         buttonProgressBar.setVisibility(View.INVISIBLE);
         SetCreateOrderButtonAvailableState(true);
     }

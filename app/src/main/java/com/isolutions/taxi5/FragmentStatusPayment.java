@@ -131,7 +131,7 @@ implements AdapterView.OnItemClickListener{
             builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
         }
         else {
-            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Light_Dialog_Alert);
         }
 
         builder.setTitle(AppData.getInstance().getAppContext().getString(R.string.assist_payment_with_card_question));
@@ -638,12 +638,16 @@ implements AdapterView.OnItemClickListener{
                 else {
                     pendingPriceProgressBar.setVisibility(View.VISIBLE);
                     pendingPriceProgressBarText.setVisibility(View.VISIBLE);
+                    priceNewTextView.setText("");
+                    priceOldTextView.setText("");
 
                 }
             }
             else {
                 pendingPriceProgressBar.setVisibility(View.VISIBLE);
                 pendingPriceProgressBarText.setVisibility(View.VISIBLE);
+                priceNewTextView.setText("");
+                priceOldTextView.setText("");
             }
         }
         else {

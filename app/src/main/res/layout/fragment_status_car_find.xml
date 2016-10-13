@@ -265,16 +265,17 @@
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/fragment_status_car_find_cancel_button_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+
+            app:indicatorName="BallPulseIndicator"
 
             android:elevation="30dp"
-            app:indicatorName="BallClipRotateIndicator"
             style="@style/AVLoadingIndicatorView"
-            app:indicatorColor="@color/defaultBlack"
+            app:indicatorColor="@color/hintsColor"
 
             app:layout_constraintCenterY_toCenterY="@id/fragment_status_car_find_cancel_button"
-            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_cancel_button"
+            app:layout_constraintCenterX_toCenterX="@id/fragment_status_car_find_cancel_button"
             />
 
 
@@ -304,16 +305,17 @@
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/fragment_status_car_find_approve_button_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+
+            app:indicatorName="BallPulseIndicator"
 
             android:elevation="30dp"
-            app:indicatorName="BallClipRotateIndicator"
             style="@style/AVLoadingIndicatorView"
-            app:indicatorColor="@color/whiteColor"
+            app:indicatorColor="@color/hintsColor"
 
             app:layout_constraintCenterY_toCenterY="@id/fragment_status_car_find_approve_button"
-            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_find_approve_button"
+            app:layout_constraintCenterX_toCenterX="@id/fragment_status_car_find_approve_button"
             />
 
     </android.support.constraint.ConstraintLayout>

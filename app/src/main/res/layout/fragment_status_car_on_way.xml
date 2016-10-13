@@ -251,16 +251,16 @@
             android:text="@string/status_car_on_way_call_driver_btn"/>
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/fragment_status_car_on_way_cancel_button_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
 
             android:elevation="30dp"
-            app:indicatorName="BallClipRotateIndicator"
+            app:indicatorName="BallPulse"
             style="@style/AVLoadingIndicatorView"
             app:indicatorColor="@color/whiteColor"
 
             app:layout_constraintCenterY_toCenterY="@id/fragment_status_car_on_way_cancel_button"
-            app:layout_constraintLeft_toLeftOf="@id/fragment_status_car_on_way_cancel_button"
+            app:layout_constraintCenterX_toCenterX="@id/fragment_status_car_on_way_cancel_button"
             />
 
     </android.support.constraint.ConstraintLayout>
