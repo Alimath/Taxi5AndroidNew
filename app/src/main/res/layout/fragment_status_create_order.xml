@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_status_create_order_options_guideline_1"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.33"
+                app:layout_constraintGuide_percent="0.3"
                 app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_options"
                 app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_options"
                 app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_options"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_status_create_order_options_guideline_2"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.67"
+                app:layout_constraintGuide_percent="0.7"
                 app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_options"
                 app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_options"
                 app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_options"
@@ -260,6 +260,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
+
             android:id="@+id/fragment_status_create_order_from_to_view"
             android:visibility="visible"
 
@@ -330,6 +331,7 @@
 
 
             <ImageView
+                android:id="@+id/fragment_status_create_order_from_to_view_search_to_address_icon"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
 
@@ -488,22 +490,6 @@
                 app:layout_constraintLeft_toLeftOf="@id/fragment_status_create_order_from_to_view_separator_center"
                 app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view_separator_top_right"/>
 
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/fragment_status_create_order_from_to_view_progress_bar_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                app:indicatorName="BallClipRotateIndicator"
-
-                style="@style/AVLoadingIndicatorView"
-                app:indicatorColor="@color/defaultBlack"
-                android:visibility="visible"
-
-
-                app:layout_constraintCenterX_toCenterX="@id/fragment_status_create_order_from_to_view"
-                app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view_separator_center"
-                />
 
 
             <Button
@@ -530,6 +516,23 @@
                 app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view_separator_center"
                 app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view"
                 app:layout_constraintRight_toRightOf="@id/fragment_status_create_order_from_to_view"
+                />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/fragment_status_create_order_from_to_view_progress_bar_2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+
+                app:indicatorName="BallSpinFadeLoaderIndicator"
+
+                style="@style/AVLoadingIndicatorView"
+                app:indicatorColor="@color/hintsColor"
+                android:visibility="visible"
+
+
+                app:layout_constraintCenterX_toCenterX="@id/fragment_status_create_order_from_to_view_search_to_address"
+                app:layout_constraintTop_toTopOf="@id/fragment_status_create_order_from_to_view"
+                app:layout_constraintBottom_toBottomOf="@id/fragment_status_create_order_from_to_view_separator_center"
                 />
 
             <Button

@@ -294,16 +294,16 @@
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/fragment_status_order_payment_price_progress_bar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:visibility="invisible"
         android:elevation="20dp"
 
-        app:indicatorName="BallClipRotateIndicator"
+        app:indicatorName="BallSpinFadeLoaderIndicator"
 
         style="@style/AVLoadingIndicatorView"
         app:indicatorColor="@color/defaultBlack"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="80dp"
 
 
         app:layout_constraintCenterX_toCenterX="@id/fragment_status_order_payment_price_back"
@@ -320,6 +320,7 @@
         android:textColor="@color/registrationColorHeader2"
         android:textSize="14sp"
         android:fontFamily="sans-serif"
+        android:layout_marginTop="32dp"
 
         app:layout_constraintCenterX_toCenterX="@id/fragment_status_order_payment_price_progress_bar"
         app:layout_constraintTop_toBottomOf="@id/fragment_status_order_payment_price_progress_bar"
@@ -351,23 +352,45 @@
         android:id="@+id/fragment_status_order_payment_loading_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/defaultBlack"
+        android:background="@color/defaultBackgroundGray"
         android:elevation="10dp"
         android:alpha="0.7"
         android:clickable="true"
         android:visibility="invisible"
         >
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
 
-            app:indicatorColor="@color/defaultWhite"
-            app:indicatorName="BallGridBeatIndicator"
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/fragment_status_order_payment_loading_progress_indicator"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            app:indicatorColor="@color/defaultBlack"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+
+            android:layout_marginBottom="70dp"
 
             app:layout_constraintCenterX_toCenterX="parent"
             app:layout_constraintCenterY_toCenterY="parent"
             />
+
+        <TextView
+            android:id="@+id/fragment_status_order_payment_loading_progress_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+            android:textAlignment="center"
+            android:gravity="center"
+
+            android:layout_marginTop="32dp"
+
+
+            app:layout_constraintCenterX_toCenterX="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_status_order_payment_loading_progress_indicator"
+        />
 
     </android.support.constraint.ConstraintLayout>
 

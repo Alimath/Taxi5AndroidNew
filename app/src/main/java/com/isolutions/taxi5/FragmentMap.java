@@ -259,9 +259,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         mMap.setOnCameraMoveStartedListener(this);
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-
-
-
+        
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         // Creating a criteria object to retrieve provider

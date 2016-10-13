@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.isolutions.taxi5.API.ApiFactory;
 import com.isolutions.taxi5.API.Taxi5SDK;
@@ -73,6 +74,9 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
 //    @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar)
 //    ProgressBar progressBar;
+
+    @BindView(R.id.fragment_status_create_order_from_to_view_search_to_address_icon)
+    ImageView fromButtonIcon;
 
 
     @BindView(R.id.fragment_status_create_order_from_to_view_progress_bar_2)
@@ -161,9 +165,6 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     }
 
     public void setFromLocation(LocationData fromLoc) {
-
-
-
         if(fromLoc != null) {
             if(!TextUtils.isEmpty(fromLoc.locationStringDescription)) {
                 Log.d("taxi5", "location string description: " + fromLoc.locationStringDescription);
@@ -211,11 +212,13 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
     public void setFromText(String fromDescription) {
         if(isVisible()) {
             if(!TextUtils.isEmpty(fromDescription)) {
+                this.fromText.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
                 this.fromText.setText(fromDescription);
                 HideProgressBar();
             }
             else {
-                this.fromText.setText("");
+                this.fromText.setTextColor(AppData.getInstance().getColor(R.color.hintsColor));
+                this.fromText.setText(getString(R.string.geocoding_in_process_text));
                 ShowProgressBar();
             }
         }
@@ -394,6 +397,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     private void ShowProgressBar() {
         if(isVisible()) {
+            fromButtonIcon.setVisibility(View.INVISIBLE);
             progressBar2.setVisibility(View.VISIBLE);
 //            progressBar.setVisibility(View.VISIBLE);
             SetCreateOrderButtonAvailableState(false);
@@ -402,6 +406,7 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     private void HideProgressBar() {
         if(isVisible()) {
+            fromButtonIcon.setVisibility(View.VISIBLE);
             progressBar2.setVisibility(View.INVISIBLE);
 //            progressBar.setVisibility(View.INVISIBLE);
             SetCreateOrderButtonAvailableState(true);
@@ -434,6 +439,8 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     @OnClick(R.id.fragment_status_create_order_my_location_button)
     public void OnMyLocationClick() {
+//        LatLng loc = new LatLng(AppData.getInstance().mainActivity.mapFragment.mMap.getMyLocation().getLatitude(), AppData.getInstance().mainActivity.mapFragment.mMap.getMyLocation().getLongitude());
+//        FragmentMap.getMapFragment().ScrollMaptoPos(loc, false);
         FragmentMap.getMapFragment().ScrollMaptoPos(AppData.getInstance().nullPoint, false);
     }
 

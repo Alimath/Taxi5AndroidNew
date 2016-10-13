@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,6 +64,9 @@ import retrofit2.Response;
 public class FragmentStatusPayment extends StatusesBaseFragment
 implements AdapterView.OnItemClickListener{
 
+    @BindView(R.id.fragment_status_order_payment_loading_progress_text_view)
+    TextView paymentHelpTextView;
+
     @BindView(R.id.fragment_status_order_payment_price_progress_bar)
     AVLoadingIndicatorView pendingPriceProgressBar;
 
@@ -95,6 +99,9 @@ implements AdapterView.OnItemClickListener{
 
     @BindView(R.id.fragment_status_order_payment_loading_progress_bar)
     ConstraintLayout paymentInProcessIndicatorView;
+
+    @BindView(R.id.fragment_status_order_payment_price_separator)
+    View currencysSeparator;
 
     public boolean isCardsShowing = false;
     AdapterPaymentCards adapterCards;
@@ -589,8 +596,7 @@ implements AdapterView.OnItemClickListener{
                                 }
                             }
                         }
-                        pendingPriceProgressBar.setVisibility(View.INVISIBLE);
-                        pendingPriceProgressBarText.setVisibility(View.INVISIBLE);
+                        HidePendingAmountPlaceHolder();
 
                         if(bynAmount != null || byrAmount != null) {
                             if(bynAmount == null) {
@@ -627,27 +633,18 @@ implements AdapterView.OnItemClickListener{
                             priceOldTextView.setText(byrAmountString);
                         }
                         else {
-                            pendingPriceProgressBar.setVisibility(View.VISIBLE);
-                            pendingPriceProgressBarText.setVisibility(View.VISIBLE);
-                            priceNewTextView.setText("");
-                            priceOldTextView.setText("");
+                            ShowPendingAmountPlaceHolder();
                         }
 
                     }
                 }
                 else {
-                    pendingPriceProgressBar.setVisibility(View.VISIBLE);
-                    pendingPriceProgressBarText.setVisibility(View.VISIBLE);
-                    priceNewTextView.setText("");
-                    priceOldTextView.setText("");
+                    ShowPendingAmountPlaceHolder();
 
                 }
             }
             else {
-                pendingPriceProgressBar.setVisibility(View.VISIBLE);
-                pendingPriceProgressBarText.setVisibility(View.VISIBLE);
-                priceNewTextView.setText("");
-                priceOldTextView.setText("");
+                ShowPendingAmountPlaceHolder();
             }
         }
         else {
@@ -662,15 +659,104 @@ implements AdapterView.OnItemClickListener{
 
     void ShowLoadingIndicator() {
         paymentInProcessIndicatorView.setVisibility(View.VISIBLE);
+        animatePendingPaymentTextChange();
     }
 
     void HideLoadingIndicator() {
         paymentInProcessIndicatorView.setVisibility(View.INVISIBLE);
+        if(helpTextChangeTimer != null) {
+            helpTextChangeTimer.cancel();
+        }
+    }
+
+    CountDownTimer helpTextChangeTimer;
+    private int helpTextDotsCount = 1;
+    private void animatePendingPaymentTextChange() {
+        if(helpTextChangeTimer != null) {
+            helpTextChangeTimer.cancel();
+        }
+        helpTextChangeTimer = new CountDownTimer(10000000, 700) {
+
+            @Override
+            public void onTick(long l) {
+                helpTextDotsCount += 1;
+                if(helpTextDotsCount > 3) {
+                    helpTextDotsCount = 1;
+                }
+
+                String dots = "";
+                for(int i = 0; i < helpTextDotsCount; i++) {
+                    dots += ".";
+                }
+                String helpString = getString(R.string.status_payment_wait_pay_help_text) + dots;
+                paymentHelpTextView.setText(helpString);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        helpTextChangeTimer.start();
     }
 
     void HideWebView() {
         if(dialog != null) {
             dialog.dismiss();
+        }
+    }
+
+    private void animateWaitAmountTextChange() {
+        if(helpTextChangeTimer != null) {
+            helpTextChangeTimer.cancel();
+        }
+        helpTextChangeTimer = new CountDownTimer(10000000, 700) {
+
+            @Override
+            public void onTick(long l) {
+                helpTextDotsCount += 1;
+                if(helpTextDotsCount > 3) {
+                    helpTextDotsCount = 1;
+                }
+
+                String dots = "";
+                for(int i = 0; i < helpTextDotsCount; i++) {
+                    dots += ".";
+                }
+                String helpString = getString(R.string.payments_wait_for_amount) + dots;
+                pendingPriceProgressBarText.setText(helpString);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        helpTextChangeTimer.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        if(helpTextChangeTimer != null) {
+            helpTextChangeTimer.cancel();
+        }
+        super.onDestroy();
+    }
+
+
+    void ShowPendingAmountPlaceHolder() {
+        pendingPriceProgressBar.setVisibility(View.VISIBLE);
+        pendingPriceProgressBarText.setVisibility(View.VISIBLE);
+        currencysSeparator.setVisibility(View.INVISIBLE);
+        priceNewTextView.setText("");
+        priceOldTextView.setText("");
+        animateWaitAmountTextChange();
+    }
+
+    void HidePendingAmountPlaceHolder() {
+        pendingPriceProgressBar.setVisibility(View.INVISIBLE);
+        pendingPriceProgressBarText.setVisibility(View.INVISIBLE);
+        currencysSeparator.setVisibility(View.VISIBLE);
+        if(helpTextChangeTimer != null) {
+            helpTextChangeTimer.cancel();
         }
     }
 }

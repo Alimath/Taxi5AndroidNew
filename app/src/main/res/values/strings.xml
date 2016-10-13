@@ -82,6 +82,7 @@
     <string name="status_payment_wait_to_no_place">Не указано</string>
     <string name="status_payment_wait_distance">Расстояние</string>
     <string name="status_payment_wait_pay_with_card_btn">ОПЛАТИТЬ КАРТОЙ</string>
+    <string name="status_payment_wait_pay_help_text">Обработка оплаты</string>
 
     <string name="km_short">км</string>
     <string name="old_currency">BYR</string>
@@ -274,6 +275,8 @@
     <string name="cancel">Отменить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+
+    <string name="geocoding_in_process_text">Определяем...</string>
 
     <string name="assist_payment_comment">За услуги такси.</string>
     <string name="payments_3d_secure_dialog_title">Ваша карта поддерживает технологию 3D-Secure?</string>

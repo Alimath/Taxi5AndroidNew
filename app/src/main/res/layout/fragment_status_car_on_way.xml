@@ -255,7 +255,7 @@
             android:layout_height="35dp"
 
             android:elevation="30dp"
-            app:indicatorName="BallPulse"
+            app:indicatorName="BallPulseIndicator"
             style="@style/AVLoadingIndicatorView"
             app:indicatorColor="@color/whiteColor"
 

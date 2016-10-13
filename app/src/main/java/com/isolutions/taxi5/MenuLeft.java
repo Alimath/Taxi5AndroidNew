@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -165,7 +166,7 @@ public class MenuLeft extends Fragment {
     public void onProfileButtonClick() {
         if(AppData.getInstance().mainActivity != null) {
             AppData.getInstance().mainActivity.OpenProfileMenu();
-            HighlightMenuItem(OpenFragmentTypes.Nothing);
+            HighlightMenuItem(OpenFragmentTypes.Profile);
         }
     }
 
@@ -200,7 +201,9 @@ public class MenuLeft extends Fragment {
         paymentsTextView.setTextColor(colorBlack);
         plansTextView.setTextColor(colorBlack);
         aboutUsTextView.setTextColor(colorBlack);
+        profileNameTextView.setTextColor(colorBlack);
 
+        avatarImage.setColorFilter(clearColor);
         mapIcon.setColorFilter(clearColor);
         myPlacesIcon.setColorFilter(clearColor);
         paymentsIcon.setColorFilter(clearColor);
@@ -232,12 +235,15 @@ public class MenuLeft extends Fragment {
                 aboutUsTextView.setTextColor(colorBlue);
                 aboutIcon.setColorFilter(colorBlue);
                 break;
+            case Profile:
+                profileNameTextView.setTextColor(colorBlue);
+                break;
             case Nothing:
                 break;
         }
     }
 
     public enum OpenFragmentTypes {
-        Map, MyPlaces, Payments, Plans, AboutUs, Nothing
+        Map, MyPlaces, Payments, Plans, AboutUs, Profile, Nothing
     }
 }
