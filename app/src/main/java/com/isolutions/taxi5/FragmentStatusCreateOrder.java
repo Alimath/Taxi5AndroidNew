@@ -197,12 +197,16 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
 
     public void setToLocation(LocationData toLoc) {
         if(toLoc != null) {
-            toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.clear_edit_text_icon));
+            if(toSearchIcon != null) {
+                toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.clear_edit_text_icon));
+            }
             toLocation = toLoc;
             setToText(toLoc.getStringDescription());
         }
         else {
-            toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.status_icon_find));
+            if(toSearchIcon != null) {
+                toSearchIcon.setImageDrawable(AppData.getInstance().getMyDrawable(R.drawable.status_icon_find));
+            }
             toLocation = null;
             setToText("");
         }

@@ -8,8 +8,8 @@ android {
         applicationId "com.isolutions.taxi5"
         minSdkVersion 16
         targetSdkVersion 16
-        versionCode 210001
-        versionName "2.1.001"
+        versionCode 210002
+        versionName "2.1.002"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         useLibrary 'org.apache.http.legacy'
     }

@@ -29,10 +29,18 @@ public class AdapterMyPlaces extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<LocationData> mDataSource;
 
+    public boolean isFavoriteAdapter;
+
     public AdapterMyPlaces(Context context, ArrayList<LocationData> items) {
         mContext = context;
-        mDataSource = items;
 
+        mDataSource = new ArrayList<LocationData>();
+        for (LocationData item:items) {
+            if(item.favoriteIsFavorite == isFavoriteAdapter) {
+                mDataSource.add(item);
+            }
+        }
+//        mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -71,7 +79,7 @@ public class AdapterMyPlaces extends BaseAdapter {
 
                 @Override
                 public void onPageSelected(int position) {
-                    Log.d("taxi5", "On Page Selected: " + position);
+//                    Log.d("taxi5", "On Page Selected: " + position);
                 }
 
                 @Override
@@ -86,12 +94,46 @@ public class AdapterMyPlaces extends BaseAdapter {
             holder.subTitleTextView= (TextView) convertView.findViewById(R.id.row_my_places_subtitle_text_view);
             holder.viewPager = viewPager;
             holder.selectPlaceButton = (Button) convertView.findViewById(R.id.row_my_places_select_place_button);
+            holder.pagerAdapter = pagerAdapterMyPlaces;
+            holder.pagerAdapter.isFavorite = isFavoriteAdapter;
 
             holder.viewPager.setCurrentItem(0);
             convertView.setTag(holder);
+
+            if(isFavoriteAdapter) {
+                holder.pagerAdapter.SetOnLeftButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("taxi5", "edit place name click");
+                    }
+                });
+                holder.pagerAdapter.SetOnRightButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("taxi5", "remove from favofite");
+                    }
+                });
+            }
+            else {
+                holder.pagerAdapter.SetOnLeftButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("taxi5", "add to favorite");
+                    }
+                });
+                holder.pagerAdapter.SetOnRightButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d("taxi5", "delete place");
+                    }
+                });
+            }
         }
         else {
             holder = (ViewHolder) convertView.getTag();
+            if(holder == null) {
+
+            }
 
             holder.viewPager.setCurrentItem(0);
         }
@@ -101,7 +143,8 @@ public class AdapterMyPlaces extends BaseAdapter {
         return convertView;
     }
 
-    public static class ViewHolder  {
+    public static class ViewHolder {
+        PagerAdapterMyPlaces pagerAdapter;
         TextView titleTextView;
         TextView subTitleTextView;
         ViewPager viewPager;
@@ -145,7 +188,15 @@ public class AdapterMyPlaces extends BaseAdapter {
     }
 
     public void updateResource(ArrayList<LocationData> addressesData) {
-        this.mDataSource = addressesData;
+//        this.mDataSource = addressesData;
+        mDataSource = new ArrayList<LocationData>();
+        if(addressesData != null) {
+            for (LocationData item : addressesData) {
+                if (item.favoriteIsFavorite == isFavoriteAdapter) {
+                    mDataSource.add(item);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 }

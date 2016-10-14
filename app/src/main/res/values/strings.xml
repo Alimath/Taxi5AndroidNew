@@ -271,6 +271,9 @@
 
     <string name="auth_payment_comment">Авторизационный платеж.</string>
 
+    <string name="adapter_my_places_header_favorite">ИЗБРАННЫЕ</string>
+    <string name="adapter_my_places_header_my_places">ПОСЕЩЕННЫЕ МЕСТА</string>
+
 
     <string name="cancel">Отменить</string>
     <string name="yes">Да</string>
