@@ -36,4 +36,33 @@
 
     </ListView>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_my_places_loading_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/defaultBackgroundGray"
+        android:elevation="10dp"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:visibility="invisible"
+        >
+
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/fragment_my_places_loading_progress_indicator"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            app:indicatorColor="@color/defaultBlack"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+
+            android:layout_marginBottom="70dp"
+
+            app:layout_constraintCenterX_toCenterX="parent"
+            app:layout_constraintCenterY_toCenterY="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

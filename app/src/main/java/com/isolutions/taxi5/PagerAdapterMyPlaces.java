@@ -102,8 +102,7 @@ public class PagerAdapterMyPlaces extends PagerAdapter {
 
     @Override
     public int getCount() {
-        //TODO Сделать редактирования моих мест.
-        return 1;
+        return 2;
     }
 
     @Override

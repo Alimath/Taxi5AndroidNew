@@ -2,7 +2,9 @@ package com.isolutions.taxi5.API;
 
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ActiveHistoryOrdersResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.EstimatedPriceAndRouteResponceData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.LocationsListResponseData;
+import com.isolutions.taxi5.API.Taxi5SDKEntity.MyPlacesData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.MyPlacesResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderResponseActionData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.OrderData;
@@ -15,6 +17,7 @@ import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -185,5 +188,20 @@ public interface Taxi5SDK {
             @Header("X-Authorization") String token,
             @Field("provider") String provider,
             @Field("payment_identity") String paymentIdentity
+    );
+
+    @FormUrlEncoded
+    @POST("http://api.taxi5.by/m/v2/customer/me/favorite-places/{placeID}")
+    Call<Void> UpdateFavoritePlace(
+            @Header("X-Authorization") String token,
+            @Path("placeID") Integer placeID,
+            @Field("alias") String alias,
+            @Field("is_favorite") boolean isFavorite
+    );
+
+    @DELETE("http://api.taxi5.by/m/v2/customer/me/favorite-places/{placeID}")
+    Call<Void> DeleteFavoritePlace(
+            @Header("X-Authorization") String token,
+            @Path("placeID") Integer placeID
     );
 }

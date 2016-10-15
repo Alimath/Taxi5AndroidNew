@@ -3,6 +3,7 @@ package com.isolutions.taxi5;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,9 @@ public class FragmentMyPlaces extends Fragment {
     @BindView(R.id.fragment_my_places_list_view)
     ListView listView;
 
+    @BindView(R.id.fragment_my_places_loading_progress_bar)
+    ConstraintLayout loadingProgressBar;
+
     Call<MyPlacesResponseData> myPlacesCall;
 
     @Override
@@ -58,12 +62,12 @@ public class FragmentMyPlaces extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        if(adapterMyPlaces != null) {
-//            adapterMyPlaces.updateResource(null);
-//        }
-//        if(adapterFavorite != null) {
-//            adapterFavorite.updateResource(null);
-//        }
+        if(adapterMyPlaces != null) {
+            adapterMyPlaces.updateResource(null);
+        }
+        if(adapterFavorite != null) {
+            adapterFavorite.updateResource(null);
+        }
         LoadMyPlaces();
     }
 
@@ -81,9 +85,11 @@ public class FragmentMyPlaces extends Fragment {
         }
 
         adapterFavorite = new AdapterMyPlaces(AppData.getInstance().getAppContext(), mData);
+        adapterFavorite.parentFragment = this;
         adapterFavorite.isFavoriteAdapter = true;
 
         adapterMyPlaces = new AdapterMyPlaces(AppData.getInstance().getAppContext(), mData);
+        adapterMyPlaces.parentFragment = this;
         adapterMyPlaces.isFavoriteAdapter = false;
 
         mergeAdapter = new MergeAdapter();
@@ -125,11 +131,12 @@ public class FragmentMyPlaces extends Fragment {
 
     void LoadMyPlaces() {
         if(adapterFavorite != null) {
-            adapterFavorite.updateResource(null);
+//            adapterFavorite.updateResource(null);
         }
         if(adapterMyPlaces != null) {
-            adapterMyPlaces.updateResource(null);
+//            adapterMyPlaces.updateResource(null);
         }
+        ShowLoadingStub();
 
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         if(taxi5SDK == null) {
@@ -144,6 +151,7 @@ public class FragmentMyPlaces extends Fragment {
         myPlacesCall.enqueue(new Callback<MyPlacesResponseData>() {
             @Override
             public void onResponse(Call<MyPlacesResponseData> call, Response<MyPlacesResponseData> response) {
+                HideLoadingStub();
                 if(response.isSuccessful()) {
                     if(response.body().getResponseData() != null && response.body().getResponseData().getPlacesData() != null) {
                         mData = response.body().getResponseData().getPlacesData();
@@ -163,6 +171,7 @@ public class FragmentMyPlaces extends Fragment {
 
             @Override
             public void onFailure(Call<MyPlacesResponseData> call, Throwable t) {
+                HideLoadingStub();
                 Toast.makeText(AppData.getInstance().mainActivity, "Ошибка при загрузке списка мест", Toast.LENGTH_SHORT).show();
                 Log.d("taxi5", "load myPlaces failure: " + t.getLocalizedMessage());
             }
@@ -175,5 +184,16 @@ public class FragmentMyPlaces extends Fragment {
         titleView.setText(headerText);
 
         return v;
+    }
+
+    public void ShowLoadingStub() {
+        if(loadingProgressBar != null) {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+    public void HideLoadingStub() {
+        if(loadingProgressBar != null) {
+            loadingProgressBar.setVisibility(View.INVISIBLE);
+        }
     }
 }

@@ -38,14 +38,19 @@
                 app:layout_constraintRight_toRightOf="@id/row_my_places_main"
                 />
 
-            <TextView
+            <com.isolutions.taxi5.CustomEditText
+                android:clickable="false"
                 android:id="@+id/row_my_places_subtitle_text_view"
 
                 android:textSize="14sp"
                 android:textColor="@color/approximatePriceTextColor"
                 android:fontFamily="sans-serif"
 
+                android:minLines="1"
+                android:maxLines="1"
                 android:lines="1"
+                android:paddingLeft="0dp"
+                android:paddingStart="0dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="22dp"

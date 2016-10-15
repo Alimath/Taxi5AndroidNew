@@ -273,6 +273,7 @@
 
     <string name="adapter_my_places_header_favorite">ИЗБРАННЫЕ</string>
     <string name="adapter_my_places_header_my_places">ПОСЕЩЕННЫЕ МЕСТА</string>
+    <string name="adapter_my_places_place_has_no_name">без названия</string>
 
 
     <string name="cancel">Отменить</string>

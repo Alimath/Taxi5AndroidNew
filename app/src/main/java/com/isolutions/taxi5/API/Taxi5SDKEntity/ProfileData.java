@@ -62,7 +62,7 @@ public class ProfileData {
     }
 
     public String getAssistCustomerNumber() {
-        return "333"+msid;
+        return msid;
     }
 
     public void setMsid(String msid) {
