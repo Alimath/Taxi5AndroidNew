@@ -328,6 +328,7 @@
         android:id="@+id/fragment_screen_profile_upload_btn_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
 
         app:indicatorName="BallClipRotateIndicator"
 
@@ -344,6 +345,7 @@
         android:id="@+id/fragment_screen_profile_image_croper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/whiteColor"
 
         android:visibility="invisible"
 
@@ -375,6 +377,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/fragment_screen_profile_fade"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor"
+        android:alpha="0.7"
+        android:visibility="invisible"
+        >
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/fragment_screen_profile_loading_progress_indicator"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            app:indicatorColor="@color/defaultBlack"
+            app:indicatorName="BallSpinFadeLoaderIndicator"
+
+            android:layout_marginBottom="70dp"
+
+            app:layout_constraintCenterX_toCenterX="parent"
+            app:layout_constraintCenterY_toCenterY="parent"
+            />
+        <TextView
+            android:id="@+id/fragment_screen_profile_loading_progress_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="16sp"
+            android:textColor="@color/defaultBlack"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/profile_screen_fade_hint_text"
+
+            android:layout_marginTop="32dp"
+
+
+            app:layout_constraintCenterX_toCenterX="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_screen_profile_loading_progress_indicator"
+            />
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

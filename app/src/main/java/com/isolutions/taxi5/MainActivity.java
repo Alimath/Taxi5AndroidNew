@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -180,10 +181,25 @@ public class MainActivity extends AppCompatActivity
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION).setDeniedMessage(R.string.permission_location_denied_message).check();
         AppData.getInstance().mainActivity = this;
         AppData.getInstance().currentActivity = this;
+        Log.d("taxi5", "open clear map");
         OpenClearMap();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.setScrimColor(getResources().getColor(android.R.color.transparent));
+
+        // TODO: НАЙТИ ПРИЧИНЫ И ИСПРАВИТЬ НЕОТОБРАЖЕНИЕ КАРТЫ СРАЗУ ПОСЛЕ ПЕРЕЗАХОДА (СМЕНЕ ПОЛЬЗОВАТЕЛЯ)
+        CountDownTimer timer = new CountDownTimer(1000, 1000) {
+            @Override
+            public void onTick(long l) {
+            }
+
+            @Override
+            public void onFinish() {
+                if(!mapFragment.isAdded() ) {
+                    OpenClearMap();
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -209,6 +225,10 @@ public class MainActivity extends AppCompatActivity
         }
         else if(fragmentPaymentsCustomerInfo != null && fragmentPaymentsCustomerInfo.isVisible()) {
             OpenPayments();
+        }
+        else if(fragmentScreenProfile != null && fragmentScreenProfile.croper != null
+                && fragmentScreenProfile.croper.getVisibility() == View.VISIBLE) {
+            fragmentScreenProfile.CancelImageCroping();
         }
         else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -380,7 +400,7 @@ public class MainActivity extends AppCompatActivity
 
     public void OpenProfileMenu() {
 //        Log.d("taxi5", "onProfileButtonClick");
-
+//
         ChangeFragment(fragmentScreenProfile);
 
         if (fragmentScreenProfile.isVisible()) {
@@ -453,6 +473,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
+        OpenClearMap();
+        isStarted = true;
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        OpenClearMap();
         isStarted = true;
     }
 

@@ -78,4 +78,24 @@ public class AssistCustomerInfo {
     public static void ClearCustomerData() {
         Paper.book().delete("taxi5AssistCustomerData");
     }
+
+    public void SaveCustomerDataForUserID(int userID) {
+        Paper.book().write("taxi5AssistCustomerData"+userID, this);
+    }
+    public void LoadCustomerDataForUserID(int userID) {
+        AssistCustomerInfo tData = (AssistCustomerInfo) Paper.book().read("taxi5AssistCustomerData"+userID);
+
+        if(tData != null) {
+            this.customerEmail = tData.customerEmail;
+            this.customerName = tData.customerName;
+            this.customerFamilyName = tData.customerFamilyName;
+        }
+        else {
+            this.customerEmail = null;
+            this.customerName = null;
+            this.customerFamilyName = null;
+        }
+
+        saveCustomerData();
+    }
 }

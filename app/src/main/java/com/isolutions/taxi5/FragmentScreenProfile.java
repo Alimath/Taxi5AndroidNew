@@ -14,11 +14,13 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.system.ErrnoException;
 import android.telephony.PhoneNumberUtils;
 import android.text.Html;
@@ -102,6 +104,12 @@ public class FragmentScreenProfile extends Fragment {
     @BindView(R.id.fragment_screen_profile_logout_text)
     TextView logoutText;
 
+    @BindView(R.id.fragment_screen_profile_fade)
+    ConstraintLayout loadingFade;
+
+    @BindView(R.id.fragment_screen_profile_loading_progress_text_view)
+    TextView loadingFadeTextView;
+
     ProfileData profileData;
 
     Bitmap newAvatarImage;
@@ -154,10 +162,10 @@ public class FragmentScreenProfile extends Fragment {
         phoneTextView.clearFocus();
 
         if(isUploading) {
-            ShowProgressBar();
+            ShowLoadingFade();
         }
         else {
-            HideProgressBar();
+            HideLoadingFade();
         }
 
 
@@ -216,10 +224,10 @@ public class FragmentScreenProfile extends Fragment {
                     Picasso.with(getActivity().getApplicationContext()).load(ProfileData.getInstance().getAvatarURL()).into(avatarImage);
                 }
             }
-            HideProgressBar();
+            HideLoadingFade();
         }
         else {
-            ShowProgressBar();
+            ShowLoadingFade();
         }
     }
 
@@ -234,7 +242,7 @@ public class FragmentScreenProfile extends Fragment {
         }
         if(!isUploading) {
             isUploading = true;
-            ShowProgressBar();
+            ShowLoadingFade();
 
             final ProfileData profileData = ProfileData.getInstance();
 
@@ -255,6 +263,7 @@ public class FragmentScreenProfile extends Fragment {
             call.enqueue(new Callback<OrderResponseActionData>() {
                 @Override
                 public void onResponse(Call<OrderResponseActionData> call, Response<OrderResponseActionData> response) {
+                    HideLoadingFade();
                     if (response.isSuccessful()) {
                         profileData.saveProfileData();
                         Log.d("taxi5", "ok to load profile");
@@ -273,9 +282,9 @@ public class FragmentScreenProfile extends Fragment {
 
 
                     isUploading = false;
-                    if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
-                        AppData.getInstance().mainActivity.fragmentScreenProfile.RefreshView();
-                    }
+//                    if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
+//                        AppData.getInstance().mainActivity.fragmentScreenProfile.RefreshView();
+//                    }
 //                    if(isVisible() && isAdded()) {
 //                        AppData.getInstance().mainActivity.fragmentScreenProfile.HideProgressBar();
 //                        AppData.getInstance().mainActivity.fragmentScreenProfile.refreshProfile();
@@ -293,6 +302,7 @@ public class FragmentScreenProfile extends Fragment {
 
                 @Override
                 public void onFailure(Call<OrderResponseActionData> call, Throwable t) {
+                    HideLoadingFade();
                     isUploading = false;
                     newAvatarImage = null;
                     if(AppData.getInstance().mainActivity != null && AppData.getInstance().mainActivity.fragmentScreenProfile != null) {
@@ -313,17 +323,17 @@ public class FragmentScreenProfile extends Fragment {
 //        AppData.getInstance().leftDrawer.RefreshProfileData();
 //    }
 
-    private void ShowProgressBar() {
-        uploadButton.setClickable(false);
-        uploadProgressBar.setVisibility(View.VISIBLE);
-    }
+//    private void ShowProgressBar() {
+//        uploadButton.setClickable(false);
+//        uploadProgressBar.setVisibility(View.VISIBLE);
+//    }
 
-    private void HideProgressBar() {
-        if(isVisible()) {
-            uploadButton.setClickable(true);
-            uploadProgressBar.setVisibility(View.INVISIBLE);
-        }
-    }
+//    private void HideProgressBar() {
+//        if(isVisible()) {
+//            uploadButton.setClickable(true);
+//            uploadProgressBar.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
     @OnClick(R.id.fragment_screen_profile_choose_avatar_btn)
     public void onChooseAvatarClick() {
@@ -341,6 +351,13 @@ public class FragmentScreenProfile extends Fragment {
     public void onPickImageClick() {
         newAvatarImage = Bitmap.createScaledBitmap(croper.getCroppedImage(), 300, 300, false);
         avatarImage.setImageBitmap(newAvatarImage);
+        croper.setVisibility(View.INVISIBLE);
+        croperButton.setVisibility(View.INVISIBLE);
+
+        croper.clearImage();
+    }
+
+    public void CancelImageCroping() {
         croper.setVisibility(View.INVISIBLE);
         croperButton.setVisibility(View.INVISIBLE);
 
@@ -521,8 +538,13 @@ public class FragmentScreenProfile extends Fragment {
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                TokenData.ClearTokenData();
+                AssistCardsHolder.SaveCardsForUserID(ProfileData.getInstance().getId());
                 AssistCardsHolder.RemoveAllCards();
+
+                TokenData.ClearTokenData();
+
+
+                AssistCustomerInfo.getInstance().SaveCustomerDataForUserID(ProfileData.getInstance().getId());
                 AssistCustomerInfo.ClearCustomerData();
 
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -541,5 +563,32 @@ public class FragmentScreenProfile extends Fragment {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+
+    public void ShowLoadingFade() {
+        loadingFade.setVisibility(View.VISIBLE);
+        if(AppData.getInstance().mainActivity != null) {
+            DrawerLayout drawer = (DrawerLayout) AppData.getInstance().mainActivity.findViewById(R.id.drawer_layout);
+            if(drawer != null) {
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+        }
+        if(AppData.getInstance().toolbar != null) {
+            AppData.getInstance().toolbar.ShowLoadingFade();
+        }
+    }
+
+    public void HideLoadingFade() {
+        loadingFade.setVisibility(View.INVISIBLE);
+        if(AppData.getInstance().mainActivity != null) {
+            DrawerLayout drawer = (DrawerLayout) AppData.getInstance().mainActivity.findViewById(R.id.drawer_layout);
+            if(drawer != null) {
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+        }
+        if(AppData.getInstance().toolbar != null) {
+            AppData.getInstance().toolbar.HideLoadingFade();
+        }
     }
 }

@@ -39,16 +39,20 @@
                 />
 
             <com.isolutions.taxi5.CustomEditText
-                android:clickable="false"
                 android:id="@+id/row_my_places_subtitle_text_view"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
 
                 android:textSize="14sp"
                 android:textColor="@color/approximatePriceTextColor"
                 android:fontFamily="sans-serif"
+                android:background="@color/clearColor"
 
+                android:lines="1"
+                android:singleLine="true"
                 android:minLines="1"
                 android:maxLines="1"
-                android:lines="1"
                 android:paddingLeft="0dp"
                 android:paddingStart="0dp"
                 android:layout_marginLeft="16dp"

@@ -135,4 +135,20 @@ public class AssistCardsHolder {
         Paper.book().delete("taxi5AndroidCardsDataOneClick");
         Paper.book().delete("taxi5AndroidCardsData");
     }
+
+    public static void SaveCardsForUserID(int userID) {
+        if(GetCards() != null) {
+            Paper.book().write("storedCards" + userID, GetCards());
+        }
+        Paper.book().write("storedCard_oneClick" + userID, GetOneClickState());
+    }
+
+    public static void LoadCardsForUserID(int userID) {
+        if(Paper.book().read("storedCards"+userID) != null) {
+            Paper.book().write("taxi5AndroidCardsData", Paper.book().read("storedCards"+userID));
+        }
+        if(Paper.book().read("storedCard_oneClick" + userID) != null) {
+            Paper.book().write("taxi5AndroidCardsDataOneClick", Paper.book().read("storedCard_oneClick" + userID));
+        }
+    }
 }

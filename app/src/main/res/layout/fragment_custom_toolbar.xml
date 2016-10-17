@@ -162,7 +162,7 @@
             android:fontFamily="sans-serif"
             android:textColor="@color/defaultBlack"
 
-            android:hint="Введите текст для поиска"
+            android:hint="@string/address_search_bar_hint"
             android:textColorHint="@color/hintsColor"
 
             app:layout_constraintLeft_toLeftOf="@id/toolbar_main_search_bar"
@@ -182,6 +182,17 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar_main"
         app:layout_constraintLeft_toLeftOf="@id/toolbar_main"
         app:layout_constraintRight_toRightOf="@id/toolbar_main"
+        />
+
+    <View
+        android:id="@+id/fragment_toolbar_fade"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor"
+        android:alpha="0.7"
+        android:visibility="invisible"
+        android:elevation="30dp"
         />
 
 </android.support.constraint.ConstraintLayout>

@@ -147,6 +147,9 @@ public class MenuRight extends Fragment {
 
 
     public void startUpdateActiveOrdersTimer() {
+        if(AppData.getInstance().currentActivity != AppData.getInstance().mainActivity) {
+            return;
+        }
         if(AppData.getInstance().toolbar != null) {
             if(activeOrders != null) {
                 AppData.getInstance().toolbar.SetOrderCount(activeOrders.size());

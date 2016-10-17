@@ -1,6 +1,9 @@
 package com.isolutions.taxi5;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -17,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,11 +112,18 @@ public class AdapterMyPlaces extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.titleTextView = (TextView) convertView.findViewById(R.id.row_my_places_title_text_view);
-            holder.subTitleTextView= (CustomEditText) convertView.findViewById(R.id.row_my_places_subtitle_text_view);
+            holder.subTitleTextView = (CustomEditText) convertView.findViewById(R.id.row_my_places_subtitle_text_view);
             holder.viewPager = viewPager;
             holder.selectPlaceButton = (Button) convertView.findViewById(R.id.row_my_places_select_place_button);
             holder.pagerAdapter = pagerAdapterMyPlaces;
             holder.pagerAdapter.isFavorite = isFavoriteAdapter;
+
+            holder.subTitleTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    Log.d("taxi5", "focus is change: " + b);
+                }
+            });
 
             holder.viewPager.setCurrentItem(0);
             convertView.setTag(holder);
@@ -124,48 +135,59 @@ public class AdapterMyPlaces extends BaseAdapter {
                     //Edit place
                     @Override
                     public void onClick(View view) {
-                        holderParent.subTitleTextView.requestFocus();
-                        InputMethodManager imm = (InputMethodManager) AppData.getInstance().currentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(holderParent.subTitleTextView, InputMethodManager.SHOW_IMPLICIT);
+                        AlertDialog.Builder builder;
+                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity);
+                        }
+                        else {
+                            builder = new AlertDialog.Builder(AppData.getInstance().mainActivity, android.R.style.Theme_Material_Light_Dialog_Alert);
+                        }
+                        builder.setTitle(AppData.getInstance().mainActivity.getString(R.string.adapter_my_places_edit_place_comment_title));
 
-                        holderParent.viewPager.setCurrentItem(0);
-                        holderParent.selectPlaceButton.setVisibility(View.INVISIBLE);
+                        final EditText input = new EditText(AppData.getInstance().mainActivity);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                        holderParent.subTitleTextView.setClickable(true);
-                        holderParent.subTitleTextView.setEnabled(true);
-
-                        if(TextUtils.isEmpty(holderParent.currentLocationData.favoriteAlias)) {
-                            holderParent.subTitleTextView.setText("");
+                        input.setPadding(AppData.getInstance().dpToPx(16), AppData.getInstance().dpToPx(16), AppData.getInstance().dpToPx(16), 0);
+                        input.setHint(AppData.getInstance().getAppContext().getString(R.string.adapter_my_places_place_has_no_name));
+                        input.setLayoutParams(lp);
+                        if(holderParent.currentLocationData.favoriteAlias != null) {
+                            input.setText(holderParent.currentLocationData.favoriteAlias);
                         }
 
-                        holderParent.subTitleTextView.setSelection(holderParent.subTitleTextView.getText().length());
-
-
-                        holderParent.subTitleTextView.setOnKeyListener(new View.OnKeyListener() {
+                        builder.setView(input);
+                        input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                             @Override
-                            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)
-                                        || (keyEvent.getAction() == KeyEvent.ACTION_UP) && (i == KeyEvent.KEYCODE_BACK)) {
-                                    Log.d("taxi5", "event with codee: END EDITING");
-                                    InputMethodManager imm = (InputMethodManager) AppData.getInstance().currentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-                                    holderParent.selectPlaceButton.setVisibility(View.VISIBLE);
-                                    holderParent.subTitleTextView.setClickable(false);
-                                    holderParent.subTitleTextView.setEnabled(false);
-                                    holderParent.subTitleTextView.clearFocus();
-
-                                    holderParent.currentLocationData.favoriteAlias = holderParent.subTitleTextView.getText().toString();
-
-                                    holderParent.fillData(holderParent.currentLocationData);
-
-                                    UploadPlace(holderParent.currentLocationData);
-
-                                    return true;
+                            public void onFocusChange(View view, boolean b) {
+                                if(b) {
+                                    ((EditText) view).setSelection(((EditText) view).getText().length());
+                                    ((EditText) view).setCursorVisible(true);
                                 }
-                                return false;
                             }
                         });
+                        input.setLines(1);
+                        input.setMaxLines(1);
+                        input.setMinLines(1);
+                        input.setSingleLine(true);
+                        input.setFocusableInTouchMode(true);
+                        input.setFocusable(true);
+                        input.setBackgroundColor(AppData.getInstance().getColor(R.color.clearColor));
+                        builder.setPositiveButton(AppData.getInstance().mainActivity.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                holderParent.currentLocationData.favoriteAlias = input.getText().toString();
+                                holderParent.fillData(holderParent.currentLocationData);
+                                UploadPlace(holderParent.currentLocationData);
+                            }
+                        });
+                        builder.setNegativeButton(AppData.getInstance().mainActivity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        });
+
+                        builder.show();
                     }
                 });
                 holder.pagerAdapter.SetOnRightButtonClickListener(new View.OnClickListener() {

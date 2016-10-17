@@ -55,6 +55,9 @@ public class FragmentCustomToolbar extends Fragment {
     @BindView(R.id.toolbar_title)
     TextView titleTextView;
 
+    @BindView(R.id.fragment_toolbar_fade)
+    View loadingFade;
+
     FragmentStatusCreateOrderFindAddress createOrderFindAddress;
 
     @Override
@@ -161,4 +164,12 @@ public class FragmentCustomToolbar extends Fragment {
 //        params.height = 0;
 //        toolbarMain.setLayoutParams(params);
 //    }
+
+
+    public void ShowLoadingFade() {
+        loadingFade.setVisibility(View.VISIBLE);
+    }
+    public void HideLoadingFade() {
+        loadingFade.setVisibility(View.INVISIBLE);
+    }
 }

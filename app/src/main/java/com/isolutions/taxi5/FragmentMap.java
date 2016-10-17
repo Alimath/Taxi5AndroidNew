@@ -53,7 +53,6 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     private CountDownTimer readOrderStatusTimer;
 
-
     public FragmentStatusCreateOrder statusCreateOrderFragment = new FragmentStatusCreateOrder();
     public FragmentStatusSearchCar statusSearchCarFragment = new FragmentStatusSearchCar();
     public FragmentStatusCarFind statusCarFindFragment = new FragmentStatusCarFind();
@@ -84,6 +83,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d("taxi5", "MAP ATTACHED");
         if(mMap != null) {
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
         }
@@ -226,6 +226,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("taxi5", "CREATE MAP VIEW");
         if(mapView != null) {
             ViewGroup parent = (ViewGroup) mapView.getParent();
         }
@@ -250,6 +251,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("taxi5", "on map ready");
         mMap = googleMap;
 
         mMap.setPadding(0, 0, 0, AppData.getInstance().dpToPx(219));

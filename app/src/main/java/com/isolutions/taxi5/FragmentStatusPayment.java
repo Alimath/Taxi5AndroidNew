@@ -659,6 +659,10 @@ implements AdapterView.OnItemClickListener{
 
     void ShowLoadingIndicator() {
         paymentInProcessIndicatorView.setVisibility(View.VISIBLE);
+        if(AppData.getInstance().mainActivity != null && AppData.getInstance().toolbar != null
+                && AppData.getInstance().toolbar.isVisible()) {
+            AppData.getInstance().toolbar.ShowLoadingFade();
+        }
         animatePendingPaymentTextChange();
     }
 
@@ -666,6 +670,10 @@ implements AdapterView.OnItemClickListener{
         paymentInProcessIndicatorView.setVisibility(View.INVISIBLE);
         if(helpTextChangeTimer != null) {
             helpTextChangeTimer.cancel();
+        }
+        if(AppData.getInstance().mainActivity != null && AppData.getInstance().toolbar != null
+                && AppData.getInstance().toolbar.isVisible()) {
+            AppData.getInstance().toolbar.HideLoadingFade();
         }
     }
 

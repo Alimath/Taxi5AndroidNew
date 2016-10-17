@@ -21,8 +21,10 @@ public class CustomEditText extends EditText {
 
     @Override
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        Log.d("taxi5", "CUSTOM EVENT");
         if (keyCode == KeyEvent.KEYCODE_BACK &&
                 event.getAction() == KeyEvent.ACTION_UP) {
+
             return super.dispatchKeyEvent(event);
 //            Log.d("taxi5", "event back pressed");
             // do your stuff

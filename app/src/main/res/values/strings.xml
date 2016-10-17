@@ -127,6 +127,7 @@
     <string name="profile_screen_email_title">Почта</string>
     <string name="profile_screen_phone_title">Номер</string>
     <string name="profile_screen_upload_data">СОХРАНИТЬ ДАННЫЕ</string>
+    <string name="profile_screen_fade_hint_text">Сохранение данных</string>
     <string name="profile_screen_logout_title"><u>ВЫЙТИ ИЗ СВОЕГО ПРОФИЛЯ</u></string>
     <string name="profile_screen_upload_pick_image_title">Выбрать</string>
 
@@ -274,19 +275,21 @@
     <string name="adapter_my_places_header_favorite">ИЗБРАННЫЕ</string>
     <string name="adapter_my_places_header_my_places">ПОСЕЩЕННЫЕ МЕСТА</string>
     <string name="adapter_my_places_place_has_no_name">без названия</string>
+    <string name="adapter_my_places_edit_place_comment_title">Введите комментарий</string>
 
 
     <string name="cancel">Отменить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
-    <string name="geocoding_in_process_text">Определяем...</string>
+    <string name="geocoding_in_process_text">Определяем</string>
+    <string name="address_search_bar_hint">Введите текст для поиска</string>
 
     <string name="assist_payment_comment">За услуги такси.</string>
     <string name="payments_3d_secure_dialog_title">Ваша карта поддерживает технологию 3D-Secure?</string>
     <string name="payments_3d_secure_dialog_message">3D-Secure - авторизация, при которой от пользователя требуется ввод дополнительного пароля от банка для совершении онлайн операции (чаще всего пароль высылается посредством SMS)</string>
 
     <string name="logout_dialog_title">Вы действительно хотите выйти?</string>
-    <string name="logout_dialog_message">Данное действие вернет вас к окну авторизации в приложение.\nТакже в целях безопасности все привязанные вами карточки оплаты будут удалены.</string>
+    <string name="logout_dialog_message">Данное действие вернет вас к окну авторизации в приложение.</string>
 
 </resources>

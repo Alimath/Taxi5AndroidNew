@@ -23,6 +23,8 @@ import com.isolutions.taxi5.API.Taxi5SDK;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileResponseData;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.TokenData;
+import com.isolutions.taxi5.APIAssist.AssistCardsHolder;
+import com.isolutions.taxi5.APIAssist.Entities.AssistCustomerInfo;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.IOException;
@@ -192,8 +194,8 @@ public class FragmentLoginSMS extends Fragment {
 //            TokenData.getInstance().setAuthorized(true);
 
 
-            LoginActivity loginActivity = (LoginActivity) getActivity();
-            loginActivity.OpenMainActivity();
+//            LoginActivity loginActivity = (LoginActivity) getActivity();
+//            loginActivity.OpenMainActivity();
 
 //            Log.d("taxi5", TokenData.getInstance().getDescription());
 
@@ -207,13 +209,19 @@ public class FragmentLoginSMS extends Fragment {
                 @Override
                 public void onResponse(Call<ProfileResponseData> call, Response<ProfileResponseData> response) {
                     if (response.body().getStatusCode() == 200) {
-                        LoginActivity loginActivity = (LoginActivity) getActivity();
                         response.body().getProfileData().saveProfileData();
 
+                        if(response.body().getProfileData().getId() != null) {
+                            AssistCardsHolder.LoadCardsForUserID(response.body().getProfileData().getId());
+                            AssistCustomerInfo.getInstance().LoadCustomerDataForUserID(response.body().getProfileData().getId());
+                        }
 
+                        LoginActivity loginActivity = (LoginActivity) getActivity();
                         loginActivity.OpenMainActivity();
                     }
-                    Log.d("taxi5", "status code: "+ response.body().getStatusCode());
+                    else {
+                        Toast.makeText(getContext(), "Произошла внутренняя ошикбка, повторите попытку позже.", Toast.LENGTH_SHORT).show();
+                    }
 //                    else {
 //                        LoginActivity loginActivity = (LoginActivity) getActivity();
 //                        loginActivity.OpenNameFragment();
