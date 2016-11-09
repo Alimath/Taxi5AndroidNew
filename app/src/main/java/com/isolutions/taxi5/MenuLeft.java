@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.isolutions.taxi5.API.Taxi5SDKEntity.ProfileData;
 import com.squareup.picasso.Picasso;
 
@@ -107,6 +108,8 @@ public class MenuLeft extends Fragment {
 
     @OnClick(R.id.left_drawer_call_to_us_btn)
     public void onClickCallUsListener() {
+        FlurryAgent.logEvent("Left Menu Call Us Button");
+
         AlertDialog.Builder builder;
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(getActivity());
@@ -115,23 +118,15 @@ public class MenuLeft extends Fragment {
             builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Light_Dialog_Alert);
         }
 
-//        TextView msgTextView = new TextView(AppData.getInstance().getAppContext());
-//        msgTextView.setTextSize(14);
-//        msgTextView.setPadding(0,0,0,0);
-//        msgTextView.setTextColor(AppData.getInstance().getColor(R.color.defaultBlack));
-//        msgTextView.setText("+375 (29) 133-75-00");
-
-//        msgTextView.setGravity(Gravity.CENTER);
-
-//        builder.setView(msgTextView);
-        builder.setTitle("Позвоните в Такси \"Пятница\"");
-        builder.setMessage("+375 (29) 133-75-00");
+        builder.setTitle(getString(R.string.left_drawer_call_us_alert_title));
+        builder.setMessage(getString(R.string.left_drawer_call_us_alert_body_phone_formatted));
 //        builder.
         builder.setPositiveButton(R.string.status_car_on_way_call_driver_dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                FlurryAgent.logEvent("Left Menu Call Us - Perform");
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:+375291337500"));
+                intent.setData(Uri.parse("tel:"+getString(R.string.left_drawer_call_us_alert_phone_number_no_formatted)));
                 startActivity(intent);
             }
         });

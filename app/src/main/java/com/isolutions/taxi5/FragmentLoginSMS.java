@@ -64,6 +64,7 @@ public class FragmentLoginSMS extends Fragment {
         ButterKnife.bind(this, phoneFragment);
 
         avLoadingIndicatorView.hide();
+        sendCodeButton.setText(getString(R.string.registration_sms_buttonText));
 //        getSMSButton.setEnabled(false);
 //        getSMSButton.setClickable(false);
 
@@ -171,6 +172,7 @@ public class FragmentLoginSMS extends Fragment {
         sendCodeButton.setClickable(false);
         smsText.setClickable(false);
         avLoadingIndicatorView.show();
+        sendCodeButton.setText("");
     }
 
     private void StopGetSMSButtonLoadinganimation() {
@@ -183,6 +185,7 @@ public class FragmentLoginSMS extends Fragment {
             smsText.setClickable(true);
 //        }
         avLoadingIndicatorView.hide();
+        sendCodeButton.setText(getString(R.string.registration_sms_buttonText));
     }
 
 

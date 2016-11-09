@@ -159,9 +159,10 @@ public class FragmentLoginPhone extends Fragment {
     }
 
     private void StartGetSMSButtonLoadingAnimation() {
+        avLoadingIndicatorView.show();
         getSMSButton.setClickable(false);
         phoneEditText.setClickable(false);
-        avLoadingIndicatorView.show();
+        getSMSButton.setText("");
     }
 
     private void StopGetSMSButtonLoadinganimation() {
@@ -173,6 +174,7 @@ public class FragmentLoginPhone extends Fragment {
             getSMSButton.setClickable(true);
             phoneEditText.setClickable(true);
         }
+        getSMSButton.setText(getString(R.string.registration_phone_buttonText));
         avLoadingIndicatorView.hide();
     }
 

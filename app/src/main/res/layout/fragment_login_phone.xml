@@ -141,17 +141,20 @@
         android:layout_width="match_parent" />
 
     <com.wang.avi.AVLoadingIndicatorView
-        app:layout_constraintLeft_toLeftOf="@+id/fragment_login_phone_button_getSMS"
-        app:layout_constraintCenterY_toCenterY="@+id/fragment_login_phone_button_getSMS"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-
-        android:elevation="30dp"
-
         android:id="@+id/fragment_login_loading_button_sms_view"
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="35dp"
-        app:indicatorName="BallClipRotateIndicator"/>
+
+        app:indicatorName="BallPulseIndicator"
+
+        style="@style/AVLoadingIndicatorView"
+        app:indicatorColor="@color/whiteColor"
+
+        android:elevation="3dp"
+
+        app:layout_constraintCenterY_toCenterY="@id/fragment_login_phone_button_getSMS"
+        app:layout_constraintCenterX_toCenterX="@id/fragment_login_phone_button_getSMS"
+        />
 
     <ImageView
         android:layout_width="match_parent"

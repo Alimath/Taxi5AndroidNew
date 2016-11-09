@@ -424,6 +424,12 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             FragmentMap.getMapFragment().ShowSearchAddressView(true);
         }
     }
+    @OnClick(R.id.fragment_status_create_order_from_to_view_search_from_address_full)
+    public void OnSearchFromAddressClickFull() {
+        if(FragmentMap.getMapFragment() != null) {
+            FragmentMap.getMapFragment().ShowSearchAddressView(true);
+        }
+    }
 
     @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address)
     public void OnSearhToAddressClick() {
@@ -432,13 +438,17 @@ public class FragmentStatusCreateOrder extends StatusesBaseFragment {
             this.setToLocation(null);
         }
         else {
-            FragmentMap.getMapFragment().ShowSearchAddressView(false);
+            if(FragmentMap.getMapFragment() != null) {
+                FragmentMap.getMapFragment().ShowSearchAddressView(false);
+            }
         }
     }
 
     @OnClick(R.id.fragment_status_create_order_from_to_view_search_to_address_full)
     public void OnSearchToAddressClickFull() {
-        FragmentMap.getMapFragment().ShowSearchAddressView(false);
+        if(FragmentMap.getMapFragment() != null) {
+            FragmentMap.getMapFragment().ShowSearchAddressView(false);
+        }
     }
 
     @OnClick(R.id.fragment_status_create_order_my_location_button)

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
     <string name="app_name">Пятница</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -27,7 +27,11 @@
     <string name="left_drawer_menu_item_plans">Тарифы</string>
     <string name="left_drawer_menu_item_about">О нас</string>
     <string name="left_drawer_call_us_btn">СВЯЗАТЬСЯ С НАМИ</string>
-    
+    <string name="left_drawer_call_us_alert_title">Позвоните в Такси "Пятница"</string>
+    <string name="left_drawer_call_us_alert_body_phone_formatted">+375 (29) 133-75-00</string>
+    <string name="left_drawer_call_us_alert_phone_number_no_formatted">+375291337500</string>
+
+
     
     <string name="approximate_cost">Примерная стоимость:</string>
     <string name="status_create_order_button_text">ЗАКАЗАТЬ ТАКСИ</string>
@@ -291,5 +295,8 @@
 
     <string name="logout_dialog_title">Вы действительно хотите выйти?</string>
     <string name="logout_dialog_message">Данное действие вернет вас к окну авторизации в приложение.</string>
+
+
+    <string name="fragment_postponed_order_from_to_view_route">Маршрут</string>
 
 </resources>

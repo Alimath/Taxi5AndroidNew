@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -120,7 +121,6 @@ public class MainActivity extends AppCompatActivity
 
 
     private LocationListener locationListener = new LocationListener() {
-
         @Override
         public void onLocationChanged(Location location) {
 //            Log.d("taxi5", "location cahnged: " + location.getLatitude() + " : " + location.getLongitude());
@@ -173,6 +173,10 @@ public class MainActivity extends AppCompatActivity
 //            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
 //                    PERMISSION_ACCESS_COARSE_LOCATION);
 //        }
+
+        if(ProfileData.getInstance() != null && ProfileData.getInstance().getId() != null) {
+            FlurryAgent.setUserId(ProfileData.getInstance().getId().toString());
+        }
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

@@ -48,6 +48,7 @@ public class FragmentLoginName extends Fragment {
         ButterKnife.bind(this, nameFragment);
 
         avLoadingIndicatorView.hide();
+        sendCodeButton.setText(getString(R.string.registration_name_buttonText));
 
 
         return nameFragment;
@@ -60,6 +61,7 @@ public class FragmentLoginName extends Fragment {
             return;
         }
         avLoadingIndicatorView.show();
+        sendCodeButton.setText("");
         Taxi5SDK taxi5SDK = ApiFactory.getTaxi5SDK();
         if(taxi5SDK == null) {
             return;
@@ -72,12 +74,14 @@ public class FragmentLoginName extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 avLoadingIndicatorView.hide();
+                sendCodeButton.setText(getString(R.string.registration_name_buttonText));
                 sendCodeButton.setClickable(true);
                 LoginActivity loginActivity = (LoginActivity) getActivity();
                 if(response.isSuccessful()) {
                     loginActivity.OpenSMSFragment();
                 }
                 else {
+                    Toast.makeText(AppData.getInstance().getAppContext(), "Ошибка, введите ваше имя", Toast.LENGTH_SHORT);
                     loginActivity.OpenPhoneFragment();
                 }
             }
@@ -86,6 +90,8 @@ public class FragmentLoginName extends Fragment {
             public void onFailure(Call<Void> call, Throwable t) {
                 sendCodeButton.setClickable(true);
                 avLoadingIndicatorView.hide();
+                Toast.makeText(AppData.getInstance().getAppContext(), "Ошибка, введите ваше имя", Toast.LENGTH_SHORT);
+                sendCodeButton.setText(getString(R.string.registration_name_buttonText));
                 LoginActivity loginActivity = (LoginActivity) getActivity();
                 loginActivity.OpenPhoneFragment();
             }
